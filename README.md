@@ -290,7 +290,7 @@ if err != nil {
 fmt.Println(result)
 ```
 
-**POST** /trackings/:id
+**POST** /trackings/:id/mark-as-completed
 
 ```go
 result, err := sdk.Tracking.
