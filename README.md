@@ -1,6 +1,6 @@
 # AfterShip Tracking API library for Go
 
-This library allows you to quickly and easily use the AfterShip Tracking API via Node.js.
+This library allows you to quickly and easily use the AfterShip Tracking API via Go.
 
 For updates to this library, see our GitHub release page.
 
@@ -419,7 +419,7 @@ fmt.Println(result)
 
 If you get stuck, we're here to help:
 
-- [Issue Tracker](https://github.com/AfterShip/aftership-sdk-nodejs/issues) for questions, feature requests, bug reports and general discussion related to this package. Try searching before you create a new issue.
+- [Issue Tracker](https://github.com/AfterShip/tracking-sdk-go/issues) for questions, feature requests, bug reports and general discussion related to this package. Try searching before you create a new issue.
 - Contact AfterShip official support via support@aftership.com
 
 ## License
