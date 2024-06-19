@@ -3,58 +3,58 @@
 package tracking
 
 import (
-    "fmt"
-    "net/url"
-    "github.com/AfterShip/tracking-sdk-go/v4/component"
-    "github.com/AfterShip/tracking-sdk-go/v4/errorx"
-    "github.com/AfterShip/tracking-sdk-go/v4/service"
+	"fmt"
+	"github.com/AfterShip/tracking-sdk-go/v4/component"
+	"github.com/AfterShip/tracking-sdk-go/v4/errorx"
+	"github.com/AfterShip/tracking-sdk-go/v4/service"
+	"net/url"
 )
 
 type Client struct {
-    options clientOptions
-    sender  *component.HttpSender
-    Tracking *service.TrackingService
-    Courier *service.CourierService
-    LastCheckpoint *service.LastCheckpointService
-    Notification *service.NotificationService
-    EstimatedDeliveryDate *service.EstimatedDeliveryDateService
+	options               clientOptions
+	sender                *component.HttpSender
+	Courier               *service.CourierService
+	Tracking              *service.TrackingService
+	Notification          *service.NotificationService
+	EstimatedDeliveryDate *service.EstimatedDeliveryDateService
+	LastCheckpoint        *service.LastCheckpointService
 }
 
-func New(opts ...ClientOption) (*Client,error) {
-    client := &Client{}
-    client.options = defaultClientOptions
-    for _, opt := range opts {
-        opt.apply(&client.options)
-    }
-    if client.options.timeoutMs < 0 {
-        return nil, errorx.NewSdkError(errorx.ErrInvalidOption, fmt.Sprintf("Invalid option: %s", "TIMEOUT"), "")
-    }
-    if client.options.maxRetry < 0  || client.options.maxRetry > 10 {
-        return nil, errorx.NewSdkError(errorx.ErrInvalidOption, fmt.Sprintf("Invalid option: %s", "MAX_RETRY"), "")
-    }
-    if len(client.options.apiKey) == 0 {
-        return nil, errorx.NewSdkError(errorx.ErrInvalidApiKey, errorx.GetErrorMessage(errorx.ErrInvalidApiKey), "")
-    }
-    if len(client.options.proxy) > 0 {
-        _, err := url.Parse(client.options.proxy)
-        if err != nil {
-            return nil, errorx.NewSdkError(errorx.ErrInvalidOption, fmt.Sprintf("Invalid option: %s", "PROXY"), "")
-        }
-    }
-    client.sender = component.NewHttpSender(
-        component.Config{
-            Timeout:   client.options.timeoutMs,
-            Proxy:     client.options.proxy,
-            MaxRetry:  client.options.maxRetry,
-            UserAgent: client.options.userAgent,
-            Domain:    client.options.domain,
-        },
-        component.NewAuthenticator(client.options.apiKey, client.options.apiSecret, client.options.authenticationType),
-    )
-    client.Tracking = service.NewTrackingService(client.sender)
-    client.Courier = service.NewCourierService(client.sender)
-    client.LastCheckpoint = service.NewLastCheckpointService(client.sender)
-    client.Notification = service.NewNotificationService(client.sender)
-    client.EstimatedDeliveryDate = service.NewEstimatedDeliveryDateService(client.sender)
-    return client,nil
+func New(opts ...ClientOption) (*Client, error) {
+	client := &Client{}
+	client.options = defaultClientOptions
+	for _, opt := range opts {
+		opt.apply(&client.options)
+	}
+	if client.options.timeoutMs < 0 {
+		return nil, errorx.NewSdkError(errorx.ErrInvalidOption, fmt.Sprintf("Invalid option: %s", "TIMEOUT"), "")
+	}
+	if client.options.maxRetry < 0 || client.options.maxRetry > 10 {
+		return nil, errorx.NewSdkError(errorx.ErrInvalidOption, fmt.Sprintf("Invalid option: %s", "MAX_RETRY"), "")
+	}
+	if len(client.options.apiKey) == 0 {
+		return nil, errorx.NewSdkError(errorx.ErrInvalidApiKey, errorx.GetErrorMessage(errorx.ErrInvalidApiKey), "")
+	}
+	if len(client.options.proxy) > 0 {
+		_, err := url.Parse(client.options.proxy)
+		if err != nil {
+			return nil, errorx.NewSdkError(errorx.ErrInvalidOption, fmt.Sprintf("Invalid option: %s", "PROXY"), "")
+		}
+	}
+	client.sender = component.NewHttpSender(
+		component.Config{
+			Timeout:   client.options.timeoutMs,
+			Proxy:     client.options.proxy,
+			MaxRetry:  client.options.maxRetry,
+			UserAgent: client.options.userAgent,
+			Domain:    client.options.domain,
+		},
+		component.NewAuthenticator(client.options.apiKey, client.options.apiSecret, client.options.authenticationType),
+	)
+	client.Courier = service.NewCourierService(client.sender)
+	client.Tracking = service.NewTrackingService(client.sender)
+	client.Notification = service.NewNotificationService(client.sender)
+	client.EstimatedDeliveryDate = service.NewEstimatedDeliveryDateService(client.sender)
+	client.LastCheckpoint = service.NewLastCheckpointService(client.sender)
+	return client, nil
 }

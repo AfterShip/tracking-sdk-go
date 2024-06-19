@@ -3,23 +3,22 @@
 package service
 
 import (
-    "github.com/AfterShip/tracking-sdk-go/v4/component"
-    "github.com/AfterShip/tracking-sdk-go/v4/request"
+	"github.com/AfterShip/tracking-sdk-go/v4/component"
+	"github.com/AfterShip/tracking-sdk-go/v4/request"
 )
 
 type LastCheckpointService struct {
-    sender *component.HttpSender
+	sender *component.HttpSender
 }
 
 func NewLastCheckpointService(sender *component.HttpSender) *LastCheckpointService {
-    return &LastCheckpointService{sender: sender}
-}
-
-func (this *LastCheckpointService) GetCheckpointBySlugTrackingNumber() *request.GetCheckpointBySlugTrackingNumberRequest {
-    return request.NewGetCheckpointBySlugTrackingNumberRequest(this.sender)
+	return &LastCheckpointService{sender: sender}
 }
 
 func (this *LastCheckpointService) GetCheckpointByTrackingId() *request.GetCheckpointByTrackingIdRequest {
-    return request.NewGetCheckpointByTrackingIdRequest(this.sender)
+	return request.NewGetCheckpointByTrackingIdRequest(this.sender)
 }
 
+func (this *LastCheckpointService) GetCheckpointBySlugTrackingNumber() *request.GetCheckpointBySlugTrackingNumberRequest {
+	return request.NewGetCheckpointBySlugTrackingNumberRequest(this.sender)
+}
