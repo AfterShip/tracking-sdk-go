@@ -9,9 +9,9 @@ import (
     "bytes"
     "encoding/json"
 	"github.com/google/go-querystring/query"
-	"github.com/AfterShip/tracking-sdk-go/v4/component"
-	"github.com/AfterShip/tracking-sdk-go/v4/errorx"
-	"github.com/AfterShip/tracking-sdk-go/v4/model"
+	"github.com/aftership/tracking-sdk-go/v4/component"
+	"github.com/aftership/tracking-sdk-go/v4/errorx"
+	"github.com/aftership/tracking-sdk-go/v4/model"
 )
 
 type MarkTrackingCompletedBySlugTrackingNumberRequest struct {

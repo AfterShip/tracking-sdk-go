@@ -8,9 +8,9 @@ import (
 	"net/http"
     "bytes"
     "encoding/json"
-	"github.com/AfterShip/tracking-sdk-go/v4/component"
-	"github.com/AfterShip/tracking-sdk-go/v4/errorx"
-	"github.com/AfterShip/tracking-sdk-go/v4/model"
+	"github.com/aftership/tracking-sdk-go/v4/component"
+	"github.com/aftership/tracking-sdk-go/v4/errorx"
+	"github.com/aftership/tracking-sdk-go/v4/model"
 )
 
 type MarkTrackingCompletedByIdRequest struct {
