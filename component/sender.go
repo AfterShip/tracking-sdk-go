@@ -4,7 +4,7 @@ package component
 
 import (
 	"encoding/json"
-	"github.com/AfterShip/tracking-sdk-go/v4/errorx"
+	"github.com/aftership/tracking-sdk-go/v4/errorx"
 	"io"
 	"math"
 	"math/rand"
