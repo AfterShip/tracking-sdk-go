@@ -2,7 +2,7 @@
 
 This library allows you to quickly and easily use the AfterShip Tracking API via Go.
 
-For updates to this library, see our GitHub release page.
+For updates to this library, see our [GitHub release page](https://github.com/AfterShip/tracking-sdk-go/releases).
 
 If you need support using AfterShip products, please contact support@aftership.com.
 
@@ -24,6 +24,7 @@ If you need support using AfterShip products, please contact support@aftership.c
     - [/couriers](#couriers)
     - [/last\_checkpoint](#last_checkpoint)
     - [/notifications](#notifications)
+    - [/estimated-delivery-date](#estimated-delivery-date)
   - [Help](#help)
   - [License](#license)
 
@@ -165,10 +166,10 @@ The SDK will return an error object when there is any error during the request, 
 
 The AfterShip instance has the following properties which are exactly the same as the API endpoints:
 
-courier - Get a list of our supported couriers.
-tracking - Create trackings, update trackings, and get tracking results.
-last_checkpoint - Get tracking information of the last checkpoint of a tracking.
-notification - Get, add or remove contacts (sms or email) to be notified when the status of a tracking has changed.
+- courier - Get a list of our supported couriers.
+- tracking - Create trackings, update trackings, and get tracking results.
+- last_checkpoint - Get tracking information of the last checkpoint of a tracking.
+- notification - Get, add or remove contacts (sms or email) to be notified when the status of a tracking has changed.
 
 
 ### /trackings
@@ -221,34 +222,6 @@ fmt.Println(result)
 **GET** /trackings/:id
 
 ```go
-result, err := sdk.Tracking.
-    GetTrackingById().
-    BuildPath("r71re5kn21mmylxegrzxh01s").
-    Execute()
-if err != nil {
-    fmt.Println(err)
-    return
-}
-fmt.Println(result)
-```
-
-```go
-// GET /trackings/:slug/:tracking_number?tracking_postal_code=:postal_code&tracking_ship_date=:ship_date
-result, err := sdk.Tracking.
-    GetTrackingBySlugTrackingNumber().
-    BuildPath("usps", "9361289752032444756119").
-    Execute()
-if err != nil {
-    fmt.Println(err)
-    return
-}
-fmt.Println(result)
-```
-
-
-> Pro Tip: You can always use /:id to replace /:slug/:tracking_number.
-```go
-// GET /trackings/:id
 result, err := sdk.Tracking.
     GetTrackingById().
     BuildPath("r71re5kn21mmylxegrzxh01s").
@@ -407,6 +380,24 @@ result, err := sdk.Notification.
     BuildBody(model.DeleteNotificationByTrackingIdRequest{model.NotificationRequestV1{
         Emails: []string{"your_mail@gmail.com"},
     }}).
+    Execute()
+if err != nil {
+    fmt.Println(err)
+    return
+}
+fmt.Println(result)
+```
+
+### /estimated-delivery-date
+
+**POST** /estimated-delivery-date/predict-batch
+
+```go
+result, err := sdk.EstimatedDeliveryDate.
+    PredictBatch().
+    BuildBody(model.PredictBatchRequest{
+        EstimatedDeliveryDates: []model.EstimatedDeliveryDateRequest,
+    }).
     Execute()
 if err != nil {
     fmt.Println(err)
