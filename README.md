@@ -54,7 +54,7 @@ import (
 )
 
 func main() {
-    sdk, err := tracking.New(tracking.WithApiKey("YOUR_API_KEY"))
+	sdk, err := tracking.New(tracking.WithApiKey("YOUR_API_KEY"))
 	if err != nil {
 		fmt.Println(err)
         return
@@ -92,9 +92,10 @@ Create AfterShip instance with options
 package main
 
 import (
-    "fmt"
-    "github.com/aftership/aftership-tracking-sdk-go"
-    "github.com/aftership/tracking-sdk-go/v4/component"
+	"fmt"
+
+	"github.com/aftership/tracking-sdk-go/v4"
+	"github.com/aftership/tracking-sdk-go/v4/component"
 )
 
 func main() {
@@ -107,8 +108,9 @@ func main() {
 		fmt.Println(err)
 		return
 	}
+	trackingId := "kponlnb1w64fmlxlakyln00l"
 	result, err := sdk.Tracking.GetTrackingById().
-		BuildPath("kponlnb1w64fmlxlakyln00l").
+		BuildPath(trackingId).
 		Execute()
 	if err != nil {
 		fmt.Println(err)
@@ -194,9 +196,10 @@ fmt.Println(result)
 **DELETE** /trackings/:id
 
 ```go
+trackingId := "txs1jvxyx6c7wlxishv5h024"
 result, err := sdk.Tracking.
-    DeleteTrackingById().
-    BuildPath("txs1jvxyx6c7wlxishv5h024").
+    DeleteTrackingById(trackingId).
+    BuildPath().
     Execute()
 if err != nil {
     fmt.Println(err)
@@ -222,9 +225,10 @@ fmt.Println(result)
 **GET** /trackings/:id
 
 ```go
+trackingId := "r71re5kn21mmylxegrzxh01s"
 result, err := sdk.Tracking.
-    GetTrackingById().
-    BuildPath("r71re5kn21mmylxegrzxh01s").
+    GetTrackingById(trackingId).
+    BuildPath().
     Execute()
 if err != nil {
     fmt.Println(err)
@@ -236,9 +240,10 @@ fmt.Println(result)
 **PUT** /trackings/:id
 
 ```go
+trackingId := "r71re5kn21mmylxegrzxh01s"
 result, err := sdk.Tracking.
     UpdateTrackingById().
-    BuildPath("r71re5kn21mmylxegrzxh01s").
+    BuildPath(trackingId).
     BuildBody(model.UpdateTrackingByIdRequest{&model.TrackingUpdateTrackingByIdRequest{
         Smses: []string{"+85291239123"},
     }}).Execute()
@@ -252,9 +257,10 @@ fmt.Println(result)
 **POST** /trackings/:id/retrack
 
 ```go
+trackingId := "hqhyzb21sm0colweuats7001"
 result, err := sdk.Tracking.
     RetrackTrackingById().
-    BuildPath("hqhyzb21sm0colweuats7001").
+    BuildPath(trackingId).
     Execute()
 if err != nil {
     fmt.Println(err)
@@ -266,9 +272,10 @@ fmt.Println(result)
 **POST** /trackings/:id/mark-as-completed
 
 ```go
+trackingId := "hqhyzb21sm0colweuats7001"
 result, err := sdk.Tracking.
     MarkTrackingCompletedById().
-    BuildPath("hqhyzb21sm0colweuats7001").
+    BuildPath(trackingId).
     BuildBody(model.MarkTrackingCompletedByIdRequest{Reason: "DELIVERED"}).
     Execute()
 if err != nil {
@@ -324,9 +331,10 @@ fmt.Println(result)
 **GET** /last_checkpoint/:id
 
 ```go
+trackingId := "r71re5kn21mmylxegrzxh01s"
 result, err := sdk.LastCheckpoint.
     GetCheckpointByTrackingId().
-    BuildPath("r71re5kn21mmylxegrzxh01s").
+    BuildPath(trackingId).
     Execute()
 if err != nil {
     fmt.Println(err)
@@ -340,9 +348,10 @@ fmt.Println(result)
 **GET** /notifications/:id
 
 ```go
+trackingId := "r71re5kn21mmylxegrzxh01s"
 result, err := sdk.Notification.
     AddNotificationByTrackingId().
-    BuildPath("r71re5kn21mmylxegrzxh01s").
+    BuildPath(trackingId).
     BuildBody(model.AddNotificationByTrackingIdRequest{model.NotificationRequestV1{
         Emails: []string{"test@gmail.com"},
     }}).
@@ -357,9 +366,10 @@ fmt.Println(result)
 **POST** /notifications/:id/add
 
 ```go
+trackingId := "r71re5kn21mmylxegrzxh01s"
 result, err := sdk.Notification.
     AddNotificationByTrackingId().
-    BuildPath("r71re5kn21mmylxegrzxh01s").
+    BuildPath(trackingId).
     BuildBody(model.AddNotificationByTrackingIdRequest{model.NotificationRequestV1{
         Emails: []string{"your_mail@gmail.com"},
     }}).
@@ -374,9 +384,10 @@ fmt.Println(result)
 **POST** /notifications/:id/remove
 
 ```go
+trackingId := "r71re5kn21mmylxegrzxh01s"
 result, err := sdk.Notification.
     DeleteNotificationByTrackingId().
-    BuildPath("r71re5kn21mmylxegrzxh01s").
+    BuildPath(trackingId).
     BuildBody(model.DeleteNotificationByTrackingIdRequest{model.NotificationRequestV1{
         Emails: []string{"your_mail@gmail.com"},
     }}).
