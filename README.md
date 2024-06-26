@@ -54,7 +54,7 @@ import (
 )
 
 func main() {
-    sdk, err := tracking.New(tracking.WithApiKey("YOUR_API_KEY"))
+	sdk, err := tracking.New(tracking.WithApiKey("YOUR_API_KEY"))
 	if err != nil {
 		fmt.Println(err)
         return
