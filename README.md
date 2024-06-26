@@ -54,7 +54,7 @@ import (
 )
 
 func main() {
-    sdk, err := tracking.New(WithApiKey("YOUR_API_KEY"))
+    sdk, err := tracking.New(tracking.WithApiKey("YOUR_API_KEY"))
 	if err != nil {
 		fmt.Println(err)
         return
@@ -94,14 +94,14 @@ package main
 import (
     "fmt"
     "github.com/aftership/aftership-tracking-sdk-go"
-    "github.com/AfterShip/tracking-sdk-go/v4/component"
+    "github.com/aftership/tracking-sdk-go/v4/component"
 )
 
 func main() {
 	sdk, err := tracking.New(
-		WithAuthKind(component.Aes),
-		WithApiKey("YOUR_API_KEY"),
-		WithSecret("YOUR_API_SECRET"),
+		tracking.WithAuthKind(component.Aes),
+		tracking.WithApiKey("YOUR_API_KEY"),
+		tracking.WithSecret("YOUR_API_SECRET"),
 	)
 	if err != nil {
 		fmt.Println(err)
