@@ -269,9 +269,7 @@ fmt.Println(result)
 result, err := sdk.Courier.
     DetectCourier().
     BuildBody(model.DetectCourierRequest{
-        Tracking: &model.TrackingDetectCourierRequest{
-            TrackingNumber: "<tracking_number>",
-        },
+        TrackingNumber: "<tracking_number>",
     }).
     Execute()
 if err != nil {
