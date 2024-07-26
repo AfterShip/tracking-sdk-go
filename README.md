@@ -142,10 +142,8 @@ The AfterShip instance has the following properties which are exactly the same a
 
 ```go
 data := model.CreateTrackingRequest{
-    &model.TrackingCreateTrackingRequest{
-        TrackingNumber: "<tracking_number>",
-        Slug:           "usps",
-    },
+    TrackingNumber: "<tracking_number>",
+    Slug:           "<slug>",
 }
 result, err := sdk.Tracking.CreateTracking().BuildBody(data).Execute()
 if err != nil {
@@ -203,11 +201,11 @@ fmt.Println(result)
 result, err := sdk.Tracking.
     UpdateTrackingById().
     BuildPath("<tracking_id>").
-    BuildBody(model.UpdateTrackingByIdRequest{&model.TrackingUpdateTrackingByIdRequest{
+    BuildBody(model.UpdateTrackingByIdRequest{
         Smses: []string{"+85291239123"},
-    }}).Execute()
+    }).Execute()
 if err != nil {
-    fmt.Println(err)
+fmt.Println(err)
     return
 }
 fmt.Println(result)
