@@ -85,7 +85,7 @@ func main() {
 
 ## Rate Limiter
 
-See the [Rate Limit](https://www.aftership.com/docs/aftership/quickstart/rate-limit) to understand the AfterShip rate limit policy.
+See the [Rate Limit](https://www.aftership.com/docs/tracking/2024-07/quickstart/api-quick-start) to understand the AfterShip rate limit policy.
 
 ## Error Handling
 
