@@ -11,6 +11,7 @@ If you need support using AfterShip products, please contact support@aftership.c
 - [AfterShip Tracking API library for Go](#aftership-tracking-api-library-for-go)
   - [Table of Contents](#table-of-contents)
   - [Before you begin](#before-you-begin)
+    - [API and SDK Version](#api-and-sdk-version)
   - [Quick Start](#quick-start)
     - [Installation](#installation)
     - [Usage](#usage)
@@ -36,6 +37,16 @@ Before you begin to integrate:
 - [Create an AfterShip account](https://admin.aftership.com/).
 - [Create an API key](https://organization.automizely.com/api-keys).
 - [Install Go](https://go.dev/dl/) version Go 1.16 or later.
+
+### API and SDK Version
+
+Each SDK version is designed to work with a specific API version. Please refer to the table below to identify the supported API versions for each SDK version, ensuring you select the appropriate SDK version for the API version you intend to use.
+
+| SDK Version | Supported API Version | Branch                                                    |
+| ----------- | --------------------- | --------------------------------------------------------- |
+| v4.x.x      | 2024-04               | https://github.com/AfterShip/tracking-sdk-go/tree/2024-04 |
+| v3.x.x      | 2023-10               | https://github.com/AfterShip/aftership-sdk-go             |
+| <=v2.x.x    | Legacy API            | https://github.com/AfterShip/aftership-sdk-go             |
 
 ## Quick Start
 
