@@ -51,7 +51,7 @@ Each SDK version is designed to work with a specific API version. Please refer t
 
 ### Installation
 ```bash
-go get -u github.com/aftership/tracking-sdk-go/v5
+go get -u github.com/aftership/tracking-sdk-go/v6
 ```
 
 ## Constructor
@@ -76,7 +76,7 @@ package main
 
 import (
     "fmt"
-    "github.com/aftership/tracking-sdk-go/v5"
+    "github.com/aftership/tracking-sdk-go/v6"
 )
 
 func main() {
