@@ -41,6 +41,7 @@ Each SDK version is designed to work with a specific API version. Please refer t
 
 | SDK Version | Supported API Version | Branch |
 | --- | --- | --- |
+| v6.x.x | 2024-10 | https://github.com/AfterShip/tracking-sdk-go/tree/2024-10 |
 | v5.x.x | 2024-07 | https://github.com/AfterShip/tracking-sdk-go/tree/2024-07 |
 | v4.x.x | 2024-04 | https://github.com/AfterShip/tracking-sdk-go/tree/2024-04 |
 | v3.x.x | 2023-10 | https://github.com/AfterShip/aftership-sdk-go |
@@ -97,7 +98,7 @@ func main() {
 
 ## Rate Limiter
 
-See the [Rate Limit](https://www.aftership.com/docs/tracking/2024-07/quickstart/api-quick-start) to understand the AfterShip rate limit policy.
+See the [Rate Limit](https://www.aftership.com/docs/tracking/2024-10/quickstart/api-quick-start) to understand the AfterShip rate limit policy.
 
 ## Error Handling
 
