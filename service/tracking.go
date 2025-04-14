@@ -15,30 +15,30 @@ func NewTrackingService(sender *component.HttpSender) *TrackingService {
 	return &TrackingService{sender: sender}
 }
 
-func (this *TrackingService) GetTrackings() *request.GetTrackingsRequest {
-	return request.NewGetTrackingsRequest(this.sender)
-}
-
 func (this *TrackingService) UpdateTrackingById() *request.UpdateTrackingByIdRequest {
 	return request.NewUpdateTrackingByIdRequest(this.sender)
 }
 
-func (this *TrackingService) RetrackTrackingById() *request.RetrackTrackingByIdRequest {
-	return request.NewRetrackTrackingByIdRequest(this.sender)
+func (this *TrackingService) DeleteTrackingById() *request.DeleteTrackingByIdRequest {
+	return request.NewDeleteTrackingByIdRequest(this.sender)
 }
 
 func (this *TrackingService) MarkTrackingCompletedById() *request.MarkTrackingCompletedByIdRequest {
 	return request.NewMarkTrackingCompletedByIdRequest(this.sender)
 }
 
+func (this *TrackingService) GetTrackings() *request.GetTrackingsRequest {
+	return request.NewGetTrackingsRequest(this.sender)
+}
+
 func (this *TrackingService) CreateTracking() *request.CreateTrackingRequest {
 	return request.NewCreateTrackingRequest(this.sender)
 }
 
-func (this *TrackingService) GetTrackingById() *request.GetTrackingByIdRequest {
-	return request.NewGetTrackingByIdRequest(this.sender)
+func (this *TrackingService) RetrackTrackingById() *request.RetrackTrackingByIdRequest {
+	return request.NewRetrackTrackingByIdRequest(this.sender)
 }
 
-func (this *TrackingService) DeleteTrackingById() *request.DeleteTrackingByIdRequest {
-	return request.NewDeleteTrackingByIdRequest(this.sender)
+func (this *TrackingService) GetTrackingById() *request.GetTrackingByIdRequest {
+	return request.NewGetTrackingByIdRequest(this.sender)
 }

@@ -13,10 +13,10 @@ import (
 type Client struct {
 	options               clientOptions
 	sender                *component.HttpSender
-	Tracking              *service.TrackingService
 	CourierConnection     *service.CourierConnectionService
-	Courier               *service.CourierService
 	EstimatedDeliveryDate *service.EstimatedDeliveryDateService
+	Tracking              *service.TrackingService
+	Courier               *service.CourierService
 }
 
 func New(opts ...ClientOption) (*Client, error) {
@@ -50,9 +50,9 @@ func New(opts ...ClientOption) (*Client, error) {
 		},
 		component.NewAuthenticator(client.options.apiKey, client.options.apiSecret, client.options.authenticationType),
 	)
-	client.Tracking = service.NewTrackingService(client.sender)
 	client.CourierConnection = service.NewCourierConnectionService(client.sender)
-	client.Courier = service.NewCourierService(client.sender)
 	client.EstimatedDeliveryDate = service.NewEstimatedDeliveryDateService(client.sender)
+	client.Tracking = service.NewTrackingService(client.sender)
+	client.Courier = service.NewCourierService(client.sender)
 	return client, nil
 }

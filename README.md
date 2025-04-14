@@ -22,6 +22,7 @@ If you need support using AfterShip products, please contact support@aftership.c
   - [Endpoints](#endpoints)
     - [/trackings](#trackings)
     - [/couriers](#couriers)
+    - [/courier-connections](#courier-connections)
     - [/estimated-delivery-date](#estimated-delivery-date)
   - [Help](#help)
   - [License](#license)
@@ -284,6 +285,80 @@ if err != nil {
 fmt.Println(result)
 ```
 
+### /courier-connections
+**GET** /courier-connections
+
+```go
+result, err := sdk.CourierConnection.GetCourierConnections().Execute()
+if err != nil {
+    fmt.Println(err)
+    return
+}
+fmt.Println(result)
+```
+
+**POST** /courier-connections
+
+```go
+result, err := sdk.CourierConnection.PostCourierConnections().
+    BuildBody(model.PostCourierConnectionsRequest{
+			CourierSlug: "dhl-api",
+			Credentials: map[string]string{
+				"api_key": "<your_api_key>",
+	        },
+    }).
+    Execute()
+if err != nil {
+    fmt.Println(err)
+    return
+}
+fmt.Println(result)
+```
+
+**GET** /courier-connections/:id
+
+```go
+result, err := sdk.CourierConnection.GetCourierConnectionsById().
+    BuildPath("<courier_connection_id>").
+    Execute()
+if err != nil {
+    fmt.Println(err)
+    return
+}
+fmt.Println(result)
+```
+
+**PATCH** /courier-connections/:id
+
+```go
+result, err := sdk.CourierConnection.PutCourierConnectionsById().
+    BuildPath("<courier_connection_id>").
+	BuildBody(model.PutCourierConnectionsByIdRequest{
+			Credentials: map[string]string{
+				"api_key": "{}",
+	        },
+    }).
+    Execute()
+if err != nil {
+    fmt.Println(err)
+    return
+}
+fmt.Println(result)
+```
+
+**DELETE** /courier-connections/:id
+
+```go
+result, err := sdk.CourierConnection.DeleteCourierConnectionsById().
+    BuildPath("<courier_connection_id>").
+    Execute()
+if err != nil {
+    fmt.Println(err)
+    return
+}
+fmt.Println(result)
+```
+
 ### /estimated-delivery-date
 
 **POST** /estimated-delivery-date/predict-batch
@@ -301,6 +376,23 @@ if err != nil {
 }
 fmt.Println(result)
 ```
+
+**POST** /estimated-delivery-date/predict
+
+```go
+result, err := sdk.EstimatedDeliveryDate.
+    Predict().
+    BuildBody(model.PredictRequest{
+        Slug: "usps",
+    }).
+    Execute()
+if err != nil {
+    fmt.Println(err)
+    return
+}
+fmt.Println(result)
+```
+
 
 ## Help
 

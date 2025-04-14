@@ -15,10 +15,10 @@ func NewEstimatedDeliveryDateService(sender *component.HttpSender) *EstimatedDel
 	return &EstimatedDeliveryDateService{sender: sender}
 }
 
-func (this *EstimatedDeliveryDateService) Predict() *request.PredictRequest {
-	return request.NewPredictRequest(this.sender)
-}
-
 func (this *EstimatedDeliveryDateService) PredictBatch() *request.PredictBatchRequest {
 	return request.NewPredictBatchRequest(this.sender)
+}
+
+func (this *EstimatedDeliveryDateService) Predict() *request.PredictRequest {
+	return request.NewPredictRequest(this.sender)
 }
