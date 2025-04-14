@@ -4,9 +4,9 @@ package tracking
 
 import (
 	"fmt"
-	"github.com/aftership/tracking-sdk-go/v6/component"
-	"github.com/aftership/tracking-sdk-go/v6/errorx"
-	"github.com/aftership/tracking-sdk-go/v6/service"
+	"github.com/aftership/tracking-sdk-go/v8/component"
+	"github.com/aftership/tracking-sdk-go/v8/errorx"
+	"github.com/aftership/tracking-sdk-go/v8/service"
 	"net/url"
 )
 
@@ -14,6 +14,7 @@ type Client struct {
 	options               clientOptions
 	sender                *component.HttpSender
 	Tracking              *service.TrackingService
+	CourierConnection     *service.CourierConnectionService
 	Courier               *service.CourierService
 	EstimatedDeliveryDate *service.EstimatedDeliveryDateService
 }
@@ -50,6 +51,7 @@ func New(opts ...ClientOption) (*Client, error) {
 		component.NewAuthenticator(client.options.apiKey, client.options.apiSecret, client.options.authenticationType),
 	)
 	client.Tracking = service.NewTrackingService(client.sender)
+	client.CourierConnection = service.NewCourierConnectionService(client.sender)
 	client.Courier = service.NewCourierService(client.sender)
 	client.EstimatedDeliveryDate = service.NewEstimatedDeliveryDateService(client.sender)
 	return client, nil

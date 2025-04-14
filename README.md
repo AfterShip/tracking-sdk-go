@@ -39,19 +39,21 @@ Before you begin to integrate:
 
 Each SDK version is designed to work with a specific API version. Please refer to the table below to identify the supported API versions for each SDK version, ensuring you select the appropriate SDK version for the API version you intend to use.
 
-| SDK Version | Supported API Version | Branch |
-| --- | --- | --- |
-| v6.x.x | 2024-10 | https://github.com/AfterShip/tracking-sdk-go/tree/2024-10 |
-| v5.x.x | 2024-07 | https://github.com/AfterShip/tracking-sdk-go/tree/2024-07 |
-| v4.x.x | 2024-04 | https://github.com/AfterShip/tracking-sdk-go/tree/2024-04 |
-| v3.x.x | 2023-10 | https://github.com/AfterShip/aftership-sdk-go |
-| <=v2.x.x | Legacy API | https://github.com/AfterShip/aftership-sdk-go |
+| SDK Version | Supported API Version | Branch                                                    |
+| ----------- | --------------------- | --------------------------------------------------------- |
+| v8.x.x      | 2025-04               | https://github.com/AfterShip/tracking-sdk-go/tree/2025-04 |
+| v7.x.x      | 2025-01               | https://github.com/AfterShip/tracking-sdk-go/tree/2025-01 |
+| v6.x.x      | 2024-10               | https://github.com/AfterShip/tracking-sdk-go/tree/2024-10 |
+| v5.x.x      | 2024-07               | https://github.com/AfterShip/tracking-sdk-go/tree/2024-07 |
+| v4.x.x      | 2024-04               | https://github.com/AfterShip/tracking-sdk-go/tree/2024-04 |
+| v3.x.x      | 2023-10               | https://github.com/AfterShip/aftership-sdk-go             |
+| <=v2.x.x    | Legacy API            | https://github.com/AfterShip/aftership-sdk-go             |
 
 ## Quick Start
 
 ### Installation
 ```bash
-go get -u github.com/aftership/tracking-sdk-go/v6
+go get -u github.com/aftership/tracking-sdk-go/v8
 ```
 
 ## Constructor
@@ -76,11 +78,11 @@ package main
 
 import (
     "fmt"
-    "github.com/aftership/tracking-sdk-go/v6"
+    "github.com/aftership/tracking-sdk-go/v8"
 )
 
 func main() {
-    sdk, err := tracking.New(tracking.WithApiKey("YOUR_API_KEY"))
+	sdk, err := tracking.New(tracking.WithApiKey("YOUR_API_KEY"))
 	if err != nil {
 		fmt.Println(err)
         return
@@ -98,19 +100,20 @@ func main() {
 
 ## Rate Limiter
 
-See the [Rate Limit](https://www.aftership.com/docs/tracking/2024-10/quickstart/api-quick-start) to understand the AfterShip rate limit policy.
+See the [Rate Limit](https://www.aftership.com/docs/tracking/2025-04/quickstart/api-quick-start) to understand the AfterShip rate limit policy.
 
 ## Error Handling
 
 The SDK will return an error object when there is any error during the request, with the following specification:
 
-| Name          | Type   | Description                    |
-| ------------- | ------ | ------------------------------ |
-| message       | string | Detail message of the error    |
-| code          | enum   | Error code enum for API Error. |
-| meta_code     | number | API response meta code.        |
-| status_code   | number | HTTP status code.              |
-| response_body | string | API response body.             |
+| Name            | Type   | Description                    |
+| --------------- | ------ | ------------------------------ |
+| message         | string | Detail message of the error    |
+| code            | enum   | Error code enum for API Error. |
+| meta_code       | number | API response meta code.        |
+| status_code     | number | HTTP status code.              |
+| response_body   | string | API response body.             |
+| response_header | object | API response header.           |
 
 
 ### Error List
@@ -215,7 +218,7 @@ result, err := sdk.Tracking.
     UpdateTrackingById().
     BuildPath("<tracking_id>").
     BuildBody(model.UpdateTrackingByIdRequest{
-        Smses: []string{"+85291239123"},
+        Title: "test",
     }).Execute()
 if err != nil {
 fmt.Println(err)
@@ -265,17 +268,6 @@ if err != nil {
 fmt.Println(result)
 ```
 
-**GET** /couriers/all
-
-```go
-result, err := sdk.Courier.GetAllCouriers().Execute()
-if err != nil {
-    fmt.Println(err)
-    return
-}
-fmt.Println(result)
-```
-
 **POST** /couriers/detect
 
 ```go
@@ -318,6 +310,6 @@ If you get stuck, we're here to help:
 - Contact AfterShip official support via support@aftership.com
 
 ## License
-Copyright (c) 2024 AfterShip
+Copyright (c) 2025 AfterShip
 
 Licensed under the MIT license.

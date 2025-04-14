@@ -14,7 +14,7 @@ type Courier struct {
 	OtherName string `json:"other_name,omitempty"`
 	// WebUrl Website link of courier
 	WebUrl string `json:"web_url,omitempty"`
-	// RequiredFields The extra fields need for tracking, such as `tracking_account_number`, `tracking_postal_code`, `tracking_ship_date`, `tracking_key`, `tracking_destination_country`
+	// RequiredFields The extra fields need for tracking, such as `tracking_account_number`, `tracking_postal_code`, `tracking_ship_date`, `tracking_key`, `tracking_destination_country_region`
 	RequiredFields []string `json:"required_fields,omitempty"`
 	// OptionalFields The extra fields which are optional for tracking. Basically it's the same as required_fields, but the difference is that only some of the tracking numbers require these fields.
 	OptionalFields []string `json:"optional_fields,omitempty"`
@@ -22,6 +22,14 @@ type Courier struct {
 	DefaultLanguage string `json:"default_language,omitempty"`
 	// SupportLanguages Other supported languages
 	SupportLanguages []string `json:"support_languages,omitempty"`
-	// ServiceFromCountryIso3 Country/Region code (ISO Alpha-3) where the courier provides service
-	ServiceFromCountryIso3 []string `json:"service_from_country_iso3,omitempty"`
+	// ServiceFromCountryRegions Country/Region code (ISO Alpha-3) where the courier provides service
+	ServiceFromCountryRegions []string `json:"service_from_country_regions,omitempty"`
+	// Credentials Refers to the authentication details required for each specific carrier (such as API keys, username, password, etc.) that the user must provide to create a carrier connection. The content varies by carrier.
+	Credentials *CredentialsCourier `json:"credentials,omitempty"`
+}
+
+// CredentialsCourier
+type CredentialsCourier struct {
+	// Fields Through this field, users can get the specific authentication information needed when creating a courier connection to one specific carrier, such as API keys, usernames, and passwords. Each field includes properties like name, data type, and whether it's required.
+	Fields []CredentialField `json:"fields,omitempty"`
 }

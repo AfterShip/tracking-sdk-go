@@ -13,52 +13,52 @@ import (
 	"net/http"
 )
 
-type UpdateTrackingByIdRequest struct {
+type PutCourierConnectionsByIdRequest struct {
 	id     string
-	body   model.UpdateTrackingByIdRequest
+	body   model.PutCourierConnectionsByIdRequest
 	header http.Header
 	sender *component.HttpSender
 	requestBuilder
 }
 
-func NewUpdateTrackingByIdRequest(sender *component.HttpSender) *UpdateTrackingByIdRequest {
-	return &UpdateTrackingByIdRequest{
+func NewPutCourierConnectionsByIdRequest(sender *component.HttpSender) *PutCourierConnectionsByIdRequest {
+	return &PutCourierConnectionsByIdRequest{
 		sender: sender,
 	}
 }
 
-func (t *UpdateTrackingByIdRequest) BuildBody(body model.UpdateTrackingByIdRequest) *UpdateTrackingByIdRequest {
+func (t *PutCourierConnectionsByIdRequest) BuildBody(body model.PutCourierConnectionsByIdRequest) *PutCourierConnectionsByIdRequest {
 	t.body = body
 	return t
 }
 
-func (t *UpdateTrackingByIdRequest) BuildHeader(h http.Header) *UpdateTrackingByIdRequest {
+func (t *PutCourierConnectionsByIdRequest) BuildHeader(h http.Header) *PutCourierConnectionsByIdRequest {
 	t.header = h
 	return t
 }
 
-func (t *UpdateTrackingByIdRequest) BuildPath(id string) *UpdateTrackingByIdRequest {
+func (t *PutCourierConnectionsByIdRequest) BuildPath(id string) *PutCourierConnectionsByIdRequest {
 	t.id = id
 	return t
 }
 
-func (t *UpdateTrackingByIdRequest) isPathParamValid() error {
+func (t *PutCourierConnectionsByIdRequest) isPathParamValid() error {
 	if t.id == "" {
 		return errors.New("path param `id` can not be empty")
 	}
 	return nil
 }
 
-func (t *UpdateTrackingByIdRequest) build() (*http.Request, error) {
+func (t *PutCourierConnectionsByIdRequest) build() (*http.Request, error) {
 	if err := t.isPathParamValid(); err != nil {
 		return nil, errorx.NewSdkError(errorx.ErrBadRequest, errorx.GetErrorMessage(errorx.ErrBadRequest), err.Error())
 	}
-	uri := fmt.Sprintf("/tracking/2025-04/trackings/%s?", t.id)
+	uri := fmt.Sprintf("/tracking/2025-04/courier-connections/%s?", t.id)
 	body, err := json.Marshal(t.body)
 	if err != nil {
 		return nil, errorx.NewSdkError(errorx.ErrBadRequest, errorx.GetErrorMessage(errorx.ErrBadRequest), err.Error())
 	}
-	req, err := http.NewRequest("PUT", uri, bytes.NewReader(body))
+	req, err := http.NewRequest("PATCH", uri, bytes.NewReader(body))
 	if err != nil {
 		return nil, errorx.NewSdkError(errorx.ErrBadRequest, errorx.GetErrorMessage(errorx.ErrBadRequest), err.Error())
 	}
@@ -66,11 +66,11 @@ func (t *UpdateTrackingByIdRequest) build() (*http.Request, error) {
 	return req, nil
 }
 
-func (t *UpdateTrackingByIdRequest) Execute() (*model.UpdateTrackingByIdResponse, error) {
+func (t *PutCourierConnectionsByIdRequest) Execute() (*model.PutCourierConnectionsByIdResponse, error) {
 	req, err := t.build()
 	if err != nil {
 		return nil, errorx.NewSdkError(errorx.ErrBadRequest, errorx.GetErrorMessage(errorx.ErrBadRequest), err.Error())
 	}
-	var data model.UpdateTrackingByIdResponse
+	var data model.PutCourierConnectionsByIdResponse
 	return &data, t.sender.Do(req, &data)
 }

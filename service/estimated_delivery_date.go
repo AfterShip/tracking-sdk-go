@@ -3,8 +3,8 @@
 package service
 
 import (
-	"github.com/aftership/tracking-sdk-go/v6/component"
-	"github.com/aftership/tracking-sdk-go/v6/request"
+	"github.com/aftership/tracking-sdk-go/v8/component"
+	"github.com/aftership/tracking-sdk-go/v8/request"
 )
 
 type EstimatedDeliveryDateService struct {
@@ -13,6 +13,10 @@ type EstimatedDeliveryDateService struct {
 
 func NewEstimatedDeliveryDateService(sender *component.HttpSender) *EstimatedDeliveryDateService {
 	return &EstimatedDeliveryDateService{sender: sender}
+}
+
+func (this *EstimatedDeliveryDateService) Predict() *request.PredictRequest {
+	return request.NewPredictRequest(this.sender)
 }
 
 func (this *EstimatedDeliveryDateService) PredictBatch() *request.PredictBatchRequest {

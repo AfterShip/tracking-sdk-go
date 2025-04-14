@@ -4,7 +4,7 @@ package component
 
 import (
 	"encoding/json"
-	"github.com/aftership/tracking-sdk-go/v6/errorx"
+	"github.com/aftership/tracking-sdk-go/v8/errorx"
 	"io"
 	"math"
 	"math/rand"
@@ -115,19 +115,43 @@ func (c *HttpSender) parseResponse(resp *http.Response, data interface{}) error 
 	}
 	b, err := io.ReadAll(resp.Body)
 	if err != nil {
-		return errorx.NewApiError(errorx.ErrUnknown, resp.StatusCode, errorx.GetErrorMessage(errorx.ErrUnknown), string(b))
+		return errorx.NewApiError(
+			errorx.ErrUnknown,
+			resp.StatusCode,
+			errorx.GetErrorMessage(errorx.ErrUnknown),
+			string(b),
+			resp.Header,
+		)
 	}
 	var response response
 	response.Data = data
 	err = json.Unmarshal(b, &response)
 	if err != nil {
-		return errorx.NewApiError(response.Meta.Code, resp.StatusCode, response.Meta.Message, string(b))
+		return errorx.NewApiError(
+			response.Meta.Code,
+			resp.StatusCode,
+			response.Meta.Message,
+			string(b),
+			resp.Header,
+		)
 	}
 	if !c.isResponseOk(resp.StatusCode) {
-		return errorx.NewApiError(response.Meta.Code, resp.StatusCode, response.Meta.Message, string(b))
+		return errorx.NewApiError(
+			response.Meta.Code,
+			resp.StatusCode,
+			response.Meta.Message,
+			string(b),
+			resp.Header,
+		)
 	}
 	if response.Meta.Code > 300 {
-		return errorx.NewApiError(response.Meta.Code, resp.StatusCode, response.Meta.Message, string(b))
+		return errorx.NewApiError(
+			response.Meta.Code,
+			resp.StatusCode,
+			response.Meta.Message,
+			string(b),
+			resp.Header,
+		)
 	}
 	return nil
 }
@@ -136,8 +160,7 @@ func (c *HttpSender) delay(retryAttempt int) int {
 	delayBase := 3
 	delay := delayBase * (2 ^ (retryAttempt - 1))
 	jitter := float64(delay) * (rand.Float64() - 0.5)
-	tmp := int(math.Max(1, float64(delay)+jitter))
-	return tmp
+	return int(math.Max(1, float64(delay)+jitter))
 }
 
 func (c *HttpSender) isResponseOk(code int) bool {

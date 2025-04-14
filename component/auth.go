@@ -15,7 +15,7 @@ import (
 	"encoding/hex"
 	"encoding/pem"
 	"errors"
-	"github.com/aftership/tracking-sdk-go/v6/errorx"
+	"github.com/aftership/tracking-sdk-go/v8/errorx"
 	"io"
 	"net/http"
 	"net/url"

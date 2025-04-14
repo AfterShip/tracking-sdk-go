@@ -2,16 +2,16 @@
 
 package model
 
-// CourierResponseV1 Model of all couriers endpoint response
-type CourierResponseV1 struct {
+// CourierResponse Model of all couriers endpoint response
+type CourierResponse struct {
 	// Meta Meta data
-	Meta MetaV1 `json:"meta"`
+	Meta Meta `json:"meta"`
 	// Data
-	Data *DataCourierResponseV1 `json:"data"`
+	Data *DataCourierResponse `json:"data"`
 }
 
-// DataCourierResponseV1
-type DataCourierResponseV1 struct {
+// DataCourierResponse
+type DataCourierResponse struct {
 	// Total Total count of courier objects
 	Total int `json:"total,omitempty"`
 	// Couriers Array of  object.

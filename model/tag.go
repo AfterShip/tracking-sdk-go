@@ -2,5 +2,5 @@
 
 package model
 
-// TagV1 Current status of tracking. (
-type TagV1 string
+// Tag Current status of tracking. (
+type Tag string

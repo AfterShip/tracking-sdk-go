@@ -11,35 +11,35 @@ import (
 	"net/http"
 )
 
-type GetTrackingsRequest struct {
-	query  model.GetTrackingsQuery
+type GetCourierConnectionsRequest struct {
+	query  model.GetCourierConnectionsQuery
 	header http.Header
 	sender *component.HttpSender
 	requestBuilder
 }
 
-func NewGetTrackingsRequest(sender *component.HttpSender) *GetTrackingsRequest {
-	return &GetTrackingsRequest{
+func NewGetCourierConnectionsRequest(sender *component.HttpSender) *GetCourierConnectionsRequest {
+	return &GetCourierConnectionsRequest{
 		sender: sender,
 	}
 }
 
-func (t *GetTrackingsRequest) BuildQuery(query model.GetTrackingsQuery) *GetTrackingsRequest {
+func (t *GetCourierConnectionsRequest) BuildQuery(query model.GetCourierConnectionsQuery) *GetCourierConnectionsRequest {
 	t.query = query
 	return t
 }
 
-func (t *GetTrackingsRequest) BuildHeader(h http.Header) *GetTrackingsRequest {
+func (t *GetCourierConnectionsRequest) BuildHeader(h http.Header) *GetCourierConnectionsRequest {
 	t.header = h
 	return t
 }
 
-func (t *GetTrackingsRequest) build() (*http.Request, error) {
+func (t *GetCourierConnectionsRequest) build() (*http.Request, error) {
 	q, err := query.Values(t.query)
 	if err != nil {
 		return nil, errorx.NewSdkError(errorx.ErrBadRequest, errorx.GetErrorMessage(errorx.ErrBadRequest), err.Error())
 	}
-	uri := fmt.Sprintf("/tracking/2025-04/trackings?") + q.Encode()
+	uri := fmt.Sprintf("/tracking/2025-04/courier-connections?") + q.Encode()
 	req, err := http.NewRequest("GET", uri, nil)
 	if err != nil {
 		return nil, errorx.NewSdkError(errorx.ErrBadRequest, errorx.GetErrorMessage(errorx.ErrBadRequest), err.Error())
@@ -48,17 +48,17 @@ func (t *GetTrackingsRequest) build() (*http.Request, error) {
 	return req, nil
 }
 
-func (t *GetTrackingsRequest) Execute() (*model.TrackingPagination, error) {
+func (t *GetCourierConnectionsRequest) Execute() (*model.CourierConnectionPagination, error) {
 	req, err := t.build()
 	if err != nil {
 		return nil, errorx.NewSdkError(errorx.ErrBadRequest, errorx.GetErrorMessage(errorx.ErrBadRequest), err.Error())
 	}
-	var data model.GetTrackingsResponse
+	var data model.GetCourierConnectionsResponse
 	err = t.sender.Do(req, &data)
-	var result model.TrackingPagination
+	var result model.CourierConnectionPagination
 	result.NextCursor = data.Pagination.NextCursor
 	result.HasNextPage = data.Pagination.HasNextPage
 	result.Total = data.Pagination.Total
-	result.Tracking = data.Trackings
+	result.CourierConnection = data.CourierConnections
 	return &result, err
 }

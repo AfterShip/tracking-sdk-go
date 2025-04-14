@@ -3,45 +3,44 @@
 package request
 
 import (
-	"bytes"
-	"encoding/json"
 	"fmt"
 	"github.com/aftership/tracking-sdk-go/v8/component"
 	"github.com/aftership/tracking-sdk-go/v8/errorx"
 	"github.com/aftership/tracking-sdk-go/v8/model"
+	"github.com/google/go-querystring/query"
 	"net/http"
 )
 
-type CreateTrackingRequest struct {
-	body   model.CreateTrackingRequest
+type GetCouriersRequest struct {
+	query  model.GetCouriersQuery
 	header http.Header
 	sender *component.HttpSender
 	requestBuilder
 }
 
-func NewCreateTrackingRequest(sender *component.HttpSender) *CreateTrackingRequest {
-	return &CreateTrackingRequest{
+func NewGetCouriersRequest(sender *component.HttpSender) *GetCouriersRequest {
+	return &GetCouriersRequest{
 		sender: sender,
 	}
 }
 
-func (t *CreateTrackingRequest) BuildBody(body model.CreateTrackingRequest) *CreateTrackingRequest {
-	t.body = body
+func (t *GetCouriersRequest) BuildQuery(query model.GetCouriersQuery) *GetCouriersRequest {
+	t.query = query
 	return t
 }
 
-func (t *CreateTrackingRequest) BuildHeader(h http.Header) *CreateTrackingRequest {
+func (t *GetCouriersRequest) BuildHeader(h http.Header) *GetCouriersRequest {
 	t.header = h
 	return t
 }
 
-func (t *CreateTrackingRequest) build() (*http.Request, error) {
-	uri := fmt.Sprintf("/tracking/2025-04/trackings?")
-	body, err := json.Marshal(t.body)
+func (t *GetCouriersRequest) build() (*http.Request, error) {
+	q, err := query.Values(t.query)
 	if err != nil {
 		return nil, errorx.NewSdkError(errorx.ErrBadRequest, errorx.GetErrorMessage(errorx.ErrBadRequest), err.Error())
 	}
-	req, err := http.NewRequest("POST", uri, bytes.NewReader(body))
+	uri := fmt.Sprintf("/tracking/2025-04/couriers?") + q.Encode()
+	req, err := http.NewRequest("GET", uri, nil)
 	if err != nil {
 		return nil, errorx.NewSdkError(errorx.ErrBadRequest, errorx.GetErrorMessage(errorx.ErrBadRequest), err.Error())
 	}
@@ -49,11 +48,11 @@ func (t *CreateTrackingRequest) build() (*http.Request, error) {
 	return req, nil
 }
 
-func (t *CreateTrackingRequest) Execute() (*model.CreateTrackingResponse, error) {
+func (t *GetCouriersRequest) Execute() (*model.GetCouriersResponse, error) {
 	req, err := t.build()
 	if err != nil {
 		return nil, errorx.NewSdkError(errorx.ErrBadRequest, errorx.GetErrorMessage(errorx.ErrBadRequest), err.Error())
 	}
-	var data model.CreateTrackingResponse
+	var data model.GetCouriersResponse
 	return &data, t.sender.Do(req, &data)
 }

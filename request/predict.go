@@ -12,31 +12,31 @@ import (
 	"net/http"
 )
 
-type CreateTrackingRequest struct {
-	body   model.CreateTrackingRequest
+type PredictRequest struct {
+	body   model.PredictRequest
 	header http.Header
 	sender *component.HttpSender
 	requestBuilder
 }
 
-func NewCreateTrackingRequest(sender *component.HttpSender) *CreateTrackingRequest {
-	return &CreateTrackingRequest{
+func NewPredictRequest(sender *component.HttpSender) *PredictRequest {
+	return &PredictRequest{
 		sender: sender,
 	}
 }
 
-func (t *CreateTrackingRequest) BuildBody(body model.CreateTrackingRequest) *CreateTrackingRequest {
+func (t *PredictRequest) BuildBody(body model.PredictRequest) *PredictRequest {
 	t.body = body
 	return t
 }
 
-func (t *CreateTrackingRequest) BuildHeader(h http.Header) *CreateTrackingRequest {
+func (t *PredictRequest) BuildHeader(h http.Header) *PredictRequest {
 	t.header = h
 	return t
 }
 
-func (t *CreateTrackingRequest) build() (*http.Request, error) {
-	uri := fmt.Sprintf("/tracking/2025-04/trackings?")
+func (t *PredictRequest) build() (*http.Request, error) {
+	uri := fmt.Sprintf("/tracking/2025-04/estimated-delivery-date/predict?")
 	body, err := json.Marshal(t.body)
 	if err != nil {
 		return nil, errorx.NewSdkError(errorx.ErrBadRequest, errorx.GetErrorMessage(errorx.ErrBadRequest), err.Error())
@@ -49,11 +49,11 @@ func (t *CreateTrackingRequest) build() (*http.Request, error) {
 	return req, nil
 }
 
-func (t *CreateTrackingRequest) Execute() (*model.CreateTrackingResponse, error) {
+func (t *PredictRequest) Execute() (*model.PredictResponse, error) {
 	req, err := t.build()
 	if err != nil {
 		return nil, errorx.NewSdkError(errorx.ErrBadRequest, errorx.GetErrorMessage(errorx.ErrBadRequest), err.Error())
 	}
-	var data model.CreateTrackingResponse
+	var data model.PredictResponse
 	return &data, t.sender.Do(req, &data)
 }

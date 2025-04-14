@@ -5,5 +5,5 @@ package model
 // PredictBatchRequest
 type PredictBatchRequest struct {
 	// EstimatedDeliveryDates
-	EstimatedDeliveryDates []EstimatedDeliveryDateRequest `json:"estimated_delivery_dates"`
+	EstimatedDeliveryDates []Estimateddeliverydate `json:"estimated_delivery_dates"`
 }

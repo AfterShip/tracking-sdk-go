@@ -4,23 +4,26 @@ package errorx
 
 import (
 	"encoding/json"
+	"net/http"
 )
 
 type APIError struct {
-	Code       int    `json:"code"`
-	MetaCode   int    `json:"meta_code"`
-	StatusCode int    `json:"status_code"`
-	Message    string `json:"message"`
-	Response   string `json:"response"`
+	Code       int         `json:"code"`
+	MetaCode   int         `json:"meta_code"`
+	StatusCode int         `json:"status_code"`
+	Message    string      `json:"message"`
+	Response   string      `json:"response"`
+	Header     http.Header `json:"response_header"`
 }
 
-func NewApiError(code, status int, msg, resp string) *APIError {
+func NewApiError(code, status int, msg, resp string, header http.Header) *APIError {
 	return &APIError{
 		Code:       GetErrorCode(code),
 		MetaCode:   code,
 		StatusCode: status,
 		Message:    msg,
 		Response:   resp,
+		Header:     header,
 	}
 }
 

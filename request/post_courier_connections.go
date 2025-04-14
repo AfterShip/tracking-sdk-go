@@ -12,31 +12,31 @@ import (
 	"net/http"
 )
 
-type CreateTrackingRequest struct {
-	body   model.CreateTrackingRequest
+type PostCourierConnectionsRequest struct {
+	body   model.PostCourierConnectionsRequest
 	header http.Header
 	sender *component.HttpSender
 	requestBuilder
 }
 
-func NewCreateTrackingRequest(sender *component.HttpSender) *CreateTrackingRequest {
-	return &CreateTrackingRequest{
+func NewPostCourierConnectionsRequest(sender *component.HttpSender) *PostCourierConnectionsRequest {
+	return &PostCourierConnectionsRequest{
 		sender: sender,
 	}
 }
 
-func (t *CreateTrackingRequest) BuildBody(body model.CreateTrackingRequest) *CreateTrackingRequest {
+func (t *PostCourierConnectionsRequest) BuildBody(body model.PostCourierConnectionsRequest) *PostCourierConnectionsRequest {
 	t.body = body
 	return t
 }
 
-func (t *CreateTrackingRequest) BuildHeader(h http.Header) *CreateTrackingRequest {
+func (t *PostCourierConnectionsRequest) BuildHeader(h http.Header) *PostCourierConnectionsRequest {
 	t.header = h
 	return t
 }
 
-func (t *CreateTrackingRequest) build() (*http.Request, error) {
-	uri := fmt.Sprintf("/tracking/2025-04/trackings?")
+func (t *PostCourierConnectionsRequest) build() (*http.Request, error) {
+	uri := fmt.Sprintf("/tracking/2025-04/courier-connections?")
 	body, err := json.Marshal(t.body)
 	if err != nil {
 		return nil, errorx.NewSdkError(errorx.ErrBadRequest, errorx.GetErrorMessage(errorx.ErrBadRequest), err.Error())
@@ -49,11 +49,11 @@ func (t *CreateTrackingRequest) build() (*http.Request, error) {
 	return req, nil
 }
 
-func (t *CreateTrackingRequest) Execute() (*model.CreateTrackingResponse, error) {
+func (t *PostCourierConnectionsRequest) Execute() (*model.PostCourierConnectionsResponse, error) {
 	req, err := t.build()
 	if err != nil {
 		return nil, errorx.NewSdkError(errorx.ErrBadRequest, errorx.GetErrorMessage(errorx.ErrBadRequest), err.Error())
 	}
-	var data model.CreateTrackingResponse
+	var data model.PostCourierConnectionsResponse
 	return &data, t.sender.Do(req, &data)
 }

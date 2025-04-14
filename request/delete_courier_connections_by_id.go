@@ -11,41 +11,41 @@ import (
 	"net/http"
 )
 
-type DeleteTrackingByIdRequest struct {
+type DeleteCourierConnectionsByIdRequest struct {
 	id     string
 	header http.Header
 	sender *component.HttpSender
 	requestBuilder
 }
 
-func NewDeleteTrackingByIdRequest(sender *component.HttpSender) *DeleteTrackingByIdRequest {
-	return &DeleteTrackingByIdRequest{
+func NewDeleteCourierConnectionsByIdRequest(sender *component.HttpSender) *DeleteCourierConnectionsByIdRequest {
+	return &DeleteCourierConnectionsByIdRequest{
 		sender: sender,
 	}
 }
 
-func (t *DeleteTrackingByIdRequest) BuildHeader(h http.Header) *DeleteTrackingByIdRequest {
+func (t *DeleteCourierConnectionsByIdRequest) BuildHeader(h http.Header) *DeleteCourierConnectionsByIdRequest {
 	t.header = h
 	return t
 }
 
-func (t *DeleteTrackingByIdRequest) BuildPath(id string) *DeleteTrackingByIdRequest {
+func (t *DeleteCourierConnectionsByIdRequest) BuildPath(id string) *DeleteCourierConnectionsByIdRequest {
 	t.id = id
 	return t
 }
 
-func (t *DeleteTrackingByIdRequest) isPathParamValid() error {
+func (t *DeleteCourierConnectionsByIdRequest) isPathParamValid() error {
 	if t.id == "" {
 		return errors.New("path param `id` can not be empty")
 	}
 	return nil
 }
 
-func (t *DeleteTrackingByIdRequest) build() (*http.Request, error) {
+func (t *DeleteCourierConnectionsByIdRequest) build() (*http.Request, error) {
 	if err := t.isPathParamValid(); err != nil {
 		return nil, errorx.NewSdkError(errorx.ErrBadRequest, errorx.GetErrorMessage(errorx.ErrBadRequest), err.Error())
 	}
-	uri := fmt.Sprintf("/tracking/2025-04/trackings/%s?", t.id)
+	uri := fmt.Sprintf("/tracking/2025-04/courier-connections/%s?", t.id)
 	req, err := http.NewRequest("DELETE", uri, nil)
 	if err != nil {
 		return nil, errorx.NewSdkError(errorx.ErrBadRequest, errorx.GetErrorMessage(errorx.ErrBadRequest), err.Error())
@@ -54,11 +54,11 @@ func (t *DeleteTrackingByIdRequest) build() (*http.Request, error) {
 	return req, nil
 }
 
-func (t *DeleteTrackingByIdRequest) Execute() (*model.DeleteTrackingByIdResponse, error) {
+func (t *DeleteCourierConnectionsByIdRequest) Execute() (*model.DeleteCourierConnectionsByIdResponse, error) {
 	req, err := t.build()
 	if err != nil {
 		return nil, errorx.NewSdkError(errorx.ErrBadRequest, errorx.GetErrorMessage(errorx.ErrBadRequest), err.Error())
 	}
-	var data model.DeleteTrackingByIdResponse
+	var data model.DeleteCourierConnectionsByIdResponse
 	return &data, t.sender.Do(req, &data)
 }

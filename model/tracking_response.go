@@ -2,10 +2,10 @@
 
 package model
 
-// TrackingResponseV1 Tracking response for returning single tracking
-type TrackingResponseV1 struct {
+// TrackingResponse Tracking response for returning single tracking
+type TrackingResponse struct {
 	// Meta Meta data
-	Meta MetaV1 `json:"meta"`
+	Meta Meta `json:"meta"`
 	// Data Object describes the tracking information.<div style="display:none; height: 0"></div>
 	Data Tracking `json:"data"`
 }

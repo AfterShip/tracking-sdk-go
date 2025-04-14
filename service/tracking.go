@@ -3,8 +3,8 @@
 package service
 
 import (
-	"github.com/aftership/tracking-sdk-go/v6/component"
-	"github.com/aftership/tracking-sdk-go/v6/request"
+	"github.com/aftership/tracking-sdk-go/v8/component"
+	"github.com/aftership/tracking-sdk-go/v8/request"
 )
 
 type TrackingService struct {

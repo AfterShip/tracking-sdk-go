@@ -7,9 +7,9 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/aftership/tracking-sdk-go/v6/component"
-	"github.com/aftership/tracking-sdk-go/v6/errorx"
-	"github.com/aftership/tracking-sdk-go/v6/model"
+	"github.com/aftership/tracking-sdk-go/v8/component"
+	"github.com/aftership/tracking-sdk-go/v8/errorx"
+	"github.com/aftership/tracking-sdk-go/v8/model"
 	"net/http"
 )
 
@@ -53,7 +53,7 @@ func (t *MarkTrackingCompletedByIdRequest) build() (*http.Request, error) {
 	if err := t.isPathParamValid(); err != nil {
 		return nil, errorx.NewSdkError(errorx.ErrBadRequest, errorx.GetErrorMessage(errorx.ErrBadRequest), err.Error())
 	}
-	uri := fmt.Sprintf("/tracking/2024-10/trackings/%s/mark-as-completed?", t.id)
+	uri := fmt.Sprintf("/tracking/2025-04/trackings/%s/mark-as-completed?", t.id)
 	body, err := json.Marshal(t.body)
 	if err != nil {
 		return nil, errorx.NewSdkError(errorx.ErrBadRequest, errorx.GetErrorMessage(errorx.ErrBadRequest), err.Error())

@@ -5,9 +5,9 @@ package request
 import (
 	"errors"
 	"fmt"
-	"github.com/aftership/tracking-sdk-go/v6/component"
-	"github.com/aftership/tracking-sdk-go/v6/errorx"
-	"github.com/aftership/tracking-sdk-go/v6/model"
+	"github.com/aftership/tracking-sdk-go/v8/component"
+	"github.com/aftership/tracking-sdk-go/v8/errorx"
+	"github.com/aftership/tracking-sdk-go/v8/model"
 	"net/http"
 )
 
@@ -45,7 +45,7 @@ func (t *RetrackTrackingByIdRequest) build() (*http.Request, error) {
 	if err := t.isPathParamValid(); err != nil {
 		return nil, errorx.NewSdkError(errorx.ErrBadRequest, errorx.GetErrorMessage(errorx.ErrBadRequest), err.Error())
 	}
-	uri := fmt.Sprintf("/tracking/2024-10/trackings/%s/retrack?", t.id)
+	uri := fmt.Sprintf("/tracking/2025-04/trackings/%s/retrack?", t.id)
 	req, err := http.NewRequest("POST", uri, nil)
 	if err != nil {
 		return nil, errorx.NewSdkError(errorx.ErrBadRequest, errorx.GetErrorMessage(errorx.ErrBadRequest), err.Error())

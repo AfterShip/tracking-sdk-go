@@ -6,9 +6,9 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"github.com/aftership/tracking-sdk-go/v6/component"
-	"github.com/aftership/tracking-sdk-go/v6/errorx"
-	"github.com/aftership/tracking-sdk-go/v6/model"
+	"github.com/aftership/tracking-sdk-go/v8/component"
+	"github.com/aftership/tracking-sdk-go/v8/errorx"
+	"github.com/aftership/tracking-sdk-go/v8/model"
 	"net/http"
 )
 
@@ -36,7 +36,7 @@ func (t *PredictBatchRequest) BuildHeader(h http.Header) *PredictBatchRequest {
 }
 
 func (t *PredictBatchRequest) build() (*http.Request, error) {
-	uri := fmt.Sprintf("/tracking/2024-10/estimated-delivery-date/predict-batch?")
+	uri := fmt.Sprintf("/tracking/2025-04/estimated-delivery-date/predict-batch?")
 	body, err := json.Marshal(t.body)
 	if err != nil {
 		return nil, errorx.NewSdkError(errorx.ErrBadRequest, errorx.GetErrorMessage(errorx.ErrBadRequest), err.Error())

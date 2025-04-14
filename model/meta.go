@@ -2,8 +2,8 @@
 
 package model
 
-// MetaV1 Meta data
-type MetaV1 struct {
+// Meta Meta data
+type Meta struct {
 	// Code meta code
 	Code int `json:"code"`
 	// Message error message, only exist if the response status is not 2xx

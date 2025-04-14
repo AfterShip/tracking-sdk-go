@@ -4,7 +4,7 @@ package model
 
 // MarkTrackingCompletedByIdResponse Object describes the tracking information.<div style="display:none; height: 0"></div>
 type MarkTrackingCompletedByIdResponse struct {
-	// Id Tracking ID.
+	// Id A  system-generated tracking ID by default, which can be customized by the user when creating a tracking.
 	Id string `json:"id,omitempty"`
 	// LegacyId The length of the tracking ID has been increased from 24 characters to 32 characters. We will use the legacy_id field to store the original 24-character tracking ID to maintain compatibility with existing data. Therefore, all tracking endpoints will continue to work with the legacy_id field as before.
 	LegacyId string `json:"legacy_id,omitempty"`
@@ -12,22 +12,18 @@ type MarkTrackingCompletedByIdResponse struct {
 	CreatedAt string `json:"created_at,omitempty"`
 	// UpdatedAt The date and time the shipment was updated. It uses the format `YYYY-MM-DDTHH:mm:ssZ` for the timezone GMT +0.
 	UpdatedAt string `json:"updated_at,omitempty"`
-	// LastUpdatedAt (Legacy) The date and time the shipment was updated. It uses the format `YYYY-MM-DDTHH:mm:ssZ` for the timezone GMT +0.
-	LastUpdatedAt string `json:"last_updated_at,omitempty"`
 	// TrackingNumber Tracking number.
 	TrackingNumber string `json:"tracking_number,omitempty"`
 	// Slug Unique courier code. When importing a shipment with no courier slug and the tracking number can’t be recognized, the courier will be marked as `unrecognized`. Get courier codes .
 	Slug string `json:"slug,omitempty"`
-	// Active Whether or not AfterShip will continue tracking the shipments. Value is `false` when tag (status) is `Delivered`, `Expired`, or further updates for 30 days since last update.
+	// Active Whether or not AfterShip will continue tracking the shipment. Value is false when no further updates for a few days since last update.
 	Active bool `json:"active,omitempty"`
 	// CustomFields Custom fields that accept an object with string field. In order to protect the privacy of your customers, do not include any  in custom fields.
 	CustomFields map[string]string `json:"custom_fields,omitempty"`
-	// CustomerName Customer name of the tracking.
-	CustomerName string `json:"customer_name,omitempty"`
 	// TransitTime Total transit time in days.- For delivered shipments: Transit time (in days) = Delivered date - Pick-up date- For undelivered shipments: Transit time (in days) = Current date - Pick-up dateValue as `null` for the shipment without pick-up date.
 	TransitTime int `json:"transit_time,omitempty"`
-	// OriginCountryIso3 The  for the origin country/region. E.g. USA for the United States.
-	OriginCountryIso3 string `json:"origin_country_iso3,omitempty"`
+	// OriginCountryRegion The  for the origin country/region. E.g. USA for the United States.
+	OriginCountryRegion string `json:"origin_country_region,omitempty"`
 	// OriginState The state of the sender’s address.
 	OriginState string `json:"origin_state,omitempty"`
 	// OriginCity The city of the sender’s address.
@@ -36,8 +32,8 @@ type MarkTrackingCompletedByIdResponse struct {
 	OriginPostalCode string `json:"origin_postal_code,omitempty"`
 	// OriginRawLocation The sender address that the shipment is shipping from.
 	OriginRawLocation string `json:"origin_raw_location,omitempty"`
-	// DestinationCountryIso3 The  for the destination country/region. E.g. USA for the United States.
-	DestinationCountryIso3 string `json:"destination_country_iso3,omitempty"`
+	// DestinationCountryRegion The  for the destination country/region. E.g. USA for the United States.
+	DestinationCountryRegion string `json:"destination_country_region,omitempty"`
 	// DestinationState The state of the recipient’s address.
 	DestinationState string `json:"destination_state,omitempty"`
 	// DestinationCity The city of the recipient’s address.
@@ -46,10 +42,8 @@ type MarkTrackingCompletedByIdResponse struct {
 	DestinationPostalCode string `json:"destination_postal_code,omitempty"`
 	// DestinationRawLocation The shipping address that the shipment is shipping to.
 	DestinationRawLocation string `json:"destination_raw_location,omitempty"`
-	// CourierDestinationCountryIso3 Destination country/region of the tracking detected from the courier. ISO Alpha-3 (three letters). Value will be `null` if the courier doesn't provide the destination country.
-	CourierDestinationCountryIso3 string `json:"courier_destination_country_iso3,omitempty"`
-	// Emails Email address(es) to receive email notifications.
-	Emails []string `json:"emails,omitempty"`
+	// CourierDestinationCountryRegion Destination country/region of the tracking detected from the courier. ISO Alpha-3 (three letters). Value will be `null` if the courier doesn't provide the destination country.
+	CourierDestinationCountryRegion string `json:"courier_destination_country_region,omitempty"`
 	// CourierEstimatedDeliveryDate The field contains the estimated delivery date provided by the carrier.
 	CourierEstimatedDeliveryDate *CourierEstimatedDeliveryDateMarkTrackingCompletedByIdResponse `json:"courier_estimated_delivery_date,omitempty"`
 	// Note Text field for the note.
@@ -72,12 +66,10 @@ type MarkTrackingCompletedByIdResponse struct {
 	ShipmentWeight *ShipmentWeightMarkTrackingCompletedByIdResponse `json:"shipment_weight,omitempty"`
 	// SignedBy Signed by information for delivered shipment.
 	SignedBy string `json:"signed_by,omitempty"`
-	// Smses The phone number(s) to receive sms notifications.  Phone number should begin with `+` and `Area Code` before phone number.
-	Smses []string `json:"smses,omitempty"`
 	// Source Source of how this tracking is added.
 	Source string `json:"source,omitempty"`
 	// Tag Current status of tracking. (
-	Tag TagV1 `json:"tag,omitempty"`
+	Tag Tag `json:"tag,omitempty"`
 	// Subtag Current subtag of tracking. (
 	Subtag string `json:"subtag,omitempty"`
 	// SubtagMessage Normalized tracking message. (
@@ -118,7 +110,7 @@ type MarkTrackingCompletedByIdResponse struct {
 	TrackingAccountNumber string `json:"tracking_account_number,omitempty"`
 	// TrackingKey Additional field required by some carriers to retrieve the tracking info. A type of tracking credential required by some carriers. Refer to our article on  for more details.
 	TrackingKey string `json:"tracking_key,omitempty"`
-	// TrackingShipDate Additional field required by some carriers to retrieve the tracking info. The date the shipment was sent, using the format YYYYMMDD. Refer to our article on  for more details.
+	// TrackingShipDate The date and time when the shipment is shipped by the merchant and ready for pickup by the carrier. The field supports the following formats:- YYYY-MM-DD- YYYY-MM-DDTHH:mm:ss- YYYY-MM-DDTHH:mm:ssZThe field serves two key purposes:- Calculate processing time metrics in the Order-to-delivery Analytics dashboard. To ensure accurate analytics, it's recommended to include timezone information when configuring this value- Required by certain carriers to retrieve tracking information as an additional tracking field.
 	TrackingShipDate string `json:"tracking_ship_date,omitempty"`
 	// OnTimeStatus Whether the tracking is delivered on time or not.
 	OnTimeStatus string `json:"on_time_status,omitempty"`
@@ -140,16 +132,6 @@ type MarkTrackingCompletedByIdResponse struct {
 	ShipmentTags []string `json:"shipment_tags,omitempty"`
 	// CourierConnectionId If you have multiple accounts connected for a single carrier on AfterShip, we have introduced the courier_connection_id field to allow you to specify the carrier account associated with each shipment. By providing this information, you enable us to accurately track and monitor your shipments based on the correct carrier account.(</br>In the event that you do not specify the courier_connection_id, we will handle your shipment using the connection that was created earliest among your connected accounts.
 	CourierConnectionId string `json:"courier_connection_id,omitempty"`
-	// NextCouriers The next couriers get the second carrier information from user or AfterShip.
-	NextCouriers []NextCouriersMarkTrackingCompletedByIdResponse `json:"next_couriers,omitempty"`
-	// TrackingOriginCountry (Legacy) Replaced by `origin_country_iso3`. Additional field required by some carriers to retrieve the tracking info. The origin country/region of the shipment. Refer to our article on  for more details.
-	TrackingOriginCountry string `json:"tracking_origin_country,omitempty"`
-	// TrackingDestinationCountry (Legacy) Replaced by `destination_country_iso3`. Additional field required by some carriers to retrieve the tracking info. The destination country/region of the shipment. Refer to our article on  for more details.
-	TrackingDestinationCountry string `json:"tracking_destination_country,omitempty"`
-	// TrackingPostalCode (Legacy) Replaced by `destination_postal_code`. Additional field required by some carriers to retrieve the tracking info. The postal code of the recipient’s address. Refer to our article on  for more details.
-	TrackingPostalCode string `json:"tracking_postal_code,omitempty"`
-	// TrackingState (Legacy) Replaced by `destination_state`. Additional field required by some carriers to retrieve the tracking info. The state/province of the recipient’s address. Refer to our article on  for more details.
-	TrackingState string `json:"tracking_state,omitempty"`
 	// CarbonEmissions The model contains the total amount of carbon emissions generated by the shipment. - AfterShip will provide this data only when it is available, and its availability is contingent upon the location and weight information that AfterShip can obtain.- The values will be accessible solely for shipments that have been successfully delivered. However, in the event of a shipping update after the delivery status has been achieved, the value may change.- It’s a paid service and only for Tracking Enterprise users, please contact your customer success manager if you want to know more.
 	CarbonEmissions *CarbonEmissionsMarkTrackingCompletedByIdResponse `json:"carbon_emissions,omitempty"`
 	// LocationId The location_id refers to the place where you fulfilled the items.  - If you provide a location_id, the system will automatically use it as the tracking's origin address. However, passing both location_id and any origin address information simultaneously is not allowed.- Please make sure you add your locations .
@@ -166,6 +148,12 @@ type MarkTrackingCompletedByIdResponse struct {
 	AftershipTrackingUrl string `json:"aftership_tracking_url,omitempty"`
 	// AftershipTrackingOrderUrl The order URL directs your customers to the order tracking page, which includes all shipments. It can display either the default or a customized page based on segmentation rules.- The universal URL is used by default, but you can opt for a custom domain if you have one. Learn how to set up a custom domain .The field is not automatically enabled in API & Webhook. Please contact support if you’d like to enable it.
 	AftershipTrackingOrderUrl string `json:"aftership_tracking_order_url,omitempty"`
+	// FirstMile The field contains information about the first leg of the shipping starting from the carrier picking up the shipment from the shipper to the point where they hand it over to the last-mile carrier. Once AfterShip detects the shipment is multi-leg, we will populate the first-mile information under this object.
+	FirstMile *FirstMileMarkTrackingCompletedByIdResponse `json:"first_mile,omitempty"`
+	// LastMile This field contains information about the last leg of the shipment, starting from the carrier who hands it over to the last-mile carrier, all the way to delivery. Once AfterShip detects that the shipment involves multiple legs and identifies the last-mile carrier, we will populate the last-mile carrier information in this object. Alternatively, the user can provide this information in this field to specify the last-mile carrier, which is helpful if AfterShip is unable to detect it automatically.
+	LastMile *LastMileMarkTrackingCompletedByIdResponse `json:"last_mile,omitempty"`
+	// Customers The field contains the customer information associated with the tracking. A maximum of three customer objects are allowed.
+	Customers []CustomersMarkTrackingCompletedByIdResponse `json:"customers,omitempty"`
 }
 
 // CourierEstimatedDeliveryDateMarkTrackingCompletedByIdResponse
@@ -236,20 +224,8 @@ type LatestEstimatedDeliveryMarkTrackingCompletedByIdResponse struct {
 	DatetimeMin string `json:"datetime_min,omitempty"`
 	// DatetimeMax For a date range EDD format, the date and time for the upper end of the range.
 	DatetimeMax string `json:"datetime_max,omitempty"`
-}
-
-// NextCouriersMarkTrackingCompletedByIdResponse
-type NextCouriersMarkTrackingCompletedByIdResponse struct {
-	// Slug Unique code of courier. Get courier
-	Slug string `json:"slug"`
-	// TrackingNumber Tracking number.
-	TrackingNumber string `json:"tracking_number"`
-	// Source Source of next couriers.
-	Source string `json:"source,omitempty"`
-	// CourierTrackingLink The field contains the official tracking URL of the next courier, if available. The language parameter of this link is determined by the destination country/region and the language associated with the shipment. If the data related to the destination country/region and the shipment's language is unavailable, AfterShip will default the language parameter of the link to "US".
-	CourierTrackingLink string `json:"courier_tracking_link,omitempty"`
-	// CourierRedirectLink The field provides the link for modifying delivery instructions (such as delivery date and shipping address) if supported by the next carrier. The language parameter of this link is determined by the destination country/region and the language associated with the shipment. If the data related to the destination country/region and the shipment's language is unavailable, AfterShip will default the language parameter of the link to "US".
-	CourierRedirectLink string `json:"courier_redirect_link,omitempty"`
+	// ReviseReason Explains the reason for a change to the latest_estimated_delivery. This string will only have a value if:1. The source for the latest EDD is AfterShip EDD. 2. The reason for the change is known.For a comprehensive list of reasons, please refer to this document.
+	ReviseReason string `json:"revise_reason,omitempty"`
 }
 
 // CarbonEmissionsMarkTrackingCompletedByIdResponse
@@ -258,4 +234,48 @@ type CarbonEmissionsMarkTrackingCompletedByIdResponse struct {
 	Unit string `json:"unit,omitempty"`
 	// Value The total amount of carbon emissions
 	Value float64 `json:"value,omitempty"`
+}
+
+// FirstMileMarkTrackingCompletedByIdResponse
+type FirstMileMarkTrackingCompletedByIdResponse struct {
+	// TrackingNumber The tracking number of the first-mile carrier.
+	TrackingNumber string `json:"tracking_number,omitempty"`
+	// Slug The unique code of the carrier responsible for the first-mile of the shipment. Find all the courier slugs .
+	Slug string `json:"slug,omitempty"`
+	// TransitTime The transit time for the first-mile of a shipment in days. This field is calculated based on whether the handed_over_to_last_mile_carrier or received_by_last_mile_carrier event is detected by AfterShip. The handover event date is used to calculate the first-mile transit time.- First mile transit time (in days) = Handover date - Pickup date
+	TransitTime int `json:"transit_time,omitempty"`
+	// CourierRedirectLink The field provides the link for modifying delivery instructions (such as delivery date and shipping address), if supported by the first-mile carrier. The language parameter of this link is determined by the destination country/region and the language associated with the shipment. If the destination country/region and language data is unavailable, AfterShip will default the language parameter to "US".
+	CourierRedirectLink string `json:"courier_redirect_link,omitempty"`
+	// CourierTrackingLink The field contains the official tracking URL of the first-mile carrier, if available. The language parameter of this link is determined by the destination country/region and the language associated with the shipment. If the destination country/region and language data is unavailable, AfterShip will default the language parameter to "US".
+	CourierTrackingLink string `json:"courier_tracking_link,omitempty"`
+}
+
+// LastMileMarkTrackingCompletedByIdResponse
+type LastMileMarkTrackingCompletedByIdResponse struct {
+	// TrackingNumber The tracking number of the last-mile carrier.
+	TrackingNumber string `json:"tracking_number,omitempty"`
+	// Slug The unique code of the carrier responsible for the last-mile of the shipment.  Find all the courier slugs .
+	Slug string `json:"slug,omitempty"`
+	// TransitTime The transit time for the last-mile of a shipment in days. This field is calculated based on whether the handed_over_to_last_mile_carrier or the received_by_last_mile_carrier event is detected by AfterShip. The handover event date is used to calculate the last-mile transit time.- Last mile transit time (in days)= Delivered date - Handover date
+	TransitTime int `json:"transit_time,omitempty"`
+	// CourierTrackingLink The field contains the official tracking URL of the last-mile carrier, if available. The language parameter of this link is determined by the destination country/region and the language associated with the shipment. If the destination country/region and language data is unavailable, AfterShip will default the language parameter to "US".
+	CourierTrackingLink string `json:"courier_tracking_link,omitempty"`
+	// CourierRedirectLink The field provides the link for modifying delivery instructions (such as delivery date and shipping address), if supported by the last-mile carrier. The language parameter of this link is determined by the destination country/region and the language associated with the shipment. If the destination country/region and language data is unavailable, AfterShip will default the language parameter to "US".
+	CourierRedirectLink string `json:"courier_redirect_link,omitempty"`
+	// Source The field indicates the source of last-mile carrier.
+	Source string `json:"source,omitempty"`
+}
+
+// CustomersMarkTrackingCompletedByIdResponse
+type CustomersMarkTrackingCompletedByIdResponse struct {
+	// Role The  role of the customer, indicating whether the customer is  an individual or a company.
+	Role string `json:"role,omitempty"`
+	// Name Customer name associated with the tracking.
+	Name string `json:"name,omitempty"`
+	// PhoneNumber The phone number(s) to receive SMS notifications. Phone numbers should begin with a `+` sign and include the area code.
+	PhoneNumber string `json:"phone_number,omitempty"`
+	// Email Email address(es) to receive email notifications.
+	Email string `json:"email,omitempty"`
+	// Language The preferred language of the customer. If you have set up AfterShip notifications in different languages, we use this to send the tracking updates to the customer in their preferred language.
+	Language string `json:"language,omitempty"`
 }

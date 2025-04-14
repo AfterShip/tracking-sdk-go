@@ -4,14 +4,8 @@ package model
 
 // UpdateTrackingByIdRequest
 type UpdateTrackingByIdRequest struct {
-	// Smses The phone number(s) to receive sms notifications.  Input `[]` to clear the value of this field. Supports up to 3 phone numbers.
-	Smses []string `json:"smses,omitempty"`
-	// Emails Email address(es) to receive email notifications. Input `[]` to clear the value of this field. Supports up to 3 email addresses.
-	Emails []string `json:"emails,omitempty"`
 	// Title By default this field shows the `tracking_number`, but you can customize it as you wish with any info (e.g. the order number).
 	Title string `json:"title,omitempty"`
-	// CustomerName Customer name of the tracking.
-	CustomerName string `json:"customer_name,omitempty"`
 	// OrderId A globally-unique identifier for the order.
 	OrderId string `json:"order_id,omitempty"`
 	// OrderIdPath The URL for the order in your system or store.
@@ -36,7 +30,7 @@ type UpdateTrackingByIdRequest struct {
 	TrackingAccountNumber string `json:"tracking_account_number,omitempty"`
 	// TrackingKey Additional field required by some carriers to retrieve the tracking info. A type of tracking credential required by some carriers. Refer to our article on  for more details.
 	TrackingKey string `json:"tracking_key,omitempty"`
-	// TrackingShipDate Additional field required by some carriers to retrieve the tracking info. The date the shipment was sent, using the format YYYYMMDD. Refer to our article on  for more details.
+	// TrackingShipDate The date and time when the shipment is shipped by the merchant and ready for pickup by the carrier. The field supports the following formats:- YYYY-MM-DD- YYYY-MM-DDTHH:mm:ss- YYYY-MM-DDTHH:mm:ssZThe field serves two key purposes:- Calculate processing time metrics in the Order-to-delivery Analytics dashboard. To ensure accurate analytics, it's recommended to include timezone information when configuring this value- Required by certain carriers to retrieve tracking information as an additional tracking field.
 	TrackingShipDate string `json:"tracking_ship_date,omitempty"`
 	// OrderNumber A unique, human-readable identifier for the order.
 	OrderNumber string `json:"order_number,omitempty"`
@@ -44,8 +38,8 @@ type UpdateTrackingByIdRequest struct {
 	OrderDate string `json:"order_date,omitempty"`
 	// ShipmentType The carrier service type for the shipment. If you provide info for this field, AfterShip will not update it with info from the carrier.
 	ShipmentType string `json:"shipment_type,omitempty"`
-	// OriginCountryIso3 The  for more details.
-	OriginCountryIso3 string `json:"origin_country_iso3,omitempty"`
+	// OriginCountryRegion The  for more details.
+	OriginCountryRegion string `json:"origin_country_region,omitempty"`
 	// OriginState The state of the sender’s address. This can help AfterShip with various functions like tracking, carrier auto-detection and auto-correction, calculating an EDD, etc.
 	OriginState string `json:"origin_state,omitempty"`
 	// OriginCity The city of the sender’s address. This can help AfterShip with various functions like tracking, carrier auto-detection and auto-correction, calculating an EDD, etc.
@@ -54,8 +48,8 @@ type UpdateTrackingByIdRequest struct {
 	OriginPostalCode string `json:"origin_postal_code,omitempty"`
 	// OriginRawLocation The sender address that the shipment is shipping from. This can help AfterShip with various functions like tracking, carrier auto-detection and auto-correction, calculating an EDD, etc.
 	OriginRawLocation string `json:"origin_raw_location,omitempty"`
-	// DestinationCountryIso3 The  for more details.
-	DestinationCountryIso3 string `json:"destination_country_iso3,omitempty"`
+	// DestinationCountryRegion The  for more details.
+	DestinationCountryRegion string `json:"destination_country_region,omitempty"`
 	// DestinationState The state of the recipient’s address. This can help AfterShip with various functions like tracking, carrier auto-detection and auto-correction, calculating an EDD, etc. Also the additional field required by some carriers to retrieve the tracking info. The state/province of the recipient’s address. Refer to our article on  for more details.
 	DestinationState string `json:"destination_state,omitempty"`
 	// DestinationCity The city of the recipient’s address. This can help AfterShip with various functions like tracking, carrier auto-detection and auto-correction, calculating an EDD, etc.
@@ -64,16 +58,24 @@ type UpdateTrackingByIdRequest struct {
 	DestinationPostalCode string `json:"destination_postal_code,omitempty"`
 	// DestinationRawLocation The shipping address that the shipment is shipping to. This can help AfterShip with various functions like tracking, carrier auto-detection and auto-correction, calculating an EDD, etc.
 	DestinationRawLocation string `json:"destination_raw_location,omitempty"`
-	// TrackingOriginCountry (Legacy) Replaced by `origin_country_iso3`. Additional field required by some carriers to retrieve the tracking info. The origin country/region of the shipment. Refer to our article on  for more details.
-	TrackingOriginCountry string `json:"tracking_origin_country,omitempty"`
-	// TrackingDestinationCountry (Legacy) Replaced by `destination_country_iso3`. Additional field required by some carriers to retrieve the tracking info. The destination country/region of the shipment. Refer to our article on  for more details.
-	TrackingDestinationCountry string `json:"tracking_destination_country,omitempty"`
-	// TrackingPostalCode (Legacy) Replaced by `destination_postal_code`. Additional field required by some carriers to retrieve the tracking info. The postal code of the recipient’s address. Refer to our article on  for more details.
-	TrackingPostalCode string `json:"tracking_postal_code,omitempty"`
-	// TrackingState (Legacy) Replaced by `destination_state`. Additional field required by some carriers to retrieve the tracking info. The state/province of the recipient’s address. Refer to our article on  for more details.
-	TrackingState string `json:"tracking_state,omitempty"`
 	// LocationId The location_id refers to the place where you fulfilled the items.  - If you provide a location_id, the system will automatically use it as the tracking's origin address. However, passing both location_id and any origin address information simultaneously is not allowed.- Please make sure you add your locations .
 	LocationId string `json:"location_id,omitempty"`
 	// ShippingMethod The shipping_method string refers to the chosen method for delivering the package. Merchants typically offer various shipping methods to consumers during the checkout process, such as, Local Delivery, Free Express Worldwide Shipping, etc.
 	ShippingMethod string `json:"shipping_method,omitempty"`
+	// Customers The field contains the customer information associated with the tracking. A maximum of three customer objects are allowed.
+	Customers []CustomersUpdateTrackingByIdRequest `json:"customers,omitempty"`
+}
+
+// CustomersUpdateTrackingByIdRequest
+type CustomersUpdateTrackingByIdRequest struct {
+	// Role The  role of the customer, indicating whether the customer is  an individual or a company.
+	Role string `json:"role,omitempty"`
+	// Name Customer name associated with the tracking.
+	Name string `json:"name,omitempty"`
+	// PhoneNumber The phone number(s) to receive SMS notifications. Phone numbers should begin with a `+` sign and include the area code.
+	PhoneNumber string `json:"phone_number,omitempty"`
+	// Email Email address(es) to receive email notifications.
+	Email string `json:"email,omitempty"`
+	// Language The preferred language of the customer. If you have set up AfterShip notifications in different languages, we use this to send the tracking updates to the customer in their preferred language.
+	Language string `json:"language,omitempty"`
 }

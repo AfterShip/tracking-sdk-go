@@ -2,8 +2,8 @@
 
 package model
 
-// GetUserCouriersResponse
-type GetUserCouriersResponse struct {
+// GetCouriersResponse
+type GetCouriersResponse struct {
 	// Total Total count of courier objects
 	Total int `json:"total,omitempty"`
 	// Couriers Array of  object.

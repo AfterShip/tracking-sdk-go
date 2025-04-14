@@ -8,7 +8,7 @@ type GetTrackingsQuery struct {
 	Cursor string `url:"cursor,omitempty"`
 	// Limit Number of trackings each page contain. (Default: 100, Max: 200)
 	Limit int `url:"limit,omitempty"`
-	// Keyword Search the content of the tracking record fields: `tracking_number`, `title`, `order_id`, `customer_name`, `custom_fields`, `emails`, `smses`
+	// Keyword Search the content of the tracking record fields: `tracking_number`, `title`, `order_id`, `customers[x].name`, `custom_fields`, `customers[x].email`, `customers[x].phone_number`
 	Keyword string `url:"keyword,omitempty"`
 	// TrackingNumbers Tracking number of shipments. Use comma to separate multiple values (Example: RA123456789US,LE123456789US). Supports up to 50 tracking numbers.
 	TrackingNumbers string `url:"tracking_numbers,omitempty"`
@@ -22,20 +22,20 @@ type GetTrackingsQuery struct {
 	Destination string `url:"destination,omitempty"`
 	// Tag Current status of tracking. Values include `Pending`, `InfoReceived`, `InTransit`, `OutForDelivery`, `AttemptFail`, `Delivered`, `AvailableForPickup`, `Exception`, `Expired` (See tag definition)
 	Tag string `url:"tag,omitempty"`
-	// CreatedAtMin Start date and time of trackings created. AfterShip only stores data of 120 days.(Defaults: 30 days ago, Example: 2013-03-15T16:41:56+08:00)
+	// CreatedAtMin Start date and time of trackings created. AfterShip only stores data of 120 days. Please make sure the value of the parameter is properly escaped in
 	CreatedAtMin string `url:"created_at_min,omitempty"`
-	// CreatedAtMax End date and time of trackings created.(Defaults: now, Example: 2013-04-15T16:41:56+08:00)
+	// CreatedAtMax End date and time of trackings created. Please make sure the value of the parameter is properly escaped in
 	CreatedAtMax string `url:"created_at_max,omitempty"`
-	// UpdatedAtMin Start date and time of trackings updated. (Example: 2013-04-15T16:41:56+08:00)
+	// UpdatedAtMin Start date and time of trackings updated. Please make sure the value of the parameter is properly escaped in
 	UpdatedAtMin string `url:"updated_at_min,omitempty"`
-	// UpdatedAtMax End date and time of trackings updated. (Example: 2013-04-15T16:41:56+08:00)
+	// UpdatedAtMax End date and time of trackings updated. Please make sure the value of the parameter is properly escaped in
 	UpdatedAtMax string `url:"updated_at_max,omitempty"`
 	// Fields List of fields to include in the response. Use comma for multiple values. Available options: `title`, `order_id`, `tag`, `checkpoints`. Example: `title,order_id`
 	Fields string `url:"fields,omitempty"`
 	// ReturnToSender Select return to sender, the value should be `true` or `false`, with optional comma separated.
 	ReturnToSender string `url:"return_to_sender,omitempty"`
-	// CourierDestinationCountryIso3 Destination country/region of trackings returned by courier. Use ISO Alpha-3 (three letters). Use comma for multiple values. (Example: USA,HKG)
-	CourierDestinationCountryIso3 string `url:"courier_destination_country_iso3,omitempty"`
+	// CourierDestinationCountryRegion Destination country/region of trackings returned by courier. Use ISO Alpha-3 (three letters). Use comma for multiple values. (Example: USA,HKG)
+	CourierDestinationCountryRegion string `url:"courier_destination_country_region,omitempty"`
 	// ShipmentTags Tags you added to your shipments to help categorize and filter them easily. Use a comma to separate multiple values (Example: a,b)
 	ShipmentTags string `url:"shipment_tags,omitempty"`
 	// OrderId A globally-unique identifier for the order. Use comma for multiple values.(Example: 6845a095a27a4caeb27487806f058add,4845a095a27a4caeb27487806f058abc)

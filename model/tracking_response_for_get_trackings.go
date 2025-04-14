@@ -2,24 +2,24 @@
 
 package model
 
-// TrackingResponseGetMultipleV1 Tracking response for getting tracking
-type TrackingResponseGetMultipleV1 struct {
+// TrackingResponseForGetTrackings Tracking response for getting tracking
+type TrackingResponseForGetTrackings struct {
 	// Meta Meta data
-	Meta MetaV1 `json:"meta"`
+	Meta Meta `json:"meta"`
 	// Data
-	Data *DataTrackingResponseGetMultipleV1 `json:"data,omitempty"`
+	Data *DataTrackingResponseForGetTrackings `json:"data,omitempty"`
 }
 
-// DataTrackingResponseGetMultipleV1
-type DataTrackingResponseGetMultipleV1 struct {
+// DataTrackingResponseForGetTrackings
+type DataTrackingResponseForGetTrackings struct {
 	// Pagination The Pagination holds the information for the pagination when the response contains multiple objects.
-	Pagination *PaginationDataTrackingResponseGetMultipleV1 `json:"pagination,omitempty"`
+	Pagination *PaginationDataTrackingResponseForGetTrackings `json:"pagination,omitempty"`
 	// Trackings Array of
 	Trackings []Tracking `json:"trackings,omitempty"`
 }
 
-// PaginationDataTrackingResponseGetMultipleV1
-type PaginationDataTrackingResponseGetMultipleV1 struct {
+// PaginationDataTrackingResponseForGetTrackings
+type PaginationDataTrackingResponseForGetTrackings struct {
 	// Total The total number of trackings.
 	Total int `json:"total,omitempty"`
 	// NextCursor A string representing the cursor value for the next page of results.

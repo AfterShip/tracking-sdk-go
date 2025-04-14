@@ -77,7 +77,7 @@ var defaultClientOptions = clientOptions{
 	domain:             "https://api.aftership.com",
 	maxRetry:           2,
 	timeoutMs:          10000,
-	userAgent:          "tracking-sdk-go/v6 (https://www.aftership.com) Go-http-client/1.1",
+	userAgent:          "tracking-sdk-go/v8 (https://www.aftership.com) Go-http-client/1.1",
 	proxy:              "",
 	apiKey:             "",
 	apiSecret:          "",

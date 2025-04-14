@@ -2,30 +2,30 @@
 
 package model
 
-// EstimatedDeliveryDateRequest
-type EstimatedDeliveryDateRequest struct {
+// Estimateddeliverydate
+type Estimateddeliverydate struct {
 	// Slug AfterShip's unique code of courier. Please refer to https://track.aftership.com/couriers/download.
 	Slug string `json:"slug"`
 	// ServiceTypeName AfterShip’s unique code represents carrier’s shipping and delivery options. Refer to .
 	ServiceTypeName string `json:"service_type_name,omitempty"`
 	// OriginAddress The location from where the package is picked up by the carrier to be delivered to the final destination.
-	OriginAddress *OriginAddressEstimatedDeliveryDateRequest `json:"origin_address"`
+	OriginAddress *OriginAddressEstimateddeliverydate `json:"origin_address"`
 	// DestinationAddress The final destination of the customer where the delivery will be made.
-	DestinationAddress *DestinationAddressEstimatedDeliveryDateRequest `json:"destination_address"`
+	DestinationAddress *DestinationAddressEstimateddeliverydate `json:"destination_address"`
 	// Weight AfterShip uses this object to calculate the total weight of the order.
-	Weight *WeightEstimatedDeliveryDateRequest `json:"weight,omitempty"`
+	Weight *WeightEstimateddeliverydate `json:"weight,omitempty"`
 	// PackageCount The number of packages.
 	PackageCount int `json:"package_count,omitempty"`
 	// PickupTime The local pickup time in the origin address time zone of the package.Either `pickup_time` or `estimated_pickup` is required.
 	PickupTime string `json:"pickup_time,omitempty"`
 	// EstimatedPickup The local pickup time of the package.Either `pickup_time` or `estimated_pickup` is required.
-	EstimatedPickup *EstimatedPickupEstimatedDeliveryDateRequest `json:"estimated_pickup,omitempty"`
+	EstimatedPickup *EstimatedPickupEstimateddeliverydate `json:"estimated_pickup,omitempty"`
 }
 
-// OriginAddressEstimatedDeliveryDateRequest
-type OriginAddressEstimatedDeliveryDateRequest struct {
-	// Country The country/region of the origin location from where the package is picked up by the carrier to be delivered to the final destination. Use 3 letters of ISO 3166-1 country/region code.
-	Country string `json:"country"`
+// OriginAddressEstimateddeliverydate
+type OriginAddressEstimateddeliverydate struct {
+	// CountryRegion The country/region of the origin location from where the package is picked up by the carrier to be delivered to the final destination. Use 3 letters of ISO 3166-1 country/region code.
+	CountryRegion string `json:"country_region"`
 	// State State, province, or the equivalent location of the origin address. Use 3 letters of ISO 3166-1 country/region code for countries/regions without state. Either `origin_address.state` or `origin_address.postal_code` is required.
 	State string `json:"state,omitempty"`
 	// City City of the origin address. Use 3 letters of ISO 3166-1 country/region code for countries/regions without City.
@@ -36,10 +36,10 @@ type OriginAddressEstimatedDeliveryDateRequest struct {
 	RawLocation string `json:"raw_location,omitempty"`
 }
 
-// DestinationAddressEstimatedDeliveryDateRequest
-type DestinationAddressEstimatedDeliveryDateRequest struct {
-	// Country The country/region of the destination location where the package will be delivered. Use 3 letters of ISO 3166-1 country code.
-	Country string `json:"country"`
+// DestinationAddressEstimateddeliverydate
+type DestinationAddressEstimateddeliverydate struct {
+	// CountryRegion The country/region of the destination location where the package will be delivered. Use 3 letters of ISO 3166-1 country code.
+	CountryRegion string `json:"country_region"`
 	// State State, province, or the equivalent location of the destination address where the package will be delivered.Either `destination_address.state` or `destination_address.postal_code` is required.
 	State string `json:"state,omitempty"`
 	// City City of the destination address where the package will be delivered.
@@ -50,16 +50,16 @@ type DestinationAddressEstimatedDeliveryDateRequest struct {
 	RawLocation string `json:"raw_location,omitempty"`
 }
 
-// WeightEstimatedDeliveryDateRequest
-type WeightEstimatedDeliveryDateRequest struct {
+// WeightEstimateddeliverydate
+type WeightEstimateddeliverydate struct {
 	// Unit The weight unit of the package.
 	Unit string `json:"unit"`
 	// Value The weight of the shipment.
 	Value float64 `json:"value"`
 }
 
-// EstimatedPickupEstimatedDeliveryDateRequest
-type EstimatedPickupEstimatedDeliveryDateRequest struct {
+// EstimatedPickupEstimateddeliverydate
+type EstimatedPickupEstimateddeliverydate struct {
 	// OrderTime The local order time in the origin address time zone of the package.
 	OrderTime string `json:"order_time"`
 	// OrderCutoffTime Order cut off time in the origin address time zone. The default value set by AfterShip is 18:00:00.
@@ -67,11 +67,11 @@ type EstimatedPickupEstimatedDeliveryDateRequest struct {
 	// BusinessDays Operating days in a week. Number refers to the weekday.E.g., [1,2,3,4,5] means operating days are from Monday to Friday.AfterShip will set [1,2,3,4,5] as the default value.
 	BusinessDays []int `json:"business_days,omitempty"`
 	// OrderProcessingTime
-	OrderProcessingTime *OrderProcessingTimeEstimatedPickupEstimatedDeliveryDateRequest `json:"order_processing_time,omitempty"`
+	OrderProcessingTime *OrderProcessingTimeEstimatedPickupEstimateddeliverydate `json:"order_processing_time,omitempty"`
 }
 
-// OrderProcessingTimeEstimatedPickupEstimatedDeliveryDateRequest
-type OrderProcessingTimeEstimatedPickupEstimatedDeliveryDateRequest struct {
+// OrderProcessingTimeEstimatedPickupEstimateddeliverydate
+type OrderProcessingTimeEstimatedPickupEstimateddeliverydate struct {
 	// Unit Processing time of an order, from being placed to being picked up. Only support day as value now.AfterShip will set day as the default value.
 	Unit string `json:"unit,omitempty"`
 	// Value Processing time of an order, from being placed to being picked up.AfterShip will set 0 as the default value.

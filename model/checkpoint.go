@@ -20,14 +20,14 @@ type Checkpoint struct {
 	Zip string `json:"zip,omitempty"`
 	// Coordinate The latitude and longitude coordinates indicate the precise location of the shipments that are currently in transit.
 	Coordinate *CoordinateCheckpoint `json:"coordinate,omitempty"`
-	// CountryIso3 Country/Region ISO Alpha-3 (three letters) of the checkpoint
-	CountryIso3 string `json:"country_iso3,omitempty"`
-	// CountryName Country/Region name of the checkpoint, may also contain other location info.
-	CountryName string `json:"country_name,omitempty"`
+	// CountryRegion Country/Region ISO Alpha-3 (three letters) of the checkpoint
+	CountryRegion string `json:"country_region,omitempty"`
+	// CountryRegionName Country/Region name of the checkpoint, may also contain other location info.
+	CountryRegionName string `json:"country_region_name,omitempty"`
 	// Message Checkpoint message
 	Message string `json:"message,omitempty"`
 	// Tag Current status of tracking. (
-	Tag TagV1 `json:"tag,omitempty"`
+	Tag Tag `json:"tag,omitempty"`
 	// Subtag Current subtag of checkpoint. (
 	Subtag string `json:"subtag,omitempty"`
 	// SubtagMessage Normalized checkpoint message. (
@@ -36,6 +36,8 @@ type Checkpoint struct {
 	RawTag string `json:"raw_tag,omitempty"`
 	// Events The array provides details about specific event(s) that occurred  to a shipment, such as "returned_to_sender". You can find the full list of events and reasons </span>- The events' value for the same checkpoint message is subject to change as we consistently strive to enhance the performance of this feature.
 	Events []EventsCheckpoint `json:"events,omitempty"`
+	// Source The source of the checkpoint, which can either be from the carrier or when the user marks the tracking as completed.
+	Source string `json:"source,omitempty"`
 }
 
 // CoordinateCheckpoint
