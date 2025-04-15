@@ -150,6 +150,7 @@ The AfterShip instance has the following properties which are exactly the same a
 
 - courier - Get a list of our supported couriers.
 - tracking - Create trackings, update trackings, and get tracking results.
+- courier-connection - Create courier connections, update courier connections, and get courier connections results.
 - estimated-delivery-date - Get estimated delivery date for your order.
 
 
@@ -261,7 +262,7 @@ fmt.Println(result)
 **GET** /couriers
 
 ```go
-result, err := sdk.Courier.GetUserCouriers().Execute()
+result, err := sdk.Courier.GetCouriers().Execute()
 if err != nil {
     fmt.Println(err)
     return

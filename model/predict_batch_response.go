@@ -5,5 +5,5 @@ package model
 // PredictBatchResponse
 type PredictBatchResponse struct {
 	// EstimatedDeliveryDates
-	EstimatedDeliveryDates []Estimateddeliverydate2 `json:"estimated_delivery_dates"`
+	EstimatedDeliveryDates []EstimatedDeliveryDateResponse `json:"estimated_delivery_dates"`
 }

@@ -15,6 +15,14 @@ func NewCourierConnectionService(sender *component.HttpSender) *CourierConnectio
 	return &CourierConnectionService{sender: sender}
 }
 
+func (this *CourierConnectionService) DeleteCourierConnectionsById() *request.DeleteCourierConnectionsByIdRequest {
+	return request.NewDeleteCourierConnectionsByIdRequest(this.sender)
+}
+
+func (this *CourierConnectionService) PutCourierConnectionsById() *request.PutCourierConnectionsByIdRequest {
+	return request.NewPutCourierConnectionsByIdRequest(this.sender)
+}
+
 func (this *CourierConnectionService) PostCourierConnections() *request.PostCourierConnectionsRequest {
 	return request.NewPostCourierConnectionsRequest(this.sender)
 }
@@ -25,12 +33,4 @@ func (this *CourierConnectionService) GetCourierConnections() *request.GetCourie
 
 func (this *CourierConnectionService) GetCourierConnectionsById() *request.GetCourierConnectionsByIdRequest {
 	return request.NewGetCourierConnectionsByIdRequest(this.sender)
-}
-
-func (this *CourierConnectionService) PutCourierConnectionsById() *request.PutCourierConnectionsByIdRequest {
-	return request.NewPutCourierConnectionsByIdRequest(this.sender)
-}
-
-func (this *CourierConnectionService) DeleteCourierConnectionsById() *request.DeleteCourierConnectionsByIdRequest {
-	return request.NewDeleteCourierConnectionsByIdRequest(this.sender)
 }
