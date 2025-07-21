@@ -6,9 +6,9 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"github.com/aftership/tracking-sdk-go/v8/component"
-	"github.com/aftership/tracking-sdk-go/v8/errorx"
-	"github.com/aftership/tracking-sdk-go/v8/model"
+	"github.com/aftership/tracking-sdk-go/v9/component"
+	"github.com/aftership/tracking-sdk-go/v9/errorx"
+	"github.com/aftership/tracking-sdk-go/v9/model"
 	"net/http"
 )
 
@@ -36,7 +36,7 @@ func (t *PostCourierConnectionsRequest) BuildHeader(h http.Header) *PostCourierC
 }
 
 func (t *PostCourierConnectionsRequest) build() (*http.Request, error) {
-	uri := fmt.Sprintf("/tracking/2025-04/courier-connections?")
+	uri := fmt.Sprintf("/tracking/2025-07/courier-connections?")
 	body, err := json.Marshal(t.body)
 	if err != nil {
 		return nil, errorx.NewSdkError(errorx.ErrBadRequest, errorx.GetErrorMessage(errorx.ErrBadRequest), err.Error())

@@ -3,8 +3,8 @@
 package service
 
 import (
-	"github.com/aftership/tracking-sdk-go/v8/component"
-	"github.com/aftership/tracking-sdk-go/v8/request"
+	"github.com/aftership/tracking-sdk-go/v9/component"
+	"github.com/aftership/tracking-sdk-go/v9/request"
 )
 
 type EstimatedDeliveryDateService struct {

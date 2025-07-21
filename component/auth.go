@@ -15,7 +15,7 @@ import (
 	"encoding/hex"
 	"encoding/pem"
 	"errors"
-	"github.com/aftership/tracking-sdk-go/v8/errorx"
+	"github.com/aftership/tracking-sdk-go/v9/errorx"
 	"io"
 	"net/http"
 	"net/url"
@@ -138,7 +138,7 @@ func (au *Authenticator) canonicalResource(rawUrl string) (result string, err er
 	if err != nil {
 		return "", err
 	}
-	result += u.Path
+	result += u.EscapedPath()
 	params := u.Query().Encode()
 	if params != "" {
 		result += "?" + params
