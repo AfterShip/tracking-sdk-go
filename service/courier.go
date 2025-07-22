@@ -3,8 +3,8 @@
 package service
 
 import (
-	"github.com/aftership/tracking-sdk-go/v8/component"
-	"github.com/aftership/tracking-sdk-go/v8/request"
+	"github.com/aftership/tracking-sdk-go/v9/component"
+	"github.com/aftership/tracking-sdk-go/v9/request"
 )
 
 type CourierService struct {
@@ -15,10 +15,10 @@ func NewCourierService(sender *component.HttpSender) *CourierService {
 	return &CourierService{sender: sender}
 }
 
-func (this *CourierService) GetCouriers() *request.GetCouriersRequest {
-	return request.NewGetCouriersRequest(this.sender)
-}
-
 func (this *CourierService) DetectCourier() *request.DetectCourierRequest {
 	return request.NewDetectCourierRequest(this.sender)
+}
+
+func (this *CourierService) GetCouriers() *request.GetCouriersRequest {
+	return request.NewGetCouriersRequest(this.sender)
 }

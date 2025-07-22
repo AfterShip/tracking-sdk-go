@@ -224,7 +224,7 @@ type LatestEstimatedDeliveryMarkTrackingCompletedByIdResponse struct {
 	DatetimeMin string `json:"datetime_min,omitempty"`
 	// DatetimeMax For a date range EDD format, the date and time for the upper end of the range.
 	DatetimeMax string `json:"datetime_max,omitempty"`
-	// ReviseReason Explains the reason for a change to the latest_estimated_delivery. This string will only have a value if:1. The source for the latest EDD is AfterShip EDD. 2. The reason for the change is known.For a comprehensive list of reasons, please refer to this document.
+	// ReviseReason Explains the reason for a change to the latest_estimated_delivery. This string will only have a value if:1. The source for the latest EDD is AfterShip EDD. 2. The reason for the change is known.For a comprehensive list of reasons, please refer to .
 	ReviseReason string `json:"revise_reason,omitempty"`
 }
 
