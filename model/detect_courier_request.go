@@ -19,7 +19,7 @@ type DetectCourierRequest struct {
 	// DestinationState State of the destination shipping address of the shipment. Required by some couriers.
 	DestinationState *string `json:"destination_state,omitempty"`
 	// SlugGroup Slug group is a group of slugs which belong to same courier. For example, when you inpit "fedex-group" as slug_group, AfterShip will detect the tracking with "fedex-uk", "fedex-fims", and other slugs which belong to "fedex". It cannot be used with slug at the same time. (
-	SlugGroup *SlugGroup `json:"slug_group,omitempty"`
+	SlugGroup *string `json:"slug_group,omitempty"`
 	// OriginCountryRegion Enter .
 	OriginCountryRegion *string `json:"origin_country_region,omitempty"`
 	// DestinationCountryRegion Enter .
@@ -54,7 +54,7 @@ func (detectCourierRequest *DetectCourierRequest) SetDestinationState(val string
 	detectCourierRequest.DestinationState = &val
 }
 
-func (detectCourierRequest *DetectCourierRequest) SetSlugGroup(val SlugGroup) {
+func (detectCourierRequest *DetectCourierRequest) SetSlugGroup(val string) {
 	detectCourierRequest.SlugGroup = &val
 }
 
