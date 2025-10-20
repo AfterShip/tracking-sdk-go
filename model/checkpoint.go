@@ -5,59 +5,105 @@ package model
 // Checkpoint Object describes checkpoint information.
 type Checkpoint struct {
 	// CreatedAt The date and time of the checkpoint event was added to AfterShip. It uses the format `YYYY-MM-DDTHH:mm:ssZ` for the timezone GMT +0.
-	CreatedAt string `json:"created_at,omitempty"`
+	CreatedAt *string `json:"created_at,omitempty"`
 	// Slug The unique code of courier for this checkpoint. Get courier slug
-	Slug string `json:"slug,omitempty"`
+	Slug *string `json:"slug,omitempty"`
 	// CheckpointTime The date and time of the checkpoint event, provided by the carrier. It uses the timezone of the checkpoint. The format may differ depending on how the carrier provides it:- YYYY-MM-DDTHH:mm:ss- YYYY-MM-DDTHH:mm:ssZ
-	CheckpointTime string `json:"checkpoint_time,omitempty"`
+	CheckpointTime *string `json:"checkpoint_time,omitempty"`
 	// Location Location info provided by carrier
-	Location string `json:"location,omitempty"`
+	Location *string `json:"location,omitempty"`
 	// City City info provided by carrier
-	City string `json:"city,omitempty"`
+	City *string `json:"city,omitempty"`
 	// State State info provided by carrier
-	State string `json:"state,omitempty"`
+	State *string `json:"state,omitempty"`
 	// Zip Postal code info provided by carrier
-	Zip string `json:"zip,omitempty"`
+	Zip *string `json:"zip,omitempty"`
 	// Coordinate The latitude and longitude coordinates indicate the precise location of the shipments that are currently in transit.
-	Coordinate *CoordinateCheckpoint `json:"coordinate,omitempty"`
+	Coordinate *CheckpointCoordinate `json:"coordinate,omitempty"`
 	// CountryRegion Country/Region ISO Alpha-3 (three letters) of the checkpoint
-	CountryRegion string `json:"country_region,omitempty"`
+	CountryRegion *string `json:"country_region,omitempty"`
 	// CountryRegionName Country/Region name of the checkpoint, may also contain other location info.
-	CountryRegionName string `json:"country_region_name,omitempty"`
+	CountryRegionName *string `json:"country_region_name,omitempty"`
 	// Message Checkpoint message
-	Message string `json:"message,omitempty"`
+	Message *string `json:"message,omitempty"`
 	// Tag Current status of tracking. (
-	Tag Tag `json:"tag,omitempty"`
+	Tag *Tag `json:"tag,omitempty"`
 	// Subtag Current subtag of checkpoint. (
-	Subtag string `json:"subtag,omitempty"`
+	Subtag *string `json:"subtag,omitempty"`
 	// SubtagMessage Normalized checkpoint message. (
-	SubtagMessage string `json:"subtag_message,omitempty"`
+	SubtagMessage *string `json:"subtag_message,omitempty"`
 	// RawTag Checkpoint raw status provided by courier
-	RawTag string `json:"raw_tag,omitempty"`
+	RawTag *string `json:"raw_tag,omitempty"`
 	// Events The array provides details about specific event(s) that occurred  to a shipment, such as "returned_to_sender". You can find the full list of events and reasons </span>- The events' value for the same checkpoint message is subject to change as we consistently strive to enhance the performance of this feature.
-	Events []EventsCheckpoint `json:"events,omitempty"`
+	Events []CheckpointEvents `json:"events,omitempty"`
 	// Source The source of the checkpoint, which can either be from the carrier or when the user marks the tracking as completed.
-	Source string `json:"source,omitempty"`
+	Source *CheckpointSource `json:"source,omitempty"`
 }
 
-// CoordinateCheckpoint
-type CoordinateCheckpoint struct {
-	// Latitude Represents the latitude.
-	Latitude float64 `json:"latitude,omitempty"`
-	// Longitude Represents the longitude.
-	Longitude float64 `json:"longitude,omitempty"`
+func (checkpoint *Checkpoint) SetCreatedAt(val string) {
+	checkpoint.CreatedAt = &val
 }
 
-// ReasonEventsCheckpoint
-type ReasonEventsCheckpoint struct {
-	// Code The code of the reason.
-	Code string `json:"code,omitempty"`
+func (checkpoint *Checkpoint) SetSlug(val string) {
+	checkpoint.Slug = &val
 }
 
-// EventsCheckpoint
-type EventsCheckpoint struct {
-	// Code Represents the event code.
-	Code string `json:"code,omitempty"`
-	// Reason Describes the specific reason that led to the event.
-	Reason *ReasonEventsCheckpoint `json:"reason,omitempty"`
+func (checkpoint *Checkpoint) SetCheckpointTime(val string) {
+	checkpoint.CheckpointTime = &val
+}
+
+func (checkpoint *Checkpoint) SetLocation(val string) {
+	checkpoint.Location = &val
+}
+
+func (checkpoint *Checkpoint) SetCity(val string) {
+	checkpoint.City = &val
+}
+
+func (checkpoint *Checkpoint) SetState(val string) {
+	checkpoint.State = &val
+}
+
+func (checkpoint *Checkpoint) SetZip(val string) {
+	checkpoint.Zip = &val
+}
+
+func (checkpoint *Checkpoint) SetCoordinate(val CheckpointCoordinate) {
+	checkpoint.Coordinate = &val
+}
+
+func (checkpoint *Checkpoint) SetCountryRegion(val string) {
+	checkpoint.CountryRegion = &val
+}
+
+func (checkpoint *Checkpoint) SetCountryRegionName(val string) {
+	checkpoint.CountryRegionName = &val
+}
+
+func (checkpoint *Checkpoint) SetMessage(val string) {
+	checkpoint.Message = &val
+}
+
+func (checkpoint *Checkpoint) SetTag(val Tag) {
+	checkpoint.Tag = &val
+}
+
+func (checkpoint *Checkpoint) SetSubtag(val string) {
+	checkpoint.Subtag = &val
+}
+
+func (checkpoint *Checkpoint) SetSubtagMessage(val string) {
+	checkpoint.SubtagMessage = &val
+}
+
+func (checkpoint *Checkpoint) SetRawTag(val string) {
+	checkpoint.RawTag = &val
+}
+
+func (checkpoint *Checkpoint) SetEvents(val []CheckpointEvents) {
+	checkpoint.Events = val
+}
+
+func (checkpoint *Checkpoint) SetSource(val CheckpointSource) {
+	checkpoint.Source = &val
 }

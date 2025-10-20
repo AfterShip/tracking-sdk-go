@@ -9,3 +9,11 @@ type PostCourierConnectionsRequest struct {
 	// Credentials It refers to the authentication details required for each specific carrier details required for each specific carrier (such as API keys, username, password, etc.) that the user must provide to establish a carrier connection. The content varies by carrier.
 	Credentials map[string]string `json:"credentials"`
 }
+
+func (postCourierConnectionsRequest *PostCourierConnectionsRequest) SetCourierSlug(val string) {
+	postCourierConnectionsRequest.CourierSlug = val
+}
+
+func (postCourierConnectionsRequest *PostCourierConnectionsRequest) SetCredentials(val map[string]string) {
+	postCourierConnectionsRequest.Credentials = val
+}

@@ -7,7 +7,19 @@ type Meta struct {
 	// Code meta code
 	Code int `json:"code"`
 	// Message error message, only exist if the response status is not 2xx
-	Message string `json:"message,omitempty"`
+	Message *string `json:"message,omitempty"`
 	// Type error type, only exist if the response status is not 2xx
-	Type string `json:"type,omitempty"`
+	Type *MetaType `json:"type,omitempty"`
+}
+
+func (meta *Meta) SetCode(val int) {
+	meta.Code = val
+}
+
+func (meta *Meta) SetMessage(val string) {
+	meta.Message = &val
+}
+
+func (meta *Meta) SetType(val MetaType) {
+	meta.Type = &val
 }

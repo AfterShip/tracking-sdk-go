@@ -2,10 +2,9 @@
 
 package model
 
-// GetCouriersResponse
+import "net/http"
+
 type GetCouriersResponse struct {
-	// Total Total count of courier objects
-	Total int `json:"total,omitempty"`
-	// Couriers Array of  object.
-	Couriers []Courier `json:"couriers,omitempty"`
+	ResponseHeader http.Header
+	Data           GetCouriersResponseData
 }

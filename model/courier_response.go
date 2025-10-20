@@ -7,13 +7,13 @@ type CourierResponse struct {
 	// Meta Meta data
 	Meta Meta `json:"meta"`
 	// Data
-	Data *DataCourierResponse `json:"data"`
+	Data CourierResponseData `json:"data"`
 }
 
-// DataCourierResponse
-type DataCourierResponse struct {
-	// Total Total count of courier objects
-	Total int `json:"total,omitempty"`
-	// Couriers Array of  object.
-	Couriers []Courier `json:"couriers,omitempty"`
+func (courierResponse *CourierResponse) SetMeta(val Meta) {
+	courierResponse.Meta = val
+}
+
+func (courierResponse *CourierResponse) SetData(val CourierResponseData) {
+	courierResponse.Data = val
 }

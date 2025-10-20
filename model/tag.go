@@ -4,3 +4,15 @@ package model
 
 // Tag Current status of tracking. (
 type Tag string
+
+const (
+	TagPending            Tag = "Pending"
+	TagInfoReceived       Tag = "InfoReceived"
+	TagInTransit          Tag = "InTransit"
+	TagOutForDelivery     Tag = "OutForDelivery"
+	TagAttemptFail        Tag = "AttemptFail"
+	TagDelivered          Tag = "Delivered"
+	TagAvailableForPickup Tag = "AvailableForPickup"
+	TagException          Tag = "Exception"
+	TagExpired            Tag = "Expired"
+)

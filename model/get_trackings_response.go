@@ -2,20 +2,9 @@
 
 package model
 
-// GetTrackingsResponse
-type GetTrackingsResponse struct {
-	// Pagination The Pagination holds the information for the pagination when the response contains multiple objects.
-	Pagination *PaginationGetTrackingsResponse `json:"pagination,omitempty"`
-	// Trackings Array of
-	Trackings []Tracking `json:"trackings,omitempty"`
-}
+import "net/http"
 
-// PaginationGetTrackingsResponse
-type PaginationGetTrackingsResponse struct {
-	// Total The total number of trackings.
-	Total int `json:"total,omitempty"`
-	// NextCursor A string representing the cursor value for the next page of results.
-	NextCursor string `json:"next_cursor,omitempty"`
-	// HasNextPage To indicate if next page is available.
-	HasNextPage bool `json:"has_next_page,omitempty"`
+type GetTrackingsResponse struct {
+	ResponseHeader http.Header
+	Data           GetTrackingsResponseData
 }

@@ -5,9 +5,21 @@ package model
 // CredentialField
 type CredentialField struct {
 	// Name The display name of the credential field that users must provide when creating a carrier connection.
-	Name string `json:"name,omitempty"`
+	Name *string `json:"name,omitempty"`
 	// Type The data type of the credential field, indicating what kind of input is expected.
-	Type string `json:"type,omitempty"`
+	Type *string `json:"type,omitempty"`
 	// Required It indicates whether the credentials field must be provided or not when creating a carrier connection.
-	Required bool `json:"required,omitempty"`
+	Required *bool `json:"required,omitempty"`
+}
+
+func (credentialField *CredentialField) SetName(val string) {
+	credentialField.Name = &val
+}
+
+func (credentialField *CredentialField) SetType(val string) {
+	credentialField.Type = &val
+}
+
+func (credentialField *CredentialField) SetRequired(val bool) {
+	credentialField.Required = &val
 }

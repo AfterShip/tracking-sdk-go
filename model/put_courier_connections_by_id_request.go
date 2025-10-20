@@ -7,3 +7,7 @@ type PutCourierConnectionsByIdRequest struct {
 	// Credentials It refers to the authentication details required for each specific carrier details required for each specific carrier (such as API keys, username, password, etc.) that the user must provide to establish a carrier connection. The content varies by carrier.
 	Credentials map[string]string `json:"credentials"`
 }
+
+func (putCourierConnectionsByIdRequest *PutCourierConnectionsByIdRequest) SetCredentials(val map[string]string) {
+	putCourierConnectionsByIdRequest.Credentials = val
+}

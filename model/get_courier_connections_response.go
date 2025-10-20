@@ -2,20 +2,9 @@
 
 package model
 
-// GetCourierConnectionsResponse
-type GetCourierConnectionsResponse struct {
-	// Pagination
-	Pagination *PaginationGetCourierConnectionsResponse `json:"pagination,omitempty"`
-	// CourierConnections
-	CourierConnections []CourierConnection `json:"courier_connections,omitempty"`
-}
+import "net/http"
 
-// PaginationGetCourierConnectionsResponse
-type PaginationGetCourierConnectionsResponse struct {
-	// Total The total number of courier connections.
-	Total int `json:"total,omitempty"`
-	// NextCursor A string representing the cursor value for the next page of results.
-	NextCursor string `json:"next_cursor,omitempty"`
-	// HasNextPage To indicate if next page is available.
-	HasNextPage bool `json:"has_next_page,omitempty"`
+type GetCourierConnectionsResponse struct {
+	ResponseHeader http.Header
+	Data           GetCourierConnectionsResponseData
 }

@@ -5,77 +5,183 @@ package model
 // UpdateTrackingByIdRequest
 type UpdateTrackingByIdRequest struct {
 	// Title By default this field shows the `tracking_number`, but you can customize it as you wish with any info (e.g. the order number).
-	Title string `json:"title,omitempty"`
+	Title *string `json:"title,omitempty"`
 	// OrderId A globally-unique identifier for the order.
-	OrderId string `json:"order_id,omitempty"`
+	OrderId *string `json:"order_id,omitempty"`
 	// OrderIdPath The URL for the order in your system or store.
-	OrderIdPath string `json:"order_id_path,omitempty"`
+	OrderIdPath *string `json:"order_id_path,omitempty"`
 	// CustomFields Custom fields that accept an object with string field. In order to protect the privacy of your customers, do not include any
 	CustomFields map[string]string `json:"custom_fields,omitempty"`
 	// Note Text field for the note.Input `""` to clear the value of this field.
-	Note string `json:"note,omitempty"`
+	Note *string `json:"note,omitempty"`
 	// Language The recipient’s language. If you set up AfterShip notifications in different languages, we use this to send the recipient tracking updates in their preferred language. Use an  to specify the language.
-	Language string `json:"language,omitempty"`
+	Language *string `json:"language,omitempty"`
 	// OrderPromisedDeliveryDate The promised delivery date of the order. It uses the formats:- YYYY-MM-DD- YYYY-MM-DDTHH:mm:ss- YYYY-MM-DDTHH:mm:ssZ
-	OrderPromisedDeliveryDate string `json:"order_promised_delivery_date,omitempty"`
+	OrderPromisedDeliveryDate *string `json:"order_promised_delivery_date,omitempty"`
 	// DeliveryType Shipment delivery type- `pickup_at_store`- `pickup_at_courier`- `door_to_door`
-	DeliveryType string `json:"delivery_type,omitempty"`
+	DeliveryType *UpdateTrackingByIdRequestDeliveryType `json:"delivery_type,omitempty"`
 	// PickupLocation Shipment pickup location for receiver
-	PickupLocation string `json:"pickup_location,omitempty"`
+	PickupLocation *string `json:"pickup_location,omitempty"`
 	// PickupNote Shipment pickup note for receiver
-	PickupNote string `json:"pickup_note,omitempty"`
+	PickupNote *string `json:"pickup_note,omitempty"`
 	// Slug Unique code of each courier. Provide a single courier.(https://admin.aftership.com/settings/couriers). Get a list of courier slug using
-	Slug string `json:"slug,omitempty"`
+	Slug *string `json:"slug,omitempty"`
 	// TrackingAccountNumber Additional field required by some carriers to retrieve the tracking info. The shipper’s carrier account number. Refer to our article on  for more details.
-	TrackingAccountNumber string `json:"tracking_account_number,omitempty"`
+	TrackingAccountNumber *string `json:"tracking_account_number,omitempty"`
 	// TrackingKey Additional field required by some carriers to retrieve the tracking info. A type of tracking credential required by some carriers. Refer to our article on  for more details.
-	TrackingKey string `json:"tracking_key,omitempty"`
+	TrackingKey *string `json:"tracking_key,omitempty"`
 	// TrackingShipDate The date and time when the shipment is shipped by the merchant and ready for pickup by the carrier. The field supports the following formats:- YYYY-MM-DD- YYYY-MM-DDTHH:mm:ss- YYYY-MM-DDTHH:mm:ssZThe field serves two key purposes:- Calculate processing time metrics in the Order-to-delivery Analytics dashboard. To ensure accurate analytics, it's recommended to include timezone information when configuring this value- Required by certain carriers to retrieve tracking information as an additional tracking field.
-	TrackingShipDate string `json:"tracking_ship_date,omitempty"`
+	TrackingShipDate *string `json:"tracking_ship_date,omitempty"`
 	// OrderNumber A unique, human-readable identifier for the order.
-	OrderNumber string `json:"order_number,omitempty"`
+	OrderNumber *string `json:"order_number,omitempty"`
 	// OrderDate Order date in YYYY-MM-DDTHH:mm:ssZ format. e.g. 2021-07-26T11:23:51-05:00
-	OrderDate string `json:"order_date,omitempty"`
+	OrderDate *string `json:"order_date,omitempty"`
 	// ShipmentType The carrier service type for the shipment. If you provide info for this field, AfterShip will not update it with info from the carrier.
-	ShipmentType string `json:"shipment_type,omitempty"`
+	ShipmentType *string `json:"shipment_type,omitempty"`
 	// OriginCountryRegion The  for more details.
-	OriginCountryRegion string `json:"origin_country_region,omitempty"`
+	OriginCountryRegion *string `json:"origin_country_region,omitempty"`
 	// OriginState The state of the sender’s address. This can help AfterShip with various functions like tracking, carrier auto-detection and auto-correction, calculating an EDD, etc.
-	OriginState string `json:"origin_state,omitempty"`
+	OriginState *string `json:"origin_state,omitempty"`
 	// OriginCity The city of the sender’s address. This can help AfterShip with various functions like tracking, carrier auto-detection and auto-correction, calculating an EDD, etc.
-	OriginCity string `json:"origin_city,omitempty"`
+	OriginCity *string `json:"origin_city,omitempty"`
 	// OriginPostalCode The postal of the sender’s address. This can help AfterShip with various functions like tracking, carrier auto-detection and auto-correction, calculating an EDD, etc.
-	OriginPostalCode string `json:"origin_postal_code,omitempty"`
+	OriginPostalCode *string `json:"origin_postal_code,omitempty"`
 	// OriginRawLocation The sender address that the shipment is shipping from. This can help AfterShip with various functions like tracking, carrier auto-detection and auto-correction, calculating an EDD, etc.
-	OriginRawLocation string `json:"origin_raw_location,omitempty"`
+	OriginRawLocation *string `json:"origin_raw_location,omitempty"`
 	// DestinationCountryRegion The  for more details.
-	DestinationCountryRegion string `json:"destination_country_region,omitempty"`
+	DestinationCountryRegion *string `json:"destination_country_region,omitempty"`
 	// DestinationState The state of the recipient’s address. This can help AfterShip with various functions like tracking, carrier auto-detection and auto-correction, calculating an EDD, etc. Also the additional field required by some carriers to retrieve the tracking info. The state/province of the recipient’s address. Refer to our article on  for more details.
-	DestinationState string `json:"destination_state,omitempty"`
+	DestinationState *string `json:"destination_state,omitempty"`
 	// DestinationCity The city of the recipient’s address. This can help AfterShip with various functions like tracking, carrier auto-detection and auto-correction, calculating an EDD, etc.
-	DestinationCity string `json:"destination_city,omitempty"`
+	DestinationCity *string `json:"destination_city,omitempty"`
 	// DestinationPostalCode The postal of the recipient’s address. This can help AfterShip with various functions like tracking, carrier auto-detection and auto-correction, calculating an EDD, etc. Also the additional field required by some carriers to retrieve the tracking info. The postal code of the recipient’s address. Refer to our article on  for more details.
-	DestinationPostalCode string `json:"destination_postal_code,omitempty"`
+	DestinationPostalCode *string `json:"destination_postal_code,omitempty"`
 	// DestinationRawLocation The shipping address that the shipment is shipping to. This can help AfterShip with various functions like tracking, carrier auto-detection and auto-correction, calculating an EDD, etc.
-	DestinationRawLocation string `json:"destination_raw_location,omitempty"`
+	DestinationRawLocation *string `json:"destination_raw_location,omitempty"`
 	// LocationId The location_id refers to the place where you fulfilled the items.  - If you provide a location_id, the system will automatically use it as the tracking's origin address. However, passing both location_id and any origin address information simultaneously is not allowed.- Please make sure you add your locations .
-	LocationId string `json:"location_id,omitempty"`
+	LocationId *string `json:"location_id,omitempty"`
 	// ShippingMethod The shipping_method string refers to the chosen method for delivering the package. Merchants typically offer various shipping methods to consumers during the checkout process, such as, Local Delivery, Free Express Worldwide Shipping, etc.
-	ShippingMethod string `json:"shipping_method,omitempty"`
+	ShippingMethod *string `json:"shipping_method,omitempty"`
 	// Customers The field contains the customer information associated with the tracking. A maximum of three customer objects are allowed.
-	Customers []CustomersUpdateTrackingByIdRequest `json:"customers,omitempty"`
+	Customers []UpdateTrackingByIdRequestCustomers `json:"customers,omitempty"`
 }
 
-// CustomersUpdateTrackingByIdRequest
-type CustomersUpdateTrackingByIdRequest struct {
-	// Role The  role of the customer, indicating whether the customer is  an individual or a company.
-	Role string `json:"role,omitempty"`
-	// Name Customer name associated with the tracking.
-	Name string `json:"name,omitempty"`
-	// PhoneNumber The phone number(s) to receive SMS notifications. Phone numbers should begin with a `+` sign and include the area code.
-	PhoneNumber string `json:"phone_number,omitempty"`
-	// Email Email address(es) to receive email notifications.
-	Email string `json:"email,omitempty"`
-	// Language The preferred language of the customer. If you have set up AfterShip notifications in different languages, we use this to send the tracking updates to the customer in their preferred language.
-	Language string `json:"language,omitempty"`
+func (updateTrackingByIdRequest *UpdateTrackingByIdRequest) SetTitle(val string) {
+	updateTrackingByIdRequest.Title = &val
+}
+
+func (updateTrackingByIdRequest *UpdateTrackingByIdRequest) SetOrderId(val string) {
+	updateTrackingByIdRequest.OrderId = &val
+}
+
+func (updateTrackingByIdRequest *UpdateTrackingByIdRequest) SetOrderIdPath(val string) {
+	updateTrackingByIdRequest.OrderIdPath = &val
+}
+
+func (updateTrackingByIdRequest *UpdateTrackingByIdRequest) SetCustomFields(val map[string]string) {
+	updateTrackingByIdRequest.CustomFields = val
+}
+
+func (updateTrackingByIdRequest *UpdateTrackingByIdRequest) SetNote(val string) {
+	updateTrackingByIdRequest.Note = &val
+}
+
+func (updateTrackingByIdRequest *UpdateTrackingByIdRequest) SetLanguage(val string) {
+	updateTrackingByIdRequest.Language = &val
+}
+
+func (updateTrackingByIdRequest *UpdateTrackingByIdRequest) SetOrderPromisedDeliveryDate(val string) {
+	updateTrackingByIdRequest.OrderPromisedDeliveryDate = &val
+}
+
+func (updateTrackingByIdRequest *UpdateTrackingByIdRequest) SetDeliveryType(val UpdateTrackingByIdRequestDeliveryType) {
+	updateTrackingByIdRequest.DeliveryType = &val
+}
+
+func (updateTrackingByIdRequest *UpdateTrackingByIdRequest) SetPickupLocation(val string) {
+	updateTrackingByIdRequest.PickupLocation = &val
+}
+
+func (updateTrackingByIdRequest *UpdateTrackingByIdRequest) SetPickupNote(val string) {
+	updateTrackingByIdRequest.PickupNote = &val
+}
+
+func (updateTrackingByIdRequest *UpdateTrackingByIdRequest) SetSlug(val string) {
+	updateTrackingByIdRequest.Slug = &val
+}
+
+func (updateTrackingByIdRequest *UpdateTrackingByIdRequest) SetTrackingAccountNumber(val string) {
+	updateTrackingByIdRequest.TrackingAccountNumber = &val
+}
+
+func (updateTrackingByIdRequest *UpdateTrackingByIdRequest) SetTrackingKey(val string) {
+	updateTrackingByIdRequest.TrackingKey = &val
+}
+
+func (updateTrackingByIdRequest *UpdateTrackingByIdRequest) SetTrackingShipDate(val string) {
+	updateTrackingByIdRequest.TrackingShipDate = &val
+}
+
+func (updateTrackingByIdRequest *UpdateTrackingByIdRequest) SetOrderNumber(val string) {
+	updateTrackingByIdRequest.OrderNumber = &val
+}
+
+func (updateTrackingByIdRequest *UpdateTrackingByIdRequest) SetOrderDate(val string) {
+	updateTrackingByIdRequest.OrderDate = &val
+}
+
+func (updateTrackingByIdRequest *UpdateTrackingByIdRequest) SetShipmentType(val string) {
+	updateTrackingByIdRequest.ShipmentType = &val
+}
+
+func (updateTrackingByIdRequest *UpdateTrackingByIdRequest) SetOriginCountryRegion(val string) {
+	updateTrackingByIdRequest.OriginCountryRegion = &val
+}
+
+func (updateTrackingByIdRequest *UpdateTrackingByIdRequest) SetOriginState(val string) {
+	updateTrackingByIdRequest.OriginState = &val
+}
+
+func (updateTrackingByIdRequest *UpdateTrackingByIdRequest) SetOriginCity(val string) {
+	updateTrackingByIdRequest.OriginCity = &val
+}
+
+func (updateTrackingByIdRequest *UpdateTrackingByIdRequest) SetOriginPostalCode(val string) {
+	updateTrackingByIdRequest.OriginPostalCode = &val
+}
+
+func (updateTrackingByIdRequest *UpdateTrackingByIdRequest) SetOriginRawLocation(val string) {
+	updateTrackingByIdRequest.OriginRawLocation = &val
+}
+
+func (updateTrackingByIdRequest *UpdateTrackingByIdRequest) SetDestinationCountryRegion(val string) {
+	updateTrackingByIdRequest.DestinationCountryRegion = &val
+}
+
+func (updateTrackingByIdRequest *UpdateTrackingByIdRequest) SetDestinationState(val string) {
+	updateTrackingByIdRequest.DestinationState = &val
+}
+
+func (updateTrackingByIdRequest *UpdateTrackingByIdRequest) SetDestinationCity(val string) {
+	updateTrackingByIdRequest.DestinationCity = &val
+}
+
+func (updateTrackingByIdRequest *UpdateTrackingByIdRequest) SetDestinationPostalCode(val string) {
+	updateTrackingByIdRequest.DestinationPostalCode = &val
+}
+
+func (updateTrackingByIdRequest *UpdateTrackingByIdRequest) SetDestinationRawLocation(val string) {
+	updateTrackingByIdRequest.DestinationRawLocation = &val
+}
+
+func (updateTrackingByIdRequest *UpdateTrackingByIdRequest) SetLocationId(val string) {
+	updateTrackingByIdRequest.LocationId = &val
+}
+
+func (updateTrackingByIdRequest *UpdateTrackingByIdRequest) SetShippingMethod(val string) {
+	updateTrackingByIdRequest.ShippingMethod = &val
+}
+
+func (updateTrackingByIdRequest *UpdateTrackingByIdRequest) SetCustomers(val []UpdateTrackingByIdRequestCustomers) {
+	updateTrackingByIdRequest.Customers = val
 }

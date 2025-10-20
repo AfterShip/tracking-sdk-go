@@ -3,27 +3,17 @@
 package component
 
 import (
-	"encoding/json"
-	"github.com/aftership/tracking-sdk-go/v9/errorx"
-	"io"
+	"context"
+	"errors"
+	"github.com/aftership/tracking-sdk-go/v10/errorx"
 	"math"
 	"math/rand"
+	"net"
 	"net/http"
 	"net/url"
 	"os"
 	"time"
 )
-
-type response struct {
-	Data interface{} `json:"data,omitempty"`
-	Meta meta        `json:"meta,omitempty"`
-}
-
-type meta struct {
-	Code    int    `json:"code,omitempty"`
-	Message string `json:"message,omitempty"`
-	Type    string `json:"type,omitempty"`
-}
 
 type Config struct {
 	UserAgent string
@@ -56,7 +46,7 @@ func NewHttpSender(config Config, auth *Authenticator) *HttpSender {
 	}
 }
 
-func (c *HttpSender) Do(request *http.Request, data interface{}) error {
+func (c *HttpSender) Do(ctx context.Context, request *http.Request) (*http.Response, error) {
 	var err error
 	request = c.setParam(request)
 	request.Header, err = newHeaderBuilder(c.auth).
@@ -64,42 +54,58 @@ func (c *HttpSender) Do(request *http.Request, data interface{}) error {
 		buildAuthHeader(request).
 		build()
 	if err != nil {
-		return errorx.NewSdkError(errorx.ErrBadRequest, errorx.GetErrorMessage(errorx.ErrBadRequest), err.Error())
+		return nil, err
 	}
+	if ctx == nil {
+		ctx = context.Background()
+	}
+	request = request.WithContext(ctx)
 
 	var resp *http.Response
 	resp, err = c.httpclient.Do(request)
 	if err == nil {
-		defer resp.Body.Close()
+		return resp, nil
 	}
 
 	if c.shouldRetry(resp, err) {
-		retryResp, errRetry := c.retry(request, err)
-		if os.IsTimeout(errRetry) {
-			return errorx.NewSdkError(errorx.ErrTimeout, errorx.GetErrorMessage(errorx.ErrTimeout), err.Error())
-		}
+		retryResp, errRetry := c.retry(request)
 		if errRetry != nil {
-			return errorx.NewSdkError(errorx.ErrBadRequest, errorx.GetErrorMessage(errorx.ErrBadRequest), err.Error())
+			return nil, errRetry
 		}
-		return c.parseResponse(retryResp, data)
+		return retryResp, nil
 	}
 
-	return c.parseResponse(resp, data)
+	return resp, err
 }
 
-func (c *HttpSender) retry(req *http.Request, rawErr error) (*http.Response, error) {
+func (c *HttpSender) retry(req *http.Request) (*http.Response, error) {
 	var (
 		err       error
 		respRetry *http.Response
 	)
 	for i := 0; i < c.Config.MaxRetry; i++ {
+		select {
+		case <-req.Context().Done():
+			return nil, req.Context().Err()
+		case <-time.After(time.Duration(c.delay(i)) * time.Second):
+		}
+
 		respRetry, err = c.httpclient.Do(req)
 		if err == nil && c.isResponseOk(respRetry.StatusCode) {
 			return respRetry, nil
 		}
-		time.Sleep(time.Duration(c.delay(i)) * time.Second)
 	}
-	return nil, err
+	if req.Context() != nil && req.Context().Err() != nil {
+		return nil, req.Context().Err()
+	}
+	if err != nil {
+		var netErr net.Error
+		if errors.As(err, &netErr) && netErr.Timeout() {
+			return nil, errorx.NewSdkError(errorx.ErrTimedOut, "Request timed out.")
+		}
+		return nil, errorx.NewSdkError(errorx.ErrUnknownError, "Something went wrong on AfterShip's end.")
+	}
+	return respRetry, nil
 }
 
 func (c *HttpSender) shouldRetry(rawResp *http.Response, rawErr error) bool {
@@ -107,53 +113,6 @@ func (c *HttpSender) shouldRetry(rawResp *http.Response, rawErr error) bool {
 		return true
 	}
 	return false
-}
-
-func (c *HttpSender) parseResponse(resp *http.Response, data interface{}) error {
-	if resp == nil {
-		return errorx.NewSdkError(errorx.ErrBadRequest, errorx.GetErrorMessage(errorx.ErrBadRequest), "response is empty")
-	}
-	b, err := io.ReadAll(resp.Body)
-	if err != nil {
-		return errorx.NewApiError(
-			errorx.ErrUnknown,
-			resp.StatusCode,
-			errorx.GetErrorMessage(errorx.ErrUnknown),
-			string(b),
-			resp.Header,
-		)
-	}
-	var response response
-	response.Data = data
-	err = json.Unmarshal(b, &response)
-	if err != nil {
-		return errorx.NewApiError(
-			response.Meta.Code,
-			resp.StatusCode,
-			response.Meta.Message,
-			string(b),
-			resp.Header,
-		)
-	}
-	if !c.isResponseOk(resp.StatusCode) {
-		return errorx.NewApiError(
-			response.Meta.Code,
-			resp.StatusCode,
-			response.Meta.Message,
-			string(b),
-			resp.Header,
-		)
-	}
-	if response.Meta.Code > 300 {
-		return errorx.NewApiError(
-			response.Meta.Code,
-			resp.StatusCode,
-			response.Meta.Message,
-			string(b),
-			resp.Header,
-		)
-	}
-	return nil
 }
 
 func (c *HttpSender) delay(retryAttempt int) int {

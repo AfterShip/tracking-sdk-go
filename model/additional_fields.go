@@ -4,3 +4,13 @@ package model
 
 // AdditionalFields All available additional fields
 type AdditionalFields string
+
+const (
+	AdditionalFieldsTrackingAccountNumber    AdditionalFields = "tracking_account_number"
+	AdditionalFieldsDestinationPostalCode    AdditionalFields = "destination_postal_code"
+	AdditionalFieldsDestinationState         AdditionalFields = "destination_state"
+	AdditionalFieldsTrackingKey              AdditionalFields = "tracking_key"
+	AdditionalFieldsOriginCountryRegion      AdditionalFields = "origin_country_region"
+	AdditionalFieldsDestinationCountryRegion AdditionalFields = "destination_country_region"
+	AdditionalFieldsTrackingShipDate         AdditionalFields = "tracking_ship_date"
+)
