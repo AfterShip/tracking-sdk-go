@@ -9,3 +9,11 @@ type TrackingResponse struct {
 	// Data Object describes the tracking information.<div style="display:none; height: 0"></div>
 	Data Tracking `json:"data"`
 }
+
+func (trackingResponse *TrackingResponse) SetMeta(val Meta) {
+	trackingResponse.Meta = val
+}
+
+func (trackingResponse *TrackingResponse) SetData(val Tracking) {
+	trackingResponse.Data = val
+}

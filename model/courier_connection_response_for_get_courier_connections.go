@@ -7,23 +7,13 @@ type CourierConnectionResponseForGetCourierConnections struct {
 	// Meta Meta data
 	Meta Meta `json:"meta"`
 	// Data
-	Data *DataCourierConnectionResponseForGetCourierConnections `json:"data,omitempty"`
+	Data *CourierConnectionResponseForGetCourierConnectionsData `json:"data,omitempty"`
 }
 
-// DataCourierConnectionResponseForGetCourierConnections
-type DataCourierConnectionResponseForGetCourierConnections struct {
-	// Pagination
-	Pagination *PaginationDataCourierConnectionResponseForGetCourierConnections `json:"pagination,omitempty"`
-	// CourierConnections
-	CourierConnections []CourierConnection `json:"courier_connections,omitempty"`
+func (courierConnectionResponseForGetCourierConnections *CourierConnectionResponseForGetCourierConnections) SetMeta(val Meta) {
+	courierConnectionResponseForGetCourierConnections.Meta = val
 }
 
-// PaginationDataCourierConnectionResponseForGetCourierConnections
-type PaginationDataCourierConnectionResponseForGetCourierConnections struct {
-	// Total The total number of courier connections.
-	Total int `json:"total,omitempty"`
-	// NextCursor A string representing the cursor value for the next page of results.
-	NextCursor string `json:"next_cursor,omitempty"`
-	// HasNextPage To indicate if next page is available.
-	HasNextPage bool `json:"has_next_page,omitempty"`
+func (courierConnectionResponseForGetCourierConnections *CourierConnectionResponseForGetCourierConnections) SetData(val CourierConnectionResponseForGetCourierConnectionsData) {
+	courierConnectionResponseForGetCourierConnections.Data = &val
 }

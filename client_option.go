@@ -8,8 +8,6 @@ import (
 	"strings"
 )
 
-const sdkPrefix = "AFTERSHIP_TRACKING_SDK_"
-
 func init() {
 	key := getEnv("API_KEY")
 	if len(key) > 0 {
@@ -59,7 +57,7 @@ func init() {
 }
 
 func getEnv(key string) string {
-	return os.Getenv(sdkPrefix + key)
+	return os.Getenv("AFTERSHIP_TRACKING_SDK_" + key)
 }
 
 type clientOptions struct {
@@ -76,8 +74,8 @@ type clientOptions struct {
 var defaultClientOptions = clientOptions{
 	domain:             "https://api.aftership.com",
 	maxRetry:           2,
-	timeoutMs:          10000,
-	userAgent:          "tracking-sdk-go/v9 (https://www.aftership.com) Go-http-client/1.1",
+	timeoutMs:          30000,
+	userAgent:          "tracking-sdk-go/v10 (https://www.aftership.com) Go-http-client/1.1",
 	proxy:              "",
 	apiKey:             "",
 	apiSecret:          "",
@@ -132,9 +130,9 @@ func WithApiKey(key string) ClientOption {
 	})
 }
 
-func WithSecret(secret string) ClientOption {
+func WithApiSecret(apiSecret string) ClientOption {
 	return newFuncOption(func(o *clientOptions) {
-		o.apiSecret = secret
+		o.apiSecret = apiSecret
 	})
 }
 
@@ -144,8 +142,8 @@ func WithAuthKind(kind string) ClientOption {
 	})
 }
 
-func WithHost(host string) ClientOption {
+func WithDomain(domain string) ClientOption {
 	return newFuncOption(func(o *clientOptions) {
-		o.domain = host
+		o.domain = domain
 	})
 }

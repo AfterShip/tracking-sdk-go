@@ -5,31 +5,69 @@ package model
 // Courier Courier object
 type Courier struct {
 	// Slug Unique code of courier. Get the slugs from .
-	Slug string `json:"slug,omitempty"`
+	Slug *string `json:"slug,omitempty"`
 	// Name Name of courier
-	Name string `json:"name,omitempty"`
+	Name *string `json:"name,omitempty"`
 	// Phone Contact phone number of courier
-	Phone string `json:"phone,omitempty"`
+	Phone *string `json:"phone,omitempty"`
 	// OtherName Other name of courier
-	OtherName string `json:"other_name,omitempty"`
+	OtherName *string `json:"other_name,omitempty"`
 	// WebUrl Website link of courier
-	WebUrl string `json:"web_url,omitempty"`
+	WebUrl *string `json:"web_url,omitempty"`
 	// RequiredFields The extra fields need for tracking, such as `tracking_account_number`, `tracking_postal_code`, `tracking_ship_date`, `tracking_key`, `tracking_destination_country_region`
-	RequiredFields []string `json:"required_fields,omitempty"`
+	RequiredFields []AdditionalFields `json:"required_fields,omitempty"`
 	// OptionalFields The extra fields which are optional for tracking. Basically it's the same as required_fields, but the difference is that only some of the tracking numbers require these fields.
-	OptionalFields []string `json:"optional_fields,omitempty"`
+	OptionalFields []AdditionalFields `json:"optional_fields,omitempty"`
 	// DefaultLanguage Default language of tracking results
-	DefaultLanguage string `json:"default_language,omitempty"`
+	DefaultLanguage *string `json:"default_language,omitempty"`
 	// SupportLanguages Other supported languages
 	SupportLanguages []string `json:"support_languages,omitempty"`
 	// ServiceFromCountryRegions Country/Region code (ISO Alpha-3) where the courier provides service
 	ServiceFromCountryRegions []string `json:"service_from_country_regions,omitempty"`
 	// Credentials Refers to the authentication details required for each specific carrier (such as API keys, username, password, etc.) that the user must provide to create a carrier connection. The content varies by carrier.
-	Credentials *CredentialsCourier `json:"credentials,omitempty"`
+	Credentials *CourierCredentials `json:"credentials,omitempty"`
 }
 
-// CredentialsCourier
-type CredentialsCourier struct {
-	// Fields Through this field, users can get the specific authentication information needed when creating a courier connection to one specific carrier, such as API keys, usernames, and passwords. Each field includes properties like name, data type, and whether it's required.
-	Fields []CredentialField `json:"fields,omitempty"`
+func (courier *Courier) SetSlug(val string) {
+	courier.Slug = &val
+}
+
+func (courier *Courier) SetName(val string) {
+	courier.Name = &val
+}
+
+func (courier *Courier) SetPhone(val string) {
+	courier.Phone = &val
+}
+
+func (courier *Courier) SetOtherName(val string) {
+	courier.OtherName = &val
+}
+
+func (courier *Courier) SetWebUrl(val string) {
+	courier.WebUrl = &val
+}
+
+func (courier *Courier) SetRequiredFields(val []AdditionalFields) {
+	courier.RequiredFields = val
+}
+
+func (courier *Courier) SetOptionalFields(val []AdditionalFields) {
+	courier.OptionalFields = val
+}
+
+func (courier *Courier) SetDefaultLanguage(val string) {
+	courier.DefaultLanguage = &val
+}
+
+func (courier *Courier) SetSupportLanguages(val []string) {
+	courier.SupportLanguages = val
+}
+
+func (courier *Courier) SetServiceFromCountryRegions(val []string) {
+	courier.ServiceFromCountryRegions = val
+}
+
+func (courier *Courier) SetCredentials(val CourierCredentials) {
+	courier.Credentials = &val
 }

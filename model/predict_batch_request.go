@@ -7,3 +7,7 @@ type PredictBatchRequest struct {
 	// EstimatedDeliveryDates
 	EstimatedDeliveryDates []EstimatedDeliveryDateRequest `json:"estimated_delivery_dates"`
 }
+
+func (predictBatchRequest *PredictBatchRequest) SetEstimatedDeliveryDates(val []EstimatedDeliveryDateRequest) {
+	predictBatchRequest.EstimatedDeliveryDates = val
+}

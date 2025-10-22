@@ -2,50 +2,38 @@
 
 package errorx
 
-// local error
 const (
-	ErrOk = 0
-	// ErrInvalidApiKey Invalid api key which detected by the SDK locally, for example, missing API key, wrong api key format.
-	ErrInvalidApiKey = 1
-	// ErrInvalidOption Invalid option, details would be described in the message.
-	ErrInvalidOption = 2
-	// ErrBadRequest Invalid request parameters, only for the errors that are possible to be caught by the SDK locally.
-	ErrBadRequest = 3
-	// ErrRateLimitExceed Local rate limit exceeds error.
-	ErrRateLimitExceed = 4
-	// ErrTimeout Request timeout
-	ErrTimeout = 5
-	// ErrUnknown unknown error
-	ErrUnknown = 6
+	ErrInvalidApiKey                 = "INVALID_API_KEY"
+	ErrInvalidOption                 = "INVALID_OPTION"
+	ErrBadRequest                    = "BAD_REQUEST"
+	ErrRateLimitExceed               = "RATE_LIMIT_EXCEED"
+	ErrTimedOut                      = "TIMED_OUT"
+	ErrUnknownError                  = "UNKNOWN_ERROR"
+	ErrInvalidRequest                = "INVALID_REQUEST"
+	ErrInvalidJson                   = "INVALID_JSON"
+	ErrTrackingAlreadyExist          = "TRACKING_ALREADY_EXIST"
+	ErrTrackingDoesNotExist          = "TRACKING_DOES_NOT_EXIST"
+	ErrTrackingNumberInvalid         = "TRACKING_NUMBER_INVALID"
+	ErrTrackingRequired              = "TRACKING_REQUIRED"
+	ErrTrackingNumberRequired        = "TRACKING_NUMBER_REQUIRED"
+	ErrValueInvalid                  = "VALUE_INVALID"
+	ErrValueRequired                 = "VALUE_REQUIRED"
+	ErrSlugInvalid                   = "SLUG_INVALID"
+	ErrMissingOrInvalidRequiredField = "MISSING_OR_INVALID_REQUIRED_FIELD"
+	ErrBadCourier                    = "BAD_COURIER"
+	ErrInactiveRetrackNotAllowed     = "INACTIVE_RETRACK_NOT_ALLOWED"
+	ErrNotificationRequired          = "NOTIFICATION_REQUIRED"
+	ErrIdInvalid                     = "ID_INVALID"
+	ErrRetrackOnceAllowed            = "RETRACK_ONCE_ALLOWED"
+	ErrTrackingNumberFormatInvalid   = "TRACKING_NUMBER_FORMAT_INVALID"
+	ErrApiKeyInvalid                 = "API_KEY_INVALID"
+	ErrRequestNotAllowed             = "REQUEST_NOT_ALLOWED"
+	ErrNotFound                      = "NOT_FOUND"
+	ErrTooManyRequest                = "TOO_MANY_REQUEST"
+	ErrInternalError                 = "INTERNAL_ERROR"
 )
 
-// remote error
-const (
-	ErrInvalidRequest                = 400
-	ErrInvalidJson                   = 4001
-	ErrTrackingAlreadyExist          = 4003
-	ErrTrackingDoesNotExist          = 4004
-	ErrTrackingNumberInvalid         = 4005
-	ErrTrackingRequired              = 4006
-	ErrTrackingNumberRequired        = 4007
-	ErrValueInvalid                  = 4008
-	ErrValueRequired                 = 4009
-	ErrSlugInvalid                   = 4010
-	ErrMissingOrInvalidRequiredField = 4011
-	ErrBadCourier                    = 4012
-	ErrInactiveRetrackNotAllowed     = 4013
-	ErrNotificationReuqired          = 4014
-	ErrIdInvalid                     = 4015
-	ErrRetrackOnceAllowed            = 4016
-	ErrTrackingNumberFormatInvalid   = 4017
-	ErrApiKeyInvalid                 = 401
-	ErrRequestNotAllowed             = 403
-	ErrNotFound                      = 404
-	ErrTooManyRequest                = 429
-	ErrInternalError                 = 500
-)
-
-var codeMap = map[int]int{
+var codeMap = map[int]string{
 	400:  ErrInvalidRequest,
 	4001: ErrInvalidJson,
 	4003: ErrTrackingAlreadyExist,
@@ -59,7 +47,7 @@ var codeMap = map[int]int{
 	4011: ErrMissingOrInvalidRequiredField,
 	4012: ErrBadCourier,
 	4013: ErrInactiveRetrackNotAllowed,
-	4014: ErrNotificationReuqired,
+	4014: ErrNotificationRequired,
 	4015: ErrIdInvalid,
 	4016: ErrRetrackOnceAllowed,
 	4017: ErrTrackingNumberFormatInvalid,
@@ -68,27 +56,17 @@ var codeMap = map[int]int{
 	404:  ErrNotFound,
 	429:  ErrTooManyRequest,
 	500:  ErrInternalError,
+	502:  ErrInternalError,
+	503:  ErrInternalError,
+	504:  ErrInternalError,
 }
 
-var localMsg = map[int]string{
-	ErrOk:              "",
-	ErrInvalidApiKey:   "Invalid API key",
-	ErrInvalidOption:   "Invalid option: %s",
-	ErrBadRequest:      "Invalid request",
-	ErrRateLimitExceed: "You have exceeded the API call rate limit. The default limit is 10 requests per second.",
-	ErrTimeout:         "Request timed out.",
-}
-
-func GetErrorCode(metaCode int) int {
+func GetErrorCode(metaCode int, statusCode int) string {
 	if code, ok := codeMap[metaCode]; ok {
 		return code
 	}
-	return ErrUnknown
-}
-
-func GetErrorMessage(code int) string {
-	if msg, ok := localMsg[code]; ok {
-		return msg
+	if statusCode >= 400 && statusCode < 500 {
+		return ErrBadRequest
 	}
-	return ""
+	return ErrUnknownError
 }

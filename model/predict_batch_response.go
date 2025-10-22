@@ -2,8 +2,9 @@
 
 package model
 
-// PredictBatchResponse
+import "net/http"
+
 type PredictBatchResponse struct {
-	// EstimatedDeliveryDates
-	EstimatedDeliveryDates []EstimatedDeliveryDateResponse `json:"estimated_delivery_dates"`
+	ResponseHeader http.Header
+	Data           PredictBatchResponseData
 }

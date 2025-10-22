@@ -14,8 +14,7 @@ import (
 	"encoding/base64"
 	"encoding/hex"
 	"encoding/pem"
-	"errors"
-	"github.com/aftership/tracking-sdk-go/v9/errorx"
+	"github.com/aftership/tracking-sdk-go/v10/errorx"
 	"io"
 	"net/http"
 	"net/url"
@@ -45,7 +44,7 @@ func NewAuthenticator(apikey, apiSecret string, kind string) *Authenticator {
 
 func (au *Authenticator) Sign(r *http.Request) (map[string]string, error) {
 	if len(au.apikey) == 0 {
-		return nil, errorx.NewSdkError(errorx.ErrInvalidApiKey, errorx.GetErrorMessage(errorx.ErrInvalidApiKey), "")
+		return nil, errorx.NewSdkError(errorx.ErrInvalidApiKey, "Invalid API key")
 	}
 	headers := map[string]string{
 		"as-api-key": au.apikey,
@@ -56,20 +55,20 @@ func (au *Authenticator) Sign(r *http.Request) (map[string]string, error) {
 		h := au.canonicalHeader(tmpHeader)
 		rs, err := au.canonicalResource(r.URL.RequestURI())
 		if err != nil {
-			return headers, errorx.NewSdkError(errorx.ErrBadRequest, errorx.GetErrorMessage(errorx.ErrBadRequest), err.Error())
+			return headers, errorx.NewSdkError(errorx.ErrBadRequest, err.Error())
 		}
 		var b bytes.Buffer
 		if r.Body != nil {
 			_, err := b.ReadFrom(r.Body)
 			if err != nil {
-				return headers, errorx.NewSdkError(errorx.ErrBadRequest, errorx.GetErrorMessage(errorx.ErrBadRequest), err.Error())
+				return headers, err
 			}
 			r.Body = io.NopCloser(&b)
 		}
 
 		s, err := au.signString(r.Method, b.String(), r.Header.Get("date"), h, rs)
 		if err != nil {
-			return headers, err
+			return headers, errorx.NewSdkError(errorx.ErrUnknownError, err.Error())
 		}
 		if au.kind == Aes {
 			headers["as-signature-hmac-sha256"] = au.getHMACSignature(s, au.apiSecret)
@@ -77,7 +76,7 @@ func (au *Authenticator) Sign(r *http.Request) (map[string]string, error) {
 		if au.kind == Rsa {
 			rsaSign, err := au.getRSASignature(s, au.apiSecret)
 			if err != nil {
-				return headers, errorx.NewSdkError(errorx.ErrInvalidApiKey, errorx.GetErrorMessage(errorx.ErrInvalidApiKey), err.Error())
+				return headers, err
 			}
 			headers["as-signature-rsa-sha256"] = rsaSign
 		}
@@ -149,7 +148,7 @@ func (au *Authenticator) canonicalResource(rawUrl string) (result string, err er
 func (au *Authenticator) getRSASignature(signString, apiSecret string) (string, error) {
 	block, _ := pem.Decode([]byte(apiSecret))
 	if block == nil {
-		return "", errors.New("invalid api key")
+		return "", errorx.NewSdkError(errorx.ErrInvalidOption, "Invalid option: API Secret")
 	}
 	privateKey, err := x509.ParsePKCS1PrivateKey(block.Bytes)
 	if err != nil {

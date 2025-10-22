@@ -4,19 +4,19 @@ package tracking
 
 import (
 	"fmt"
-	"github.com/aftership/tracking-sdk-go/v9/component"
-	"github.com/aftership/tracking-sdk-go/v9/errorx"
-	"github.com/aftership/tracking-sdk-go/v9/service"
+	"github.com/aftership/tracking-sdk-go/v10/api"
+	"github.com/aftership/tracking-sdk-go/v10/component"
+	"github.com/aftership/tracking-sdk-go/v10/errorx"
 	"net/url"
 )
 
 type Client struct {
 	options               clientOptions
 	sender                *component.HttpSender
-	Tracking              *service.TrackingService
-	CourierConnection     *service.CourierConnectionService
-	EstimatedDeliveryDate *service.EstimatedDeliveryDateService
-	Courier               *service.CourierService
+	EstimatedDeliveryDate *api.EstimatedDeliveryDateApi
+	Tracking              *api.TrackingApi
+	Courier               *api.CourierApi
+	CourierConnection     *api.CourierConnectionApi
 }
 
 func New(opts ...ClientOption) (*Client, error) {
@@ -25,19 +25,27 @@ func New(opts ...ClientOption) (*Client, error) {
 	for _, opt := range opts {
 		opt.apply(&client.options)
 	}
+	domain, err := url.Parse(client.options.domain)
+	if err != nil {
+		return nil, errorx.NewSdkError(errorx.ErrInvalidOption, fmt.Sprintf("Invalid option: %s", "DOMAIN"))
+	}
+	if domain.Scheme == "" {
+		return nil, errorx.NewSdkError(errorx.ErrInvalidOption, fmt.Sprintf("Invalid option: %s", "DOMAIN"))
+	}
+
 	if client.options.timeoutMs < 0 {
-		return nil, errorx.NewSdkError(errorx.ErrInvalidOption, fmt.Sprintf("Invalid option: %s", "TIMEOUT"), "")
+		return nil, errorx.NewSdkError(errorx.ErrInvalidOption, fmt.Sprintf("Invalid option: %s", "TIMEOUT"))
 	}
 	if client.options.maxRetry < 0 || client.options.maxRetry > 10 {
-		return nil, errorx.NewSdkError(errorx.ErrInvalidOption, fmt.Sprintf("Invalid option: %s", "MAX_RETRY"), "")
+		return nil, errorx.NewSdkError(errorx.ErrInvalidOption, fmt.Sprintf("Invalid option: %s", "MAX_RETRY"))
 	}
 	if len(client.options.apiKey) == 0 {
-		return nil, errorx.NewSdkError(errorx.ErrInvalidApiKey, errorx.GetErrorMessage(errorx.ErrInvalidApiKey), "")
+		return nil, errorx.NewSdkError(errorx.ErrInvalidApiKey, "Invalid API key")
 	}
 	if len(client.options.proxy) > 0 {
 		_, err := url.Parse(client.options.proxy)
 		if err != nil {
-			return nil, errorx.NewSdkError(errorx.ErrInvalidOption, fmt.Sprintf("Invalid option: %s", "PROXY"), "")
+			return nil, errorx.NewSdkError(errorx.ErrInvalidOption, fmt.Sprintf("Invalid option: %s", "PROXY"))
 		}
 	}
 	client.sender = component.NewHttpSender(
@@ -50,9 +58,9 @@ func New(opts ...ClientOption) (*Client, error) {
 		},
 		component.NewAuthenticator(client.options.apiKey, client.options.apiSecret, client.options.authenticationType),
 	)
-	client.Tracking = service.NewTrackingService(client.sender)
-	client.CourierConnection = service.NewCourierConnectionService(client.sender)
-	client.EstimatedDeliveryDate = service.NewEstimatedDeliveryDateService(client.sender)
-	client.Courier = service.NewCourierService(client.sender)
+	client.EstimatedDeliveryDate = api.NewEstimatedDeliveryDateApi(client.sender)
+	client.Tracking = api.NewTrackingApi(client.sender)
+	client.Courier = api.NewCourierApi(client.sender)
+	client.CourierConnection = api.NewCourierConnectionApi(client.sender)
 	return client, nil
 }

@@ -8,7 +8,7 @@ import (
 )
 
 type APIError struct {
-	Code       int         `json:"code"`
+	Code       string      `json:"code"`
 	MetaCode   int         `json:"meta_code"`
 	StatusCode int         `json:"status_code"`
 	Message    string      `json:"message"`
@@ -16,24 +16,21 @@ type APIError struct {
 	Header     http.Header `json:"response_header"`
 }
 
-func NewApiError(code, status int, msg, resp string, header http.Header) *APIError {
+func NewApiError(metaCode, statusCode int, msg, resp string, header http.Header) *APIError {
 	return &APIError{
-		Code:       GetErrorCode(code),
-		MetaCode:   code,
-		StatusCode: status,
+		Code:       GetErrorCode(metaCode, statusCode),
+		MetaCode:   metaCode,
+		StatusCode: statusCode,
 		Message:    msg,
 		Response:   resp,
 		Header:     header,
 	}
 }
 
-func NewSdkError(code int, msg string, detail string) *APIError {
+func NewSdkError(code string, msg string) *APIError {
 	return &APIError{
-		Code:       code,
-		MetaCode:   0,
-		StatusCode: 0,
-		Message:    msg,
-		Response:   detail,
+		Code:    code,
+		Message: msg,
 	}
 }
 

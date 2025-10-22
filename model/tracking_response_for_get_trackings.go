@@ -7,23 +7,13 @@ type TrackingResponseForGetTrackings struct {
 	// Meta Meta data
 	Meta Meta `json:"meta"`
 	// Data
-	Data *DataTrackingResponseForGetTrackings `json:"data,omitempty"`
+	Data *TrackingResponseForGetTrackingsData `json:"data,omitempty"`
 }
 
-// DataTrackingResponseForGetTrackings
-type DataTrackingResponseForGetTrackings struct {
-	// Pagination The Pagination holds the information for the pagination when the response contains multiple objects.
-	Pagination *PaginationDataTrackingResponseForGetTrackings `json:"pagination,omitempty"`
-	// Trackings Array of
-	Trackings []Tracking `json:"trackings,omitempty"`
+func (trackingResponseForGetTrackings *TrackingResponseForGetTrackings) SetMeta(val Meta) {
+	trackingResponseForGetTrackings.Meta = val
 }
 
-// PaginationDataTrackingResponseForGetTrackings
-type PaginationDataTrackingResponseForGetTrackings struct {
-	// Total The total number of trackings.
-	Total int `json:"total,omitempty"`
-	// NextCursor A string representing the cursor value for the next page of results.
-	NextCursor string `json:"next_cursor,omitempty"`
-	// HasNextPage To indicate if next page is available.
-	HasNextPage bool `json:"has_next_page,omitempty"`
+func (trackingResponseForGetTrackings *TrackingResponseForGetTrackings) SetData(val TrackingResponseForGetTrackingsData) {
+	trackingResponseForGetTrackings.Data = &val
 }

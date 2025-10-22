@@ -9,19 +9,59 @@ type DetectCourierRequest struct {
 	// Slug If not specified, Aftership will automatically detect the courier based on the tracking number format and your . Use array to input a list of couriers for auto detect. Cannot be used with slug_group at the same time.
 	Slug []string `json:"slug,omitempty"`
 	// DestinationPostalCode The postal code of receiver's address. Required by some couriers. Refer to  for more details
-	DestinationPostalCode string `json:"destination_postal_code,omitempty"`
+	DestinationPostalCode *string `json:"destination_postal_code,omitempty"`
 	// TrackingShipDate Shipping date in `YYYYMMDD` format. Required by some couriers. Refer to  for more details
-	TrackingShipDate string `json:"tracking_ship_date,omitempty"`
+	TrackingShipDate *string `json:"tracking_ship_date,omitempty"`
 	// TrackingAccountNumber Account number of the shipper for a specific courier. Required by some couriers. Refer to  for more details
-	TrackingAccountNumber string `json:"tracking_account_number,omitempty"`
+	TrackingAccountNumber *string `json:"tracking_account_number,omitempty"`
 	// TrackingKey Key of the shipment for a specific courier. Required by some couriers. Refer to  for more details
-	TrackingKey string `json:"tracking_key,omitempty"`
+	TrackingKey *string `json:"tracking_key,omitempty"`
 	// DestinationState State of the destination shipping address of the shipment. Required by some couriers.
-	DestinationState string `json:"destination_state,omitempty"`
+	DestinationState *string `json:"destination_state,omitempty"`
 	// SlugGroup Slug group is a group of slugs which belong to same courier. For example, when you inpit "fedex-group" as slug_group, AfterShip will detect the tracking with "fedex-uk", "fedex-fims", and other slugs which belong to "fedex". It cannot be used with slug at the same time. (
-	SlugGroup SlugGroup `json:"slug_group,omitempty"`
+	SlugGroup *string `json:"slug_group,omitempty"`
 	// OriginCountryRegion Enter .
-	OriginCountryRegion string `json:"origin_country_region,omitempty"`
+	OriginCountryRegion *string `json:"origin_country_region,omitempty"`
 	// DestinationCountryRegion Enter .
-	DestinationCountryRegion string `json:"destination_country_region,omitempty"`
+	DestinationCountryRegion *string `json:"destination_country_region,omitempty"`
+}
+
+func (detectCourierRequest *DetectCourierRequest) SetTrackingNumber(val string) {
+	detectCourierRequest.TrackingNumber = val
+}
+
+func (detectCourierRequest *DetectCourierRequest) SetSlug(val []string) {
+	detectCourierRequest.Slug = val
+}
+
+func (detectCourierRequest *DetectCourierRequest) SetDestinationPostalCode(val string) {
+	detectCourierRequest.DestinationPostalCode = &val
+}
+
+func (detectCourierRequest *DetectCourierRequest) SetTrackingShipDate(val string) {
+	detectCourierRequest.TrackingShipDate = &val
+}
+
+func (detectCourierRequest *DetectCourierRequest) SetTrackingAccountNumber(val string) {
+	detectCourierRequest.TrackingAccountNumber = &val
+}
+
+func (detectCourierRequest *DetectCourierRequest) SetTrackingKey(val string) {
+	detectCourierRequest.TrackingKey = &val
+}
+
+func (detectCourierRequest *DetectCourierRequest) SetDestinationState(val string) {
+	detectCourierRequest.DestinationState = &val
+}
+
+func (detectCourierRequest *DetectCourierRequest) SetSlugGroup(val string) {
+	detectCourierRequest.SlugGroup = &val
+}
+
+func (detectCourierRequest *DetectCourierRequest) SetOriginCountryRegion(val string) {
+	detectCourierRequest.OriginCountryRegion = &val
+}
+
+func (detectCourierRequest *DetectCourierRequest) SetDestinationCountryRegion(val string) {
+	detectCourierRequest.DestinationCountryRegion = &val
 }

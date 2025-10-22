@@ -15,7 +15,7 @@ type headerBuilder struct {
 	err    error
 }
 
-const defaultUserAgent = "tracking-sdk-go/v9 (https://www.aftership.com) Go-http-client/1.1"
+const defaultUserAgent = "tracking-sdk-go/v10 (https://www.aftership.com) Go-http-client/1.1"
 
 func newHeaderBuilder(auth *Authenticator) *headerBuilder {
 	return &headerBuilder{header: http.Header{}, auth: auth}
