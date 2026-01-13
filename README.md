@@ -20,10 +20,10 @@ If you need support using AfterShip products, please contact support@aftership.c
   - [Error Handling](#error-handling)
     - [Error List](#error-list)
   - [Endpoints](#endpoints)
+    - [/courier-connections](#courier-connections)
     - [/estimated-delivery-date](#estimated-delivery-date)
     - [/trackings](#trackings)
     - [/couriers](#couriers)
-    - [/courier-connections](#courier-connections)
   - [Help](#help)
   - [License](#license)
 
@@ -39,12 +39,12 @@ Before you begin to integrate:
 ### API and SDK Version
 
 - SDK Version: 
-- API Version: 2025-07
+- API Version: 2026-01
 ## Quick Start
 
 ### Installation
 ```bash
-go get -u github.com/aftership/tracking-sdk-go/v10
+go get -u github.com/aftership/tracking-sdk-go/v11
 ```
 
 ## Constructor
@@ -69,9 +69,9 @@ package main
 
 import (
     "fmt"
-    "github.com/aftership/tracking-sdk-go/v10"
+    "github.com/aftership/tracking-sdk-go/v11"
     
-    "github.com/aftership/tracking-sdk-go/v10/operation"
+    "github.com/aftership/tracking-sdk-go/v11/operation"
 )
 
 func main() {
@@ -147,6 +147,12 @@ The SDK will return an error object when there is any error during the request, 
 
 The AfterShip SDK has the following resource which are exactly the same as the API endpoints:
 
+- CourierConnectionResource
+  - Get courier connections
+  - Create courier connections
+  - Get courier connection by id
+  - Update courier connection by id
+  - Delete courier connection by id
 - EstimatedDeliveryDateResource
   - Prediction for the Estimated Delivery Date
   - Batch prediction for the Estimated Delivery Date
@@ -161,12 +167,79 @@ The AfterShip SDK has the following resource which are exactly the same as the A
 - CourierResource
   - Get couriers
   - Detect courier
-- CourierConnectionResource
-  - Get courier connections
-  - Create courier connections
-  - Get courier connection by id
-  - Update courier connection by id
-  - Delete courier connection by id
+
+### /courier-connections
+**GET** /courier-connections
+
+```go
+    query := operation.GetCourierConnectionsQuery{}
+    result, err := sdk.CourierConnection.GetCourierConnections().
+        BuildQuery(query).
+        Execute()
+    if err != nil {
+        fmt.Println(err)
+        return
+    }
+    fmt.Println(result)
+```
+
+**POST** /courier-connections
+
+```go
+    body := model.PostCourierConnectionsRequest{}
+    body.SetCourierSlug("valid_value")
+    body.SetCredentials()
+    result, err := sdk.CourierConnection.PostCourierConnections().
+        BuildBody(body).
+        Execute()
+    if err != nil {
+        fmt.Println(err)
+        return
+    }
+    fmt.Println(result)
+```
+
+**GET** /courier-connections/{id}
+
+```go
+    result, err := sdk.CourierConnection.GetCourierConnectionsById().
+        BuildPath("valid_value").
+        Execute()
+    if err != nil {
+        fmt.Println(err)
+        return
+    }
+    fmt.Println(result)
+```
+
+**PATCH** /courier-connections/{id}
+
+```go
+    body := model.PutCourierConnectionsByIdRequest{}
+    body.SetCredentials()
+    result, err := sdk.CourierConnection.PutCourierConnectionsById().
+        BuildPath("valid_value").
+        BuildBody(body).
+        Execute()
+    if err != nil {
+        fmt.Println(err)
+        return
+    }
+    fmt.Println(result)
+```
+
+**DELETE** /courier-connections/{id}
+
+```go
+    result, err := sdk.CourierConnection.DeleteCourierConnectionsById().
+        BuildPath("valid_value").
+        Execute()
+    if err != nil {
+        fmt.Println(err)
+        return
+    }
+    fmt.Println(result)
+```
 
 ### /estimated-delivery-date
 **POST** /estimated-delivery-date/predict
@@ -325,79 +398,6 @@ The AfterShip SDK has the following resource which are exactly the same as the A
     body.SetTrackingNumber("valid_value")
     result, err := sdk.Courier.DetectCourier().
         BuildBody(body).
-        Execute()
-    if err != nil {
-        fmt.Println(err)
-        return
-    }
-    fmt.Println(result)
-```
-
-### /courier-connections
-**GET** /courier-connections
-
-```go
-    query := operation.GetCourierConnectionsQuery{}
-    result, err := sdk.CourierConnection.GetCourierConnections().
-        BuildQuery(query).
-        Execute()
-    if err != nil {
-        fmt.Println(err)
-        return
-    }
-    fmt.Println(result)
-```
-
-**POST** /courier-connections
-
-```go
-    body := model.PostCourierConnectionsRequest{}
-    body.SetCourierSlug("valid_value")
-    body.SetCredentials()
-    result, err := sdk.CourierConnection.PostCourierConnections().
-        BuildBody(body).
-        Execute()
-    if err != nil {
-        fmt.Println(err)
-        return
-    }
-    fmt.Println(result)
-```
-
-**GET** /courier-connections/{id}
-
-```go
-    result, err := sdk.CourierConnection.GetCourierConnectionsById().
-        BuildPath("valid_value").
-        Execute()
-    if err != nil {
-        fmt.Println(err)
-        return
-    }
-    fmt.Println(result)
-```
-
-**PATCH** /courier-connections/{id}
-
-```go
-    body := model.PutCourierConnectionsByIdRequest{}
-    body.SetCredentials()
-    result, err := sdk.CourierConnection.PutCourierConnectionsById().
-        BuildPath("valid_value").
-        BuildBody(body).
-        Execute()
-    if err != nil {
-        fmt.Println(err)
-        return
-    }
-    fmt.Println(result)
-```
-
-**DELETE** /courier-connections/{id}
-
-```go
-    result, err := sdk.CourierConnection.DeleteCourierConnectionsById().
-        BuildPath("valid_value").
         Execute()
     if err != nil {
         fmt.Println(err)

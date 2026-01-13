@@ -4,9 +4,9 @@ package operation
 
 import (
 	"context"
-	"github.com/aftership/tracking-sdk-go/v10/component"
-	"github.com/aftership/tracking-sdk-go/v10/errorx"
-	"github.com/aftership/tracking-sdk-go/v10/model"
+	"github.com/aftership/tracking-sdk-go/v11/component"
+	"github.com/aftership/tracking-sdk-go/v11/errorx"
+	"github.com/aftership/tracking-sdk-go/v11/model"
 	"github.com/google/go-querystring/query"
 	"net/http"
 )
@@ -74,7 +74,7 @@ func (t *GetCourierConnectionsRequest) build() (*http.Request, error) {
 	if err != nil {
 		return nil, errorx.NewSdkError(errorx.ErrBadRequest, err.Error())
 	}
-	uri := "/tracking/2025-07/courier-connections?" + q.Encode()
+	uri := "/tracking/2026-01/courier-connections?" + q.Encode()
 	req, err := http.NewRequest("GET", uri, nil)
 	if err != nil {
 		return nil, err

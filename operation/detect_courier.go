@@ -6,9 +6,9 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
-	"github.com/aftership/tracking-sdk-go/v10/component"
-	"github.com/aftership/tracking-sdk-go/v10/errorx"
-	"github.com/aftership/tracking-sdk-go/v10/model"
+	"github.com/aftership/tracking-sdk-go/v11/component"
+	"github.com/aftership/tracking-sdk-go/v11/errorx"
+	"github.com/aftership/tracking-sdk-go/v11/model"
 	"net/http"
 )
 
@@ -42,7 +42,7 @@ func (t *DetectCourierRequest) BuildHeader(h http.Header) *DetectCourierRequest 
 }
 
 func (t *DetectCourierRequest) build() (*http.Request, error) {
-	uri := "/tracking/2025-07/couriers/detect?"
+	uri := "/tracking/2026-01/couriers/detect?"
 	body, err := json.Marshal(t.body)
 	if err != nil {
 		return nil, err

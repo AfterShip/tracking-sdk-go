@@ -16,8 +16,8 @@ type Checkpoint struct {
 	City *string `json:"city,omitempty"`
 	// State State info provided by carrier
 	State *string `json:"state,omitempty"`
-	// Zip Postal code info provided by carrier
-	Zip *string `json:"zip,omitempty"`
+	// PostalCode Postal code info provided by carrier
+	PostalCode *string `json:"postal_code,omitempty"`
 	// Coordinate The latitude and longitude coordinates indicate the precise location of the shipments that are currently in transit.
 	Coordinate *CheckpointCoordinate `json:"coordinate,omitempty"`
 	// CountryRegion Country/Region ISO Alpha-3 (three letters) of the checkpoint
@@ -64,8 +64,8 @@ func (checkpoint *Checkpoint) SetState(val string) {
 	checkpoint.State = &val
 }
 
-func (checkpoint *Checkpoint) SetZip(val string) {
-	checkpoint.Zip = &val
+func (checkpoint *Checkpoint) SetPostalCode(val string) {
+	checkpoint.PostalCode = &val
 }
 
 func (checkpoint *Checkpoint) SetCoordinate(val CheckpointCoordinate) {

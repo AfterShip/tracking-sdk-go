@@ -16,9 +16,9 @@ type EstimatedDeliveryDateRequest struct {
 	Weight *EstimatedDeliveryDateRequestWeight `json:"weight,omitempty"`
 	// PackageCount The number of packages.
 	PackageCount *int `json:"package_count,omitempty"`
-	// PickupTime The local pickup time in the origin address time zone of the package.Either `pickup_time` or `estimated_pickup` is required.
+	// PickupTime The local pickup time in the origin address time zone of the package.</br><span style=color:#ff6b2b;padding:2px>**Either `pickup_time` or `estimated_pickup` is required.**</span>
 	PickupTime *string `json:"pickup_time,omitempty"`
-	// EstimatedPickup The local pickup time of the package.Either `pickup_time` or `estimated_pickup` is required.
+	// EstimatedPickup The local pickup time of the package.</br><span style=color:#ff6b2b;padding:2px>**Either `pickup_time` or `estimated_pickup` is required.**</span>
 	EstimatedPickup *EstimatedDeliveryDateRequestEstimatedPickup `json:"estimated_pickup,omitempty"`
 }
 

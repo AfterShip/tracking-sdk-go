@@ -16,8 +16,8 @@ type UpdateTrackingByIdRequest struct {
 	Note *string `json:"note,omitempty"`
 	// Language The recipient’s language. If you set up AfterShip notifications in different languages, we use this to send the recipient tracking updates in their preferred language. Use an  to specify the language.
 	Language *string `json:"language,omitempty"`
-	// OrderPromisedDeliveryDate The promised delivery date of the order. It uses the formats:- YYYY-MM-DD- YYYY-MM-DDTHH:mm:ss- YYYY-MM-DDTHH:mm:ssZ
-	OrderPromisedDeliveryDate *string `json:"order_promised_delivery_date,omitempty"`
+	// OrderPromisedDeliveryDate The promised delivery date of the order in shipment recipient’s timezone.
+	OrderPromisedDeliveryDate *UpdateTrackingByIdRequestOrderPromisedDeliveryDate `json:"order_promised_delivery_date,omitempty"`
 	// DeliveryType Shipment delivery type- `pickup_at_store`- `pickup_at_courier`- `door_to_door`
 	DeliveryType *UpdateTrackingByIdRequestDeliveryType `json:"delivery_type,omitempty"`
 	// PickupLocation Shipment pickup location for receiver
@@ -90,7 +90,7 @@ func (updateTrackingByIdRequest *UpdateTrackingByIdRequest) SetLanguage(val stri
 	updateTrackingByIdRequest.Language = &val
 }
 
-func (updateTrackingByIdRequest *UpdateTrackingByIdRequest) SetOrderPromisedDeliveryDate(val string) {
+func (updateTrackingByIdRequest *UpdateTrackingByIdRequest) SetOrderPromisedDeliveryDate(val UpdateTrackingByIdRequestOrderPromisedDeliveryDate) {
 	updateTrackingByIdRequest.OrderPromisedDeliveryDate = &val
 }
 
