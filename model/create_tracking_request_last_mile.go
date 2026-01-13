@@ -7,7 +7,7 @@ type CreateTrackingRequestLastMile struct {
 	// TrackingNumber The tracking number of the last-mile carrier.
 	TrackingNumber string `json:"tracking_number"`
 	// Slug The unique code of the carrier responsible for the last-mile of the shipment.  Find all the courier slugs .
-	Slug *string `json:"slug,omitempty"`
+	Slug string `json:"slug"`
 }
 
 func (createTrackingRequestLastMile *CreateTrackingRequestLastMile) SetTrackingNumber(val string) {
@@ -15,5 +15,5 @@ func (createTrackingRequestLastMile *CreateTrackingRequestLastMile) SetTrackingN
 }
 
 func (createTrackingRequestLastMile *CreateTrackingRequestLastMile) SetSlug(val string) {
-	createTrackingRequestLastMile.Slug = &val
+	createTrackingRequestLastMile.Slug = val
 }

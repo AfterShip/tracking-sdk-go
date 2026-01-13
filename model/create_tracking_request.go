@@ -20,12 +20,12 @@ type CreateTrackingRequest struct {
 	OrderIdPath *string `json:"order_id_path,omitempty"`
 	// Language The recipient’s language. If you set up AfterShip notifications in different languages, we use this to send the recipient tracking updates in their preferred language. Use an  to specify the language.
 	Language *string `json:"language,omitempty"`
-	// OrderPromisedDeliveryDate The promised delivery date of the order. It uses the formats:- YYYY-MM-DD- YYYY-MM-DDTHH:mm:ss- YYYY-MM-DDTHH:mm:ssZ
-	OrderPromisedDeliveryDate *string `json:"order_promised_delivery_date,omitempty"`
-	// DeliveryType Shipment delivery type- pickup_at_store- pickup_at_courier- door_to_door
-	DeliveryType *CreateTrackingRequestDeliveryType `json:"delivery_type,omitempty"`
+	// OrderPromisedDeliveryDate The promised delivery date of the order in shipment recipient’s timezone.
+	OrderPromisedDeliveryDate *CreateTrackingRequestOrderPromisedDeliveryDate `json:"order_promised_delivery_date,omitempty"`
 	// PickupLocation Shipment pickup location for receiver
 	PickupLocation *string `json:"pickup_location,omitempty"`
+	// DeliveryType Shipment delivery type- pickup_at_store- pickup_at_courier- door_to_door
+	DeliveryType *CreateTrackingRequestDeliveryType `json:"delivery_type,omitempty"`
 	// PickupNote Shipment pickup note for receiver
 	PickupNote *string `json:"pickup_note,omitempty"`
 	// TrackingAccountNumber Additional field required by some carriers to retrieve the tracking info. The shipper’s carrier account number. Refer to our article on  for more details.
@@ -110,16 +110,16 @@ func (createTrackingRequest *CreateTrackingRequest) SetLanguage(val string) {
 	createTrackingRequest.Language = &val
 }
 
-func (createTrackingRequest *CreateTrackingRequest) SetOrderPromisedDeliveryDate(val string) {
+func (createTrackingRequest *CreateTrackingRequest) SetOrderPromisedDeliveryDate(val CreateTrackingRequestOrderPromisedDeliveryDate) {
 	createTrackingRequest.OrderPromisedDeliveryDate = &val
-}
-
-func (createTrackingRequest *CreateTrackingRequest) SetDeliveryType(val CreateTrackingRequestDeliveryType) {
-	createTrackingRequest.DeliveryType = &val
 }
 
 func (createTrackingRequest *CreateTrackingRequest) SetPickupLocation(val string) {
 	createTrackingRequest.PickupLocation = &val
+}
+
+func (createTrackingRequest *CreateTrackingRequest) SetDeliveryType(val CreateTrackingRequestDeliveryType) {
+	createTrackingRequest.DeliveryType = &val
 }
 
 func (createTrackingRequest *CreateTrackingRequest) SetPickupNote(val string) {

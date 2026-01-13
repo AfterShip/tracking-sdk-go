@@ -1,4 +1,4 @@
-module github.com/aftership/tracking-sdk-go/v10
+module github.com/aftership/tracking-sdk-go/v11
 
 go 1.16
 

@@ -78,8 +78,6 @@ type Tracking struct {
 	Title *string `json:"title,omitempty"`
 	// TrackedCount Number of attempts AfterShip tracks at courier's system.
 	TrackedCount *float64 `json:"tracked_count,omitempty"`
-	// LastMileTrackingSupported Indicates if the shipment is trackable till the final destination.Three possible values:- true- false- null
-	LastMileTrackingSupported *bool `json:"last_mile_tracking_supported,omitempty"`
 	// Language The recipient’s language. If you set up AfterShip notifications in different languages, we use this to send the recipient tracking updates in their preferred language.
 	Language *string `json:"language,omitempty"`
 	// UniqueToken Deprecated
@@ -92,8 +90,8 @@ type Tracking struct {
 	SubscribedEmails []string `json:"subscribed_emails,omitempty"`
 	// ReturnToSender Whether or not the shipment is returned to sender. Value is `true` when any of its checkpoints has subtag `Exception_010` (returning to sender) or `Exception_011` (returned to sender). Otherwise value is `false`.
 	ReturnToSender *bool `json:"return_to_sender,omitempty"`
-	// OrderPromisedDeliveryDate The promised delivery date of the order. It uses the formats:- YYYY-MM-DD- YYYY-MM-DDTHH:mm:ss- YYYY-MM-DDTHH:mm:ssZ
-	OrderPromisedDeliveryDate *string `json:"order_promised_delivery_date,omitempty"`
+	// OrderPromisedDeliveryDate The promised delivery date of the order in shipment recipient’s timezone.
+	OrderPromisedDeliveryDate *TrackingOrderPromisedDeliveryDate `json:"order_promised_delivery_date,omitempty"`
 	// DeliveryType Shipment delivery type- pickup_at_store- pickup_at_courier- door_to_door
 	DeliveryType *string `json:"delivery_type,omitempty"`
 	// PickupLocation Shipment pickup location for receiver
@@ -304,10 +302,6 @@ func (tracking *Tracking) SetTrackedCount(val float64) {
 	tracking.TrackedCount = &val
 }
 
-func (tracking *Tracking) SetLastMileTrackingSupported(val bool) {
-	tracking.LastMileTrackingSupported = &val
-}
-
 func (tracking *Tracking) SetLanguage(val string) {
 	tracking.Language = &val
 }
@@ -332,7 +326,7 @@ func (tracking *Tracking) SetReturnToSender(val bool) {
 	tracking.ReturnToSender = &val
 }
 
-func (tracking *Tracking) SetOrderPromisedDeliveryDate(val string) {
+func (tracking *Tracking) SetOrderPromisedDeliveryDate(val TrackingOrderPromisedDeliveryDate) {
 	tracking.OrderPromisedDeliveryDate = &val
 }
 

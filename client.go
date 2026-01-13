@@ -4,19 +4,19 @@ package tracking
 
 import (
 	"fmt"
-	"github.com/aftership/tracking-sdk-go/v10/api"
-	"github.com/aftership/tracking-sdk-go/v10/component"
-	"github.com/aftership/tracking-sdk-go/v10/errorx"
+	"github.com/aftership/tracking-sdk-go/v11/api"
+	"github.com/aftership/tracking-sdk-go/v11/component"
+	"github.com/aftership/tracking-sdk-go/v11/errorx"
 	"net/url"
 )
 
 type Client struct {
 	options               clientOptions
 	sender                *component.HttpSender
+	CourierConnection     *api.CourierConnectionApi
 	EstimatedDeliveryDate *api.EstimatedDeliveryDateApi
 	Tracking              *api.TrackingApi
 	Courier               *api.CourierApi
-	CourierConnection     *api.CourierConnectionApi
 }
 
 func New(opts ...ClientOption) (*Client, error) {
@@ -42,6 +42,11 @@ func New(opts ...ClientOption) (*Client, error) {
 	if len(client.options.apiKey) == 0 {
 		return nil, errorx.NewSdkError(errorx.ErrInvalidApiKey, "Invalid API key")
 	}
+	if client.options.authenticationType == "RSA" || client.options.authenticationType == "AES" {
+		if len(client.options.apiSecret) == 0 {
+			return nil, errorx.NewSdkError(errorx.ErrInvalidOption, fmt.Sprintf("Invalid option: %s", "API_SECRET"))
+		}
+	}
 	if len(client.options.proxy) > 0 {
 		_, err := url.Parse(client.options.proxy)
 		if err != nil {
@@ -58,9 +63,9 @@ func New(opts ...ClientOption) (*Client, error) {
 		},
 		component.NewAuthenticator(client.options.apiKey, client.options.apiSecret, client.options.authenticationType),
 	)
+	client.CourierConnection = api.NewCourierConnectionApi(client.sender)
 	client.EstimatedDeliveryDate = api.NewEstimatedDeliveryDateApi(client.sender)
 	client.Tracking = api.NewTrackingApi(client.sender)
 	client.Courier = api.NewCourierApi(client.sender)
-	client.CourierConnection = api.NewCourierConnectionApi(client.sender)
 	return client, nil
 }

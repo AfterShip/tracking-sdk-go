@@ -2,7 +2,7 @@
 
 package model
 
-// EstimatedDeliveryDateRequestEstimatedPickup The local pickup time of the package.Either `pickup_time` or `estimated_pickup` is required.
+// EstimatedDeliveryDateRequestEstimatedPickup The local pickup time of the package.</br><span style=color:#ff6b2b;padding:2px>**Either `pickup_time` or `estimated_pickup` is required.**</span>
 type EstimatedDeliveryDateRequestEstimatedPickup struct {
 	// OrderTime The local order time in the origin address time zone of the package.
 	OrderTime string `json:"order_time"`
