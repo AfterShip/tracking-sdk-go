@@ -2,7 +2,7 @@
 
 package model
 
-// Tracking Object describes the tracking information.<div style="display:none; height: 0"></div>
+// Tracking Object describes the tracking information.<div style="visibility:hidden; height: 0"></div>
 type Tracking struct {
 	// Id A  system-generated tracking ID by default, which can be customized by the user when creating a tracking.
 	Id *string `json:"id,omitempty"`
@@ -64,6 +64,8 @@ type Tracking struct {
 	ShipmentType *string `json:"shipment_type,omitempty"`
 	// ShipmentWeight The shipment_weight field represents the total weight of the shipment. In scenarios where the carrier does not provide this information, you can provide the weight to AfterShip. We will prioritize the data provided by the carrier, if available. The shipment weight will be included in the Response and accessed through the GET API, Webhook, and CSV export. It will also be displayed on the AfterShip Tracking admin. Additionally, it plays a significant role in error-free shipment handling and carbon emission calculations, ensuring accurate and informed decision-making
 	ShipmentWeight *TrackingShipmentWeight `json:"shipment_weight,omitempty"`
+	// ShipmentDimensions Physical dimensions of the package (length, width and height).
+	ShipmentDimensions *TrackingShipmentDimensions `json:"shipment_dimensions,omitempty"`
 	// SignedBy Signed by information for delivered shipment.
 	SignedBy *string `json:"signed_by,omitempty"`
 	// Source Source of how this tracking is added.
@@ -152,6 +154,16 @@ type Tracking struct {
 	LastMile *TrackingLastMile `json:"last_mile,omitempty"`
 	// Customers The field contains the customer information associated with the tracking. A maximum of three customer objects are allowed.
 	Customers []TrackingCustomers `json:"customers,omitempty"`
+	// ProofOfDelivery An array of proof of delivery (POD) records, such as a signature or photo captured upon successful delivery.This field returns a value only after the feature is enabled. Please contact your customer success manager if you'd like to know more.
+	ProofOfDelivery []TrackingProofOfDelivery `json:"proof_of_delivery,omitempty"`
+	// MultiPieceInfo Multi-piece shipment refers to a scenario where a single shipment order is fulfilled by multiple physical packages. Each piece has its own carrier-assigned tracking number, but all pieces belong to the same shipment. This commonly occurs when an order is too large to fit in one box, or when items are packed separately for handling reasons.This field contains multi-piece shipment metadata describing a group of packages that belong to the same shipment.This field returns a value only when your subscription plan includes a multi-piece feature. To enable, go to .
+	MultiPieceInfo *TrackingMultiPieceInfo `json:"multi_piece_info,omitempty"`
+	// ShipmentDirection Indicates the business direction of the shipment in the e-commerce fulfillment lifecycle.Possible values:- `forward`: A forward (outbound-to-customer) shipment created for order fulfillment.- `return`: A return (customer-to-merchant) shipment created for after-sales return or exchange.This field is populated in either of the following cases:1. You explicitly provided it when creating the tracking.2. AfterShip automatically detected a linked forward or return shipment.It also determines which related shipment object (`forward_shipment` or `return_shipment`) may appear in the response.
+	ShipmentDirection *TrackingShipmentDirection `json:"shipment_direction,omitempty"`
+	// ReturnShipment The associated return shipment linked to the current outbound shipment.This field is only present when `shipment_direction = "forward"` and AfterShip has detected a linked return shipment.
+	ReturnShipment *TrackingReturnShipment `json:"return_shipment,omitempty"`
+	// ForwardShipment The original outbound shipment linked to this return. Use this to trace a return back to its source delivery.This field is only present when `shipment_direction = "return"` and AfterShip has detected a linked forward shipment.
+	ForwardShipment *TrackingForwardShipment `json:"forward_shipment,omitempty"`
 }
 
 func (tracking *Tracking) SetId(val string) {
@@ -272,6 +284,10 @@ func (tracking *Tracking) SetShipmentType(val string) {
 
 func (tracking *Tracking) SetShipmentWeight(val TrackingShipmentWeight) {
 	tracking.ShipmentWeight = &val
+}
+
+func (tracking *Tracking) SetShipmentDimensions(val TrackingShipmentDimensions) {
+	tracking.ShipmentDimensions = &val
 }
 
 func (tracking *Tracking) SetSignedBy(val string) {
@@ -448,4 +464,24 @@ func (tracking *Tracking) SetLastMile(val TrackingLastMile) {
 
 func (tracking *Tracking) SetCustomers(val []TrackingCustomers) {
 	tracking.Customers = val
+}
+
+func (tracking *Tracking) SetProofOfDelivery(val []TrackingProofOfDelivery) {
+	tracking.ProofOfDelivery = val
+}
+
+func (tracking *Tracking) SetMultiPieceInfo(val TrackingMultiPieceInfo) {
+	tracking.MultiPieceInfo = &val
+}
+
+func (tracking *Tracking) SetShipmentDirection(val TrackingShipmentDirection) {
+	tracking.ShipmentDirection = &val
+}
+
+func (tracking *Tracking) SetReturnShipment(val TrackingReturnShipment) {
+	tracking.ReturnShipment = &val
+}
+
+func (tracking *Tracking) SetForwardShipment(val TrackingForwardShipment) {
+	tracking.ForwardShipment = &val
 }

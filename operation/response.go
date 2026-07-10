@@ -7,7 +7,7 @@ import (
 	"io"
 	"net/http"
 
-	"github.com/aftership/tracking-sdk-go/v11/errorx"
+	"github.com/aftership/tracking-sdk-go/v12/errorx"
 )
 
 type response struct {

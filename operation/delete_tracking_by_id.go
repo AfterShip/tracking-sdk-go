@@ -5,9 +5,9 @@ package operation
 import (
 	"context"
 	"errors"
-	"github.com/aftership/tracking-sdk-go/v11/component"
-	"github.com/aftership/tracking-sdk-go/v11/errorx"
-	"github.com/aftership/tracking-sdk-go/v11/model"
+	"github.com/aftership/tracking-sdk-go/v12/component"
+	"github.com/aftership/tracking-sdk-go/v12/errorx"
+	"github.com/aftership/tracking-sdk-go/v12/model"
 	"net/http"
 	"strings"
 )
@@ -52,7 +52,7 @@ func (t *DeleteTrackingByIdRequest) build() (*http.Request, error) {
 	if err := t.isPathParamValid(); err != nil {
 		return nil, errorx.NewSdkError(errorx.ErrBadRequest, err.Error())
 	}
-	uri := "/tracking/2026-01/trackings/{id}?"
+	uri := "/tracking/2026-07/trackings/{id}?"
 	uri = strings.ReplaceAll(uri, "{"+"id"+"}", t.id)
 
 	req, err := http.NewRequest("DELETE", uri, nil)

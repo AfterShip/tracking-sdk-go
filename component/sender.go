@@ -5,7 +5,7 @@ package component
 import (
 	"context"
 	"errors"
-	"github.com/aftership/tracking-sdk-go/v11/errorx"
+	"github.com/aftership/tracking-sdk-go/v12/errorx"
 	"math"
 	"math/rand"
 	"net"

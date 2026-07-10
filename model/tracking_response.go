@@ -6,7 +6,7 @@ package model
 type TrackingResponse struct {
 	// Meta Meta data
 	Meta Meta `json:"meta"`
-	// Data Object describes the tracking information.<div style="display:none; height: 0"></div>
+	// Data Object describes the tracking information.<div style="visibility:hidden; height: 0"></div>
 	Data Tracking `json:"data"`
 }
 
