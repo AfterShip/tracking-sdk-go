@@ -20,10 +20,10 @@ If you need support using AfterShip products, please contact support@aftership.c
   - [Error Handling](#error-handling)
     - [Error List](#error-list)
   - [Endpoints](#endpoints)
-    - [/courier-connections](#courier-connections)
     - [/estimated-delivery-date](#estimated-delivery-date)
     - [/trackings](#trackings)
     - [/couriers](#couriers)
+    - [/courier-connections](#courier-connections)
   - [Help](#help)
   - [License](#license)
 
@@ -38,13 +38,13 @@ Before you begin to integrate:
 
 ### API and SDK Version
 
-- SDK Version: v11
-- API Version: 2026-01
+- SDK Version: v12
+- API Version: 2026-07
 ## Quick Start
 
 ### Installation
 ```bash
-go get -u github.com/aftership/tracking-sdk-go/v11
+go get -u github.com/aftership/tracking-sdk-go/v12
 ```
 
 ## Constructor
@@ -69,9 +69,9 @@ package main
 
 import (
     "fmt"
-    "github.com/aftership/tracking-sdk-go/v11"
+    "github.com/aftership/tracking-sdk-go/v12"
     
-    "github.com/aftership/tracking-sdk-go/v11/operation"
+    "github.com/aftership/tracking-sdk-go/v12/operation"
 )
 
 func main() {
@@ -97,6 +97,29 @@ func main() {
 ## Rate Limiter
 
 See the [Rate Limit](https://www.aftership.com/docs/tracking/quickstart/rate-limit) to understand the AfterShip rate limit policy.
+
+The API returns its current rate limit status in the headers of every response, and the SDK exposes these headers on both successful responses and rate-limited errors, so you can monitor your consumption proactively instead of waiting for `429` errors.
+
+| Header                  | Description                                                |
+| ----------------------- | ---------------------------------------------------------- |
+| `X-RateLimit-Limit`     | The rate limit ceiling for the current endpoint per second |
+| `X-RateLimit-Remaining` | The number of requests left for the 1-second window        |
+| `X-RateLimit-Reset`     | The Unix timestamp when the rate limit will be reset       |
+
+Every successful response exposes a `ResponseHeader` field (`http.Header`) alongside `Data`. Taking the Quick Start example above:
+
+```go
+remaining, _ := strconv.Atoi(result.ResponseHeader.Get("X-RateLimit-Remaining"))
+resetAt, _ := strconv.ParseInt(result.ResponseHeader.Get("X-RateLimit-Reset"), 10, 64)
+
+if remaining <= 1 {
+    // Throttle or defer lower-priority requests until resetAt
+}
+```
+
+`http.Header.Get` performs a case-insensitive lookup.
+
+When the rate limit is exceeded, the request fails with a `429` error that carries the same headers — see [Error Handling](#error-handling).
 
 ## Error Handling
 
@@ -147,12 +170,6 @@ The SDK will return an error object when there is any error during the request, 
 
 The AfterShip SDK has the following resource which are exactly the same as the API endpoints:
 
-- CourierConnectionResource
-  - Get courier connections
-  - Create courier connections
-  - Get courier connection by id
-  - Update courier connection by id
-  - Delete courier connection by id
 - EstimatedDeliveryDateResource
   - Prediction for the Estimated Delivery Date
   - Batch prediction for the Estimated Delivery Date
@@ -167,79 +184,12 @@ The AfterShip SDK has the following resource which are exactly the same as the A
 - CourierResource
   - Get couriers
   - Detect courier
-
-### /courier-connections
-**GET** /courier-connections
-
-```go
-    query := operation.GetCourierConnectionsQuery{}
-    result, err := sdk.CourierConnection.GetCourierConnections().
-        BuildQuery(query).
-        Execute()
-    if err != nil {
-        fmt.Println(err)
-        return
-    }
-    fmt.Println(result)
-```
-
-**POST** /courier-connections
-
-```go
-    body := model.PostCourierConnectionsRequest{}
-    body.SetCourierSlug("valid_value")
-    body.SetCredentials()
-    result, err := sdk.CourierConnection.PostCourierConnections().
-        BuildBody(body).
-        Execute()
-    if err != nil {
-        fmt.Println(err)
-        return
-    }
-    fmt.Println(result)
-```
-
-**GET** /courier-connections/{id}
-
-```go
-    result, err := sdk.CourierConnection.GetCourierConnectionsById().
-        BuildPath("valid_value").
-        Execute()
-    if err != nil {
-        fmt.Println(err)
-        return
-    }
-    fmt.Println(result)
-```
-
-**PATCH** /courier-connections/{id}
-
-```go
-    body := model.PutCourierConnectionsByIdRequest{}
-    body.SetCredentials()
-    result, err := sdk.CourierConnection.PutCourierConnectionsById().
-        BuildPath("valid_value").
-        BuildBody(body).
-        Execute()
-    if err != nil {
-        fmt.Println(err)
-        return
-    }
-    fmt.Println(result)
-```
-
-**DELETE** /courier-connections/{id}
-
-```go
-    result, err := sdk.CourierConnection.DeleteCourierConnectionsById().
-        BuildPath("valid_value").
-        Execute()
-    if err != nil {
-        fmt.Println(err)
-        return
-    }
-    fmt.Println(result)
-```
+- CourierConnectionResource
+  - Get courier connections
+  - Create courier connections
+  - Get courier connection by id
+  - Update courier connection by id
+  - Delete courier connection by id
 
 ### /estimated-delivery-date
 **POST** /estimated-delivery-date/predict
@@ -398,6 +348,79 @@ The AfterShip SDK has the following resource which are exactly the same as the A
     body.SetTrackingNumber("valid_value")
     result, err := sdk.Courier.DetectCourier().
         BuildBody(body).
+        Execute()
+    if err != nil {
+        fmt.Println(err)
+        return
+    }
+    fmt.Println(result)
+```
+
+### /courier-connections
+**GET** /courier-connections
+
+```go
+    query := operation.GetCourierConnectionsQuery{}
+    result, err := sdk.CourierConnection.GetCourierConnections().
+        BuildQuery(query).
+        Execute()
+    if err != nil {
+        fmt.Println(err)
+        return
+    }
+    fmt.Println(result)
+```
+
+**POST** /courier-connections
+
+```go
+    body := model.PostCourierConnectionsRequest{}
+    body.SetCourierSlug("valid_value")
+    body.SetCredentials()
+    result, err := sdk.CourierConnection.PostCourierConnections().
+        BuildBody(body).
+        Execute()
+    if err != nil {
+        fmt.Println(err)
+        return
+    }
+    fmt.Println(result)
+```
+
+**GET** /courier-connections/{id}
+
+```go
+    result, err := sdk.CourierConnection.GetCourierConnectionsById().
+        BuildPath("valid_value").
+        Execute()
+    if err != nil {
+        fmt.Println(err)
+        return
+    }
+    fmt.Println(result)
+```
+
+**PATCH** /courier-connections/{id}
+
+```go
+    body := model.PutCourierConnectionsByIdRequest{}
+    body.SetCredentials()
+    result, err := sdk.CourierConnection.PutCourierConnectionsById().
+        BuildPath("valid_value").
+        BuildBody(body).
+        Execute()
+    if err != nil {
+        fmt.Println(err)
+        return
+    }
+    fmt.Println(result)
+```
+
+**DELETE** /courier-connections/{id}
+
+```go
+    result, err := sdk.CourierConnection.DeleteCourierConnectionsById().
+        BuildPath("valid_value").
         Execute()
     if err != nil {
         fmt.Println(err)

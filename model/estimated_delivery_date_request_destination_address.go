@@ -6,11 +6,11 @@ package model
 type EstimatedDeliveryDateRequestDestinationAddress struct {
 	// CountryRegion The country/region of the destination location where the package will be delivered. Use 3 letters of ISO 3166-1 country code.
 	CountryRegion string `json:"country_region"`
-	// State State, province, or the equivalent location of the destination address where the package will be delivered.Either `destination_address.state` or `destination_address.postal_code` is required.
+	// State State, province, or the equivalent location of the destination address where the package will be delivered.</br><span style=color:#ff6b2b;padding:2px>**Either `destination_address.state` or `destination_address.postal_code` is required.**</span>
 	State *string `json:"state,omitempty"`
 	// City City of the destination address where the package will be delivered.
 	City *string `json:"city,omitempty"`
-	// PostalCode Postal code of the destination address.Either `destination_address.state` or `destination_address.postal_code` is required.
+	// PostalCode Postal code of the destination address.</br><span style=color:#ff6b2b;padding:2px>**Either `destination_address.state` or `destination_address.postal_code` is required.**</span>
 	PostalCode *string `json:"postal_code,omitempty"`
 	// RawLocation Raw location of the destination address. A raw address will help AI to identify the accurate location of the destination address.
 	RawLocation *string `json:"raw_location,omitempty"`

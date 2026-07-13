@@ -6,11 +6,11 @@ package model
 type EstimatedDeliveryDateRequestOriginAddress struct {
 	// CountryRegion The country/region of the origin location from where the package is picked up by the carrier to be delivered to the final destination. Use 3 letters of ISO 3166-1 country/region code.
 	CountryRegion string `json:"country_region"`
-	// State State, province, or the equivalent location of the origin address. Use 3 letters of ISO 3166-1 country/region code for countries/regions without state. Either `origin_address.state` or `origin_address.postal_code` is required.
+	// State State, province, or the equivalent location of the origin address. Use 3 letters of ISO 3166-1 country/region code for countries/regions without state. </br><span style=color:#ff6b2b;padding:2px>**Either `origin_address.state` or `origin_address.postal_code` is required.**</span>
 	State *string `json:"state,omitempty"`
 	// City City of the origin address. Use 3 letters of ISO 3166-1 country/region code for countries/regions without City.
 	City *string `json:"city,omitempty"`
-	// PostalCode Postal code of the origin address. Use 3 letters of ISO 3166-1 country/region code for countries/regions without postal code. Either `origin_address.state` or `origin_address.postal_code` is required.
+	// PostalCode Postal code of the origin address. Use 3 letters of ISO 3166-1 country/region code for countries/regions without postal code. </br><span style=color:#ff6b2b;padding:2px>**Either `origin_address.state` or `origin_address.postal_code` is required.**</span>
 	PostalCode *string `json:"postal_code,omitempty"`
 	// RawLocation Raw location of the origin address. A raw address will help AI to identify the accurate location of the origin address.
 	RawLocation *string `json:"raw_location,omitempty"`

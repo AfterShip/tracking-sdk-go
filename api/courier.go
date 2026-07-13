@@ -3,8 +3,8 @@
 package api
 
 import (
-	"github.com/aftership/tracking-sdk-go/v11/component"
-	"github.com/aftership/tracking-sdk-go/v11/operation"
+	"github.com/aftership/tracking-sdk-go/v12/component"
+	"github.com/aftership/tracking-sdk-go/v12/operation"
 )
 
 type CourierApi struct {

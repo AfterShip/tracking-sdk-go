@@ -38,6 +38,8 @@ type Checkpoint struct {
 	Events []CheckpointEvents `json:"events,omitempty"`
 	// Source The source of the checkpoint, which can either be from the carrier or when the user marks the tracking as completed.
 	Source *CheckpointSource `json:"source,omitempty"`
+	// Hash Unique hash identifier for each checkpoint event, could be used for deduplication.
+	Hash *string `json:"hash,omitempty"`
 }
 
 func (checkpoint *Checkpoint) SetCreatedAt(val string) {
@@ -106,4 +108,8 @@ func (checkpoint *Checkpoint) SetEvents(val []CheckpointEvents) {
 
 func (checkpoint *Checkpoint) SetSource(val CheckpointSource) {
 	checkpoint.Source = &val
+}
+
+func (checkpoint *Checkpoint) SetHash(val string) {
+	checkpoint.Hash = &val
 }

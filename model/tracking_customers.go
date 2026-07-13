@@ -14,6 +14,8 @@ type TrackingCustomers struct {
 	Email *string `json:"email,omitempty"`
 	// Language The preferred language of the customer. If you have set up AfterShip notifications in different languages, we use this to send the tracking updates to the customer in their preferred language.
 	Language *string `json:"language,omitempty"`
+	// Id The customer's identifier on the merchant or platform (for example, Shopify) side.
+	Id *string `json:"id,omitempty"`
 }
 
 func (trackingCustomers *TrackingCustomers) SetRole(val string) {
@@ -34,4 +36,8 @@ func (trackingCustomers *TrackingCustomers) SetEmail(val string) {
 
 func (trackingCustomers *TrackingCustomers) SetLanguage(val string) {
 	trackingCustomers.Language = &val
+}
+
+func (trackingCustomers *TrackingCustomers) SetId(val string) {
+	trackingCustomers.Id = &val
 }

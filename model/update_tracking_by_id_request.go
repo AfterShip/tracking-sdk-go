@@ -64,6 +64,8 @@ type UpdateTrackingByIdRequest struct {
 	ShippingMethod *string `json:"shipping_method,omitempty"`
 	// Customers The field contains the customer information associated with the tracking. A maximum of three customer objects are allowed.
 	Customers []UpdateTrackingByIdRequestCustomers `json:"customers,omitempty"`
+	// ShipmentDirection Indicates the business direction of the shipment in the e-commerce fulfillment lifecycle.Possible values:- `forward`: A forward (outbound-to-customer) shipment created for order fulfillment.- `return`: A return (customer-to-merchant) shipment created for after-sales return or exchange.When provided, this field gives AfterShip additional context about the shipment's intent, enabling more accurate status identification.
+	ShipmentDirection *UpdateTrackingByIdRequestShipmentDirection `json:"shipment_direction,omitempty"`
 }
 
 func (updateTrackingByIdRequest *UpdateTrackingByIdRequest) SetTitle(val string) {
@@ -184,4 +186,8 @@ func (updateTrackingByIdRequest *UpdateTrackingByIdRequest) SetShippingMethod(va
 
 func (updateTrackingByIdRequest *UpdateTrackingByIdRequest) SetCustomers(val []UpdateTrackingByIdRequestCustomers) {
 	updateTrackingByIdRequest.Customers = val
+}
+
+func (updateTrackingByIdRequest *UpdateTrackingByIdRequest) SetShipmentDirection(val UpdateTrackingByIdRequestShipmentDirection) {
+	updateTrackingByIdRequest.ShipmentDirection = &val
 }
